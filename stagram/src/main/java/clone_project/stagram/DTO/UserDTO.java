@@ -6,10 +6,10 @@ public class UserDTO {
     private Long user_no;
     private String email;
     private String id;
-    private String pw;
+    private String password;
     private String name;
     private String bio;
-    private Date regDate;
+    private String regDate;
 
     public Long getUser_no() {
         return user_no;
@@ -35,12 +35,12 @@ public class UserDTO {
         this.id = id;
     }
 
-    public String getPw() {
-        return pw;
+    public String getPassword() {
+        return password;
     }
 
-    public void setPw(String pw) {
-        this.pw = pw;
+    public void setPassword(String password) {
+        this.password = password;
     }
 
     public String getName() {
@@ -59,11 +59,11 @@ public class UserDTO {
         this.bio = bio;
     }
 
-    public Date getRegDate() {
+    public String getRegDate() {
         return regDate;
     }
 
-    public void setRegDate(Date regDate) {
+    public void setRegDate(String regDate) {
         this.regDate = regDate;
     }
 }

@@ -3,6 +3,7 @@ package clone_project.stagram.service;
 import clone_project.stagram.DTO.UserDTO;
 import clone_project.stagram.Entity.UserEntity;
 import clone_project.stagram.repository.JpaUserRepository;
+import clone_project.stagram.repository.JpaUserRepositoryCustom;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -20,12 +21,15 @@ public class UserService {
 //        this.userRepository = userRepository;
 //    }
 
-    public UserService(JpaUserRepository jpaUserRepository) {
+    public UserService(JpaUserRepository jpaUserRepository, JpaUserRepositoryCustom jpaUserRepositoryCustom) {
         this.jpaUserRepository = jpaUserRepository;
+        this.jpaUserRepositoryCustom = jpaUserRepositoryCustom;
     }
 
 
     private final JpaUserRepository jpaUserRepository;
+
+    private final JpaUserRepositoryCustom jpaUserRepositoryCustom;
     @Autowired
     private ModelMapper modelMapper;
 
@@ -41,18 +45,28 @@ public class UserService {
         //List<UserDTO> userDto = modelMapper(userEntity, List<UserDTO>.class);
 
 
+
         return userDto;
+    }
+
+    public UserDTO findByEmail(String email) {
+        UserEntity userEntity = jpaUserRepositoryCustom.findByEmail(email);
+        UserDTO userDTO = modelMapper.map(userEntity, UserDTO.class);
+        return userDTO;
     }
 
     public void register(UserDTO userDTO) {
         BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
-        System.out.println("암호화 전 pw : " + userDTO.getPw());
-        String securedPw = encoder.encode(userDTO.getPw());
-        userDTO.setPw(securedPw);
-        System.out.println("안호화 후 pw : " + userDTO.getPw());
+        System.out.println("암호화 전 pw : " + userDTO.getPassword());
+        String securedPw = encoder.encode(userDTO.getPassword());
+        userDTO.setPassword(securedPw);
+        System.out.println("암호화 후 pw : " + userDTO.getPassword());
 
         UserEntity userEntity = modelMapper.map(userDTO, UserEntity.class);
+        System.out.println("userEntity" + userEntity.getEmail());
 
         jpaUserRepository.save(userEntity);
     }
+
+
 }

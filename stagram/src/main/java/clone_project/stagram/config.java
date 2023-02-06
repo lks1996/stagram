@@ -1,17 +1,19 @@
 package clone_project.stagram;
 
+import clone_project.stagram.repository.JpaUserRepositoryCustom;
+import clone_project.stagram.repository.JpaUserRepositoryCustomImpl;
 import org.modelmapper.ModelMapper;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
-import javax.sql.DataSource;
+import javax.persistence.EntityManager;
 
 @Configuration
 public class config {
-    private final DataSource dataSource;
+    private final EntityManager em;
 
-    public config(DataSource dataSource) {
-        this.dataSource = dataSource;
+    public config(EntityManager em) {
+        this.em = em;
     }
 
     @Bean
@@ -25,9 +27,8 @@ public class config {
 //        return new UserService(userRepository());
 //    }
 //
-//    @Bean
-//    public UserRepository userRepository() {
-//        return new JPAUserRepository(dataSource);
-////          return new JpaMemberRepository(em);
-//    }
+    @Bean
+    public JpaUserRepositoryCustom jpaUserRepositoryCustom() {
+          return new JpaUserRepositoryCustomImpl(em);
+    }
 }

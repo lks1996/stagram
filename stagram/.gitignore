@@ -6,6 +6,7 @@ build/
 !**/src/test/**/build/
 
 application.properties
+images
 
 ### STS ###
 .apt_generated

@@ -13,6 +13,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 @Controller
 public class UserController {
@@ -47,13 +48,28 @@ public class UserController {
 
     @PostMapping("/emailCheck")
     @ResponseBody
-    public int idCheck(@RequestParam String email) {
-
-        userService.findByEmail(email);
-//        int cnt = memberService.idCheck(id);
+    public boolean emailCheck(@RequestParam String email) {
+        UserDTO emailCheck = userService.findByEmail(email);
+        //이메일이 이미 없다면
+        if (emailCheck == null) {
+            System.out.println(email);
+            return true;
+        }
         System.out.println(email);
-        int cnt = 0;
-        return cnt;
+        return false;
+    }
+
+    @PostMapping("/idCheck")
+    @ResponseBody
+    public boolean idCheck(@RequestParam String id) {
+        UserDTO idCheck = userService.findById(id);
+        //id(사용자 이름)가 없다면
+        if (idCheck == null) {
+            System.out.println(id);
+            return true;
+        }
+        System.out.println(id);
+        return false;
     }
 
 

@@ -16,3 +16,22 @@
   right: 12px;
   margin: 0;
 }
+
+.div_id {
+  position: relative;
+  width: 270px;
+}
+
+.div_id input {
+  width: 100%;
+  padding: 10px 12px;
+  font-size: 14px;
+}
+
+.div_id span {
+  position : absolute;
+  width: 17px;
+  top: 10px;
+  right: 12px;
+  margin: 0;
+}

@@ -3,6 +3,8 @@ package clone_project.stagram.repository;
 import clone_project.stagram.Entity.UserEntity;
 
 import javax.persistence.EntityManager;
+import java.util.List;
+import java.util.Optional;
 
 public class JpaUserRepositoryCustomImpl implements JpaUserRepositoryCustom{
 
@@ -13,10 +15,17 @@ public class JpaUserRepositoryCustomImpl implements JpaUserRepositoryCustom{
     }
 
     @Override
-    public UserEntity findByEmail(String email) {
-        UserEntity userEntity = em.createQuery("select m from UserEntity m where m.email = :email", UserEntity.class)
+    public Optional<UserEntity> findByEmail(String email) {
+        List<UserEntity> userEntity = em.createQuery("select m from UserEntity m where m.email = :email", UserEntity.class)
                 .setParameter("email", email)
-                .getSingleResult();
-        return userEntity;
+                .getResultList();
+        return userEntity.stream().findAny();
     }
+
+    @Override
+    public Optional<UserEntity> findById(String id) {
+        List<UserEntity> userEntity = em.createQuery("select m from UserEntity m where m.id = :id", UserEntity.class)
+                .setParameter("id", id)
+                .getResultList();
+        return userEntity.stream().findAny();    }
 }

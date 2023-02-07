@@ -10,7 +10,9 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.lang.reflect.Type;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -50,9 +52,21 @@ public class UserService {
     }
 
     public UserDTO findByEmail(String email) {
-        UserEntity userEntity = jpaUserRepositoryCustom.findByEmail(email);
-        UserDTO userDTO = modelMapper.map(userEntity, UserDTO.class);
-        return userDTO;
+        Optional<UserEntity> userEntity = jpaUserRepositoryCustom.findByEmail(email);
+        if (userEntity.isPresent()) {
+            UserDTO userDTO = modelMapper.map(userEntity, UserDTO.class);
+            return userDTO;
+        }
+        return null;
+    }
+
+    public UserDTO findById(String id) {
+        Optional<UserEntity> userEntity = jpaUserRepositoryCustom.findById(id);
+        if (userEntity.isPresent()) {
+            UserDTO userDTO = modelMapper.map(userEntity, UserDTO.class);
+            return userDTO;
+        }
+        return null;
     }
 
     public void register(UserDTO userDTO) {
@@ -67,6 +81,7 @@ public class UserService {
 
         jpaUserRepository.save(userEntity);
     }
+
 
 
 }

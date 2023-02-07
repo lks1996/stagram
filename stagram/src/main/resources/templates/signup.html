@@ -32,14 +32,18 @@
                     <!--회원가입 인풋-->
                     <form class="login__input"  action="/user/signup" method="post">
                         <div class="div_email">
-                            <input type="email" id="email" name="email" placeholder="이메일 주소" required="required" oninput = "checkId()"/>
+                            <input type="email" id="email" name="email" placeholder="이메일 주소" required="required" onkeyup = "checkEmail()"/>
                             <span class="email_ok" style="display: none;"><i class="fa-solid fa-check"></i></span>
                             <span class="email_already" style="display: none;"><i class="fa-solid fa-x"></i></span>
                         </div>
-                        <input type="text" id="name" name="name" placeholder="성명" required="required" />
-                        <input type="text" id="id" name="id" placeholder="사용자 이름" required="required"  maxlength="30"/>
-                        <input type="password" id="password" name="password" placeholder="비밀번호" required="required" />
-                        <button>가입</button>
+                        <input type="text" id="name" name="name" placeholder="성명" required="required" onkeyup="stateHandle()"/>
+                        <div class="div_id">
+                            <input type="text" id="id" name="id" placeholder="사용자 이름" required="required"  maxlength="30" onkeyup = "checkId()"/>
+                            <span class="id_ok" style="display: none;"><i class="fa-solid fa-check"></i></span>
+                            <span class="id_already" style="display: none;"><i class="fa-solid fa-x"></i></span>
+                        </div>
+                        <input type="password" id="password" name="password" placeholder="비밀번호" required="required" onkeyup="stateHandle2()"/>
+                        <button class="join_btn">가입</button>
                     </form>
                     <!--회원가입 인풋end-->
                 </div>
@@ -48,7 +52,7 @@
                 <!--계정이 있으신가요?-->
                 <div class="login__register">
                     <span>계정이 있으신가요?</span>
-                    <a href="/auth/signin">로그인</a>
+                    <a href="/user/signin">로그인</a>
                 </div>
                 <!--계정이 있으신가요?end-->
 
@@ -57,28 +61,112 @@
     </main>
 </div>
 <script>
-    function checkId(){
-        var email = $('#email').val(); //id값이 "id"인 입력란의 값을 저장
-        $.ajax({
-            url:'/emailCheck', //Controller에서 요청 받을 주소
+    let input_email = false;
+    let input_name = false;
+    let input_id = false;
+    let input_password = false;
+
+    let button = document.querySelector(".join_btn");
+    button.disabled = true;
+
+    function btnControl(){
+        if(input_email && input_name && input_id && input_password){
+            button.disabled = false;
+            $('.join_btn').css("background-color", "#0095f6");
+
+        }
+        else{
+            button.disabled = true;
+            $('.join_btn').css("background-color", "#accbdf");
+        }
+    }
+
+
+    function stateHandle() {
+         if (document.querySelector("#name").value === "") {
+            input_name = false;
+          } else {
+            input_name = true;
+            btnControl();
+          }
+    }
+
+     function stateHandle2() {
+          if (document.querySelector("#password").value === "") {
+            input_password = false;
+          } else {
+            input_password = true;
+            btnControl();
+          }
+     }
+
+    function checkEmail(){
+        var email = $('#email').val(); //id 값이 "email"인 입력란의 값을 저장
+        if(document.querySelector("#email").value === ""){
+                    $('.email_already').css("display","none");
+                    $('.email_ok').css("display", "none");
+                    input_email = false;
+        }
+        else{
+            $.ajax({
+            url:'/emailCheck', //Controller 에서 요청 받을 주소
             type:'post', //POST 방식으로 전달
             data:{email:email},
-            success:function(cnt){ //컨트롤러에서 넘어온 cnt값을 받는다
-                if(cnt == 0){ //cnt가 1이 아니면(=0일 경우) -> 사용 가능한 아이디
+            success:function(result){ //컨트롤러에서 넘어온 result 값을 받는다
+                if(result){ //result 가 1이 아니면(=0일 경우) -> 사용 가능한 아이디
                     $('.email_ok').css("display","inline-block");
                     $('.email_already').css("display", "none");
-                } else { // cnt가 1일 경우 -> 이미 존재하는 아이디
+                    input_email = true;
+                    btnControl();
+                } else { // result 가 1일 경우 -> 이미 존재하는 아이디
                     $('.email_already').css("display","inline-block");
                     $('.email_ok').css("display", "none");
-                    alert("아이디를 다시 입력해주세요");
-                    $('#id').val('');
+                    input_email = false;
                 }
             },
-            error:function(){
-                alert("에러입니다");
-            }
-        });
-        };
+                error:function(){
+                    alert("에러입니다");
+                }
+            });
+            };
+        }
+
+
+        function checkId(){
+        var id = $('#id').val(); //id 값이 "id"인 입력란의 값을 저장
+        if(document.querySelector("#id").value === ""){
+            $('.id_already').css("display","none");
+            $('.id_ok').css("display", "none");
+            input_id = false;
+        }
+        else{
+            $.ajax({
+            url:'/idCheck', //Controller 에서 요청 받을 주소
+            type:'post', //POST 방식으로 전달
+            data:{id:id},
+            success:function(result){ //컨트롤러에서 넘어온 result 값을 받는다
+                if(result){ //result 가 1이 아니면(=0일 경우) -> 사용 가능한 아이디
+                    $('.id_ok').css("display","inline-block");
+                    $('.id_already').css("display", "none");
+                    input_id = true;
+                    btnControl();
+                } else { // result 가 1일 경우 -> 이미 존재하는 아이디
+                    $('.id_already').css("display","inline-block");
+                    $('.id_ok').css("display", "none");
+                    input_id = false;
+                }
+            },
+                error:function(){
+                    alert("에러입니다");
+                }
+            });
+            };
+        }
+
+
+
+
+
 </script>
 </body>
 

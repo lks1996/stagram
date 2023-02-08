@@ -8,7 +8,7 @@
 <script src="https://kit.fontawesome.com/8437d7db58.js" crossorigin="anonymous"></script>
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
-<!--    <meta name="viewport" content="width=device-width, initial-scale=1.0">-->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Instagram</title>
     <link rel="stylesheet" type="text/css" th:href="@{/css/style.css}">
     <link rel="stylesheet" type="text/css" th:href="@{/css/signup.css}">
@@ -70,14 +70,15 @@
     button.disabled = true;
 
     function btnControl(){
-        if(input_email && input_name && input_id && input_password){
+        if(input_email && input_name && input_id && input_password){//모든 항목의 입력 값이 유효하다면
             button.disabled = false;
             $('.join_btn').css("background-color", "#0095f6");
-
+            $('.join_btn').css("cursor", "pointer");
         }
         else{
             button.disabled = true;
             $('.join_btn').css("background-color", "#accbdf");
+            $('.join_btn').css("cursor", "default");
         }
     }
 

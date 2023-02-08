@@ -35,3 +35,7 @@
   right: 12px;
   margin: 0;
 }
+
+.join_btn{
+  cursor: default;
+}

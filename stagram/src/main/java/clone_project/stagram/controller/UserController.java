@@ -3,6 +3,7 @@ package clone_project.stagram.controller;
 import clone_project.stagram.DTO.LoginDTO;
 import clone_project.stagram.DTO.UserDTO;
 import clone_project.stagram.service.UserService;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -12,8 +13,6 @@ import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
-import java.util.Map;
-import java.util.Optional;
 
 @Controller
 public class UserController {
@@ -25,7 +24,7 @@ public class UserController {
 
     @GetMapping("/")
     public String welcome(Model model) throws Exception{
-        List<UserDTO> users = userService.findMembers();
+        List<UserDTO> users = userService.findAllMembers();
 
         model.addAttribute("users", users);
 
@@ -49,11 +48,13 @@ public class UserController {
     @PostMapping("/emailCheck")
     @ResponseBody
     public boolean emailCheck(@RequestParam String email) {
-        UserDTO emailCheck = userService.findByEmail(email);
-        //이메일이 이미 없다면
-        if (emailCheck == null) {
-            System.out.println(email);
-            return true;
+        if (email.contains("@") && email.contains(".")) {
+            UserDTO emailCheck = userService.isDuplicateEmail(email);
+            //이메일이 이미 없다면
+            if (emailCheck == null) {
+                System.out.println(email);
+                return true;
+            }
         }
         System.out.println(email);
         return false;
@@ -62,7 +63,7 @@ public class UserController {
     @PostMapping("/idCheck")
     @ResponseBody
     public boolean idCheck(@RequestParam String id) {
-        UserDTO idCheck = userService.findById(id);
+        UserDTO idCheck = userService.isDuplicateId(id);
         //id(사용자 이름)가 없다면
         if (idCheck == null) {
             System.out.println(id);
@@ -78,10 +79,30 @@ public class UserController {
         return "signin";
     }
     @PostMapping("/user/signin")
-    public String signin(LoginDTO loginDTO, HttpSession session) throws Exception {
+    @ResponseBody
+    public String signin(@RequestBody LoginDTO loginDTO, HttpSession session) throws Exception {
         System.out.println("로그인 시도 : " + loginDTO.getIdOrEmail());
 
-        return "signin";
+        BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
+        String result;
+
+        UserDTO userDTO = userService.login(loginDTO.getIdOrEmail());
+
+        //입력한 email 이나 id 가 존재하지 않는다면,
+        if (userDTO != null) {
+            if (encoder.matches(loginDTO.getPw(), userDTO.getPassword())) {
+                result = "loginSuccess";
+
+                session.setAttribute("logined_user", userDTO);
+                System.out.println("logined_user 세션 확인 : " + userDTO);
+            } else {
+                result = "passwordFail";
+            }
+        } else {
+            result = "idOrEmailFail";
+        }
+
+        return result;
     }
 
     public String whatTimeIsItNow() {

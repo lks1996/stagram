@@ -3,6 +3,7 @@ package clone_project.stagram;
 import clone_project.stagram.repository.JpaUserRepositoryCustom;
 import clone_project.stagram.repository.JpaUserRepositoryCustomImpl;
 import org.modelmapper.ModelMapper;
+import org.modelmapper.convention.MatchingStrategies;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -18,15 +19,14 @@ public class config {
 
     @Bean
     public ModelMapper modelMapper(){
-        return new ModelMapper();
+        //return new ModelMapper();
+        ModelMapper mapper = new ModelMapper();
+
+        mapper.getConfiguration().setMatchingStrategy(MatchingStrategies.LOOSE);
+        return mapper;
     }
 
 
-//    @Bean
-//    public UserService userService() {
-//        return new UserService(userRepository());
-//    }
-//
     @Bean
     public JpaUserRepositoryCustom jpaUserRepositoryCustom() {
           return new JpaUserRepositoryCustomImpl(em);

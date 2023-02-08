@@ -1,11 +1,7 @@
 package clone_project.stagram.Entity;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.*;
-import org.hibernate.annotations.GenerationTime;
-
 import javax.persistence.*;
-import java.util.Date;
 
 @Entity
 @AllArgsConstructor //여기에 필드에 쓴 모든생성자만 만들어줌

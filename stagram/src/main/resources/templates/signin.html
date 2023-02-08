@@ -1,11 +1,16 @@
 <!DOCTYPE HTML>
 <html xmlns:th="http://www.thymeleaf.org">
-
+<script
+        src="https://code.jquery.com/jquery-3.6.1.min.js"
+        integrity="sha256-o88AwQnZB+VDvE9tvIXrMQaPlFFSUTR+nldQm1LuPXQ="
+        crossorigin="anonymous">
+</script>
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Instagram</title>
-    <link rel="stylesheet" href="/css/style.css">
+    <link rel="stylesheet" type="text/css" th:href="@{/css/style.css}">
+    <link rel="stylesheet" type="text/css" th:href="@{/css/signin.css}">
     <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css"
           integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p" crossorigin="anonymous" />
 </head>
@@ -23,9 +28,9 @@
 
                     <!--로그인 인풋-->
                     <form class="login__input"  action="/user/signin" method="POST">
-                        <input type="text" name="idOrEmail" placeholder="사용자 이름 또는 이메일" required="required" />
-                        <input type="password" name="pw" placeholder="비밀번호" required="required" />
-                        <button>로그인</button>
+                        <input type="text" id="idOrEmail" name="idOrEmail" placeholder="사용자 이름 또는 이메일" required="required" onkeyup = "stateHandle()"/>
+                        <input type="password" id="pw" name="pw" placeholder="비밀번호" required="required" onkeyup = "stateHandle2()"/>
+                        <button class="login_btn" onclick="login()">로그인</button>
                     </form>
                     <!--로그인 인풋end-->
 
@@ -58,6 +63,91 @@
     </main>
 
 </div>
+<script>
+    let input_idOrEmail = false;
+    let input_password = false;
+
+    let button = document.querySelector(".login_btn");
+    button.disabled = true;
+
+    function btnControl(){
+        if(input_idOrEmail && input_password){//모든 항목의 입력 값이 유효하다면
+            button.disabled = false;
+            $('.login_btn').css("background-color", "#0095f6");
+            $('.login_btn').css("cursor", "pointer");
+        }
+        else{
+            button.disabled = true;
+            $('.login_btn').css("background-color", "#accbdf");
+            $('.login_btn').css("cursor", "default");
+        }
+    }
+
+//idOrEmail 인풋박스에 데이터가 들어오면,
+    function stateHandle() {
+    var idOrEmailValue = document.querySelector("#idOrEmail").value;
+         if (idOrEmailValue === "") {
+           input_idOrEmail = false;
+           btnControl();
+         } else if(idOrEmailValue.length > 5){
+           input_idOrEmail = true;
+           btnControl();
+         } else{
+            input_idOrEmail = false;
+            btnControl();
+         }
+    }
+
+//password 인풋 박스에 데이터가 들어오면,
+     function stateHandle2() {
+     var passwordValue = document.querySelector("#pw").value;
+          if (passwordValue === "") {
+            input_password = false;
+            btnControl();
+          } else if(passwordValue.length > 5){
+            input_password = true;
+            btnControl();
+          } else{
+            input_password = false;
+            btnControl();
+          }
+     }
+
+
+
+     //login ajax 함수
+     function login(){
+         const data = {
+            idOrEmail: $('#idOrEmail').val(),
+            pw: $('#pw').val()
+         };
+        $.ajax({
+            url: '/user/signin',
+            type: 'POST',
+            contentType: 'application/json; charset=utf-8',
+            data: JSON.stringify(data),
+            success: function(result){
+                console.log("ajax result : " + result);
+
+                if(result === "idOrEmailFail"){
+
+
+                } else if(result === "passwordFail"){
+
+                } else if(result === "loginSuccess") {
+                alert("로그인 성공");
+                self.location ="/";
+                }
+            },
+            error:function(){
+                alert("에러입니다");
+            }
+
+        }); //$.ajax
+     }
+
+
+</script>
 </body>
 
 </html>

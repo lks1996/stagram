@@ -1,5 +1,10 @@
 package clone_project.stagram.DTO;
 
+import lombok.Getter;
+import lombok.Setter;
+
+@Getter
+@Setter
 public class LoginDTO {
     private String idOrEmail;
     private String pw;

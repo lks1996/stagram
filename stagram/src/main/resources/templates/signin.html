@@ -24,14 +24,14 @@
             <article class="login__form__container">
                 <!--로그인 폼-->
                 <div class="login__form">
-                    <h1><img src="/images/stagram.jpg" alt=""></h1>
+                    <h1><a href="/"><img src="/images/stagram.jpg" alt="stagram"></a></h1>
 
                     <!--로그인 인풋-->
-                    <form class="login__input"  action="/user/signin" method="POST">
-                        <input type="text" id="idOrEmail" name="idOrEmail" placeholder="사용자 이름 또는 이메일" required="required" onkeyup = "stateHandle()"/>
-                        <input type="password" id="pw" name="pw" placeholder="비밀번호" required="required" onkeyup = "stateHandle2()"/>
-                        <button class="login_btn" onclick="login()">로그인</button>
-                    </form>
+                    <div class="login__input">
+                        <input type="text" th:id="idOrEmail" th:name="idOrEmail" placeholder="사용자 이름 또는 이메일" required="required" th:onkeyup = "stateHandle()"/>
+                        <input type="password" th:id="pw" th:name="pw" placeholder="비밀번호" required="required" th:onkeyup = "stateHandle2()"/>
+                        <button class="login_btn" th:onclick="login()">로그인</button>
+                    </div>
                     <!--로그인 인풋end-->
 
                     <!-- 또는 -->
@@ -44,12 +44,14 @@
 
                     <!-- Oauth 소셜로그인 -->
                     <div class="login__facebook">
-                        <button onclick="javascript:location.href=''">
+                        <button th:onclick="javascript:location.href=''">
                             <i class="fab fa-facebook-square"></i>
                             <span>Facebook으로 로그인</span>
                         </button>
                     </div>
                     <!-- Oauth 소셜로그인end -->
+                    <span class="wrong_pw" style="display: none;"><label>잘못된 비밀번호입니다. 다시 확인하세요.</label></i></span>
+
                 </div>
 
                 <!--계정이 없으신가요?-->
@@ -125,26 +127,25 @@
             url: '/user/signin',
             type: 'POST',
             contentType: 'application/json; charset=utf-8',
-            data: JSON.stringify(data),
-            success: function(result){
+            data: JSON.stringify(data)
+            }).done(function(result){
                 console.log("ajax result : " + result);
 
                 if(result === "idOrEmailFail"){
-
+                    $('.wrong_pw').css("display", "inline-block");
 
                 } else if(result === "passwordFail"){
+                    $('.wrong_pw').css("display", "inline-block");
 
                 } else if(result === "loginSuccess") {
-                alert("로그인 성공");
-                self.location ="/";
+                    alert("로그인 성공");
+                    window.location.href="/";
                 }
-            },
-            error:function(){
-                alert("에러입니다");
-            }
+            }).fail(function(error){
+                alert(JSON.stringify(error));
+            });
+        }; //$.ajax
 
-        }); //$.ajax
-     }
 
 
 </script>

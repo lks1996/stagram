@@ -78,7 +78,7 @@ public class UserController {
     public String home() throws Exception{
         return "signin";
     }
-    @PostMapping("/user/signin")
+    @PostMapping(value = "/user/signin")
     @ResponseBody
     public String signin(@RequestBody LoginDTO loginDTO, HttpSession session) throws Exception {
         System.out.println("로그인 시도 : " + loginDTO.getIdOrEmail());
@@ -88,18 +88,22 @@ public class UserController {
 
         UserDTO userDTO = userService.login(loginDTO.getIdOrEmail());
 
+        System.out.println(encoder.matches(loginDTO.getPw(), userDTO.getPassword()));
         //입력한 email 이나 id 가 존재하지 않는다면,
         if (userDTO != null) {
             if (encoder.matches(loginDTO.getPw(), userDTO.getPassword())) {
                 result = "loginSuccess";
+                //result=0;
 
                 session.setAttribute("logined_user", userDTO);
                 System.out.println("logined_user 세션 확인 : " + userDTO);
             } else {
                 result = "passwordFail";
+                //result=1;
             }
         } else {
             result = "idOrEmailFail";
+            //result=2;
         }
 
         return result;

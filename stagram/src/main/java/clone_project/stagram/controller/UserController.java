@@ -2,13 +2,17 @@ package clone_project.stagram.controller;
 
 import clone_project.stagram.DTO.LoginDTO;
 import clone_project.stagram.DTO.UserDTO;
+import clone_project.stagram.SessionConst;
 import clone_project.stagram.service.UserService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import javax.validation.Valid;
 import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -80,33 +84,46 @@ public class UserController {
     }
     @PostMapping(value = "/user/signin")
     @ResponseBody
-    public String signin(@RequestBody LoginDTO loginDTO, HttpSession session) throws Exception {
+    public String signin(@Valid @RequestBody LoginDTO loginDTO, BindingResult bindingResult, HttpServletRequest request) throws Exception {
+        if (bindingResult.hasErrors()) {
+            return "passwordFail";
+        }
         System.out.println("로그인 시도 : " + loginDTO.getIdOrEmail());
 
         BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
         String result;
 
-        UserDTO userDTO = userService.login(loginDTO.getIdOrEmail());
+        UserDTO loginUser = userService.login(loginDTO.getIdOrEmail());
 
-        System.out.println(encoder.matches(loginDTO.getPw(), userDTO.getPassword()));
+        System.out.println(encoder.matches(loginDTO.getPw(), loginUser.getPassword()));
         //입력한 email 이나 id 가 존재하지 않는다면,
-        if (userDTO != null) {
-            if (encoder.matches(loginDTO.getPw(), userDTO.getPassword())) {
-                result = "loginSuccess";
-                //result=0;
+        if (loginUser != null) {
+            if (encoder.matches(loginDTO.getPw(), loginUser.getPassword())) {
+                HttpSession session = request.getSession();
+                session.setAttribute(SessionConst.LOGIN_MEMBER, loginUser);
 
-                session.setAttribute("logined_user", userDTO);
-                System.out.println("logined_user 세션 확인 : " + userDTO);
+                result = "loginSuccess";
+
+
+//                session.setAttribute("logined_user", loginUser);
+//                System.out.println("logined_user 세션 확인 : " + loginUser);
             } else {
+                bindingResult.reject("passwordFail", "비밀번호가 맞지 않습니다.");
                 result = "passwordFail";
-                //result=1;
+
             }
         } else {
+            bindingResult.reject("idOrEmailFail", "없는 아이디입니다.");
             result = "idOrEmailFail";
-            //result=2;
+
         }
 
         return result;
+    }
+
+    @GetMapping("/timeline")
+    public String timeline() throws Exception{
+        return "timeline";
     }
 
     public String whatTimeIsItNow() {

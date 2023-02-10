@@ -1,9 +1,10 @@
 package clone_project.stagram.DTO;
 
+import lombok.Data;
 import lombok.Getter;
 import org.springframework.web.multipart.MultipartFile;
 
-
+@Data
 public class UserProfileImgDTO {
 
     private int userImgNo;

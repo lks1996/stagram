@@ -1,0 +1,97 @@
+ul {
+  list-style-type: none;
+  padding: 0px;
+  margin: 0px;
+  width: 100px;
+  background: #FF6347;
+  height: 100%;
+  overflow: auto;
+  position: fixed;
+}
+
+li a {
+  text-decoration: none;
+  padding: 10px;
+  display: block;
+  color: #000;
+  font-weight: bold;
+}
+
+li a:hover {
+  background: #333;
+  color: #fff;
+}
+
+li a.home {
+  background : #333;
+  color: #fff;
+}
+
+.cd1 {
+  margin-left: 120px;
+}
+
+
+
+
+
+.main_left{
+    background-color: #efefef;
+    display: flex;
+    flex-direction: row;
+    justify-content:center;
+    border-top: 1px solid #4a4a4a;
+    height: 100vh;
+    width: 100vw;
+}
+
+.card{
+    border: 1px solid #efefef;
+    background-color: white;
+    width: 600px;
+    height: 600px;
+}
+
+header img{
+    border-radius: 50%;
+    height: 30px;
+    width: 30px;
+    border: 1px solid #efefef;
+}
+
+.card_image img{
+    width: 100%;
+}
+
+.info i{
+    font-size: 1.5rem;
+}
+
+.main_left{
+    margin: 1rem;
+}
+
+.comment{
+    margin: 0rem 1rem 1rem 1rem;
+    border-bottom: 1px solid #efefef;
+    padding-bottom: 1rem;
+}
+
+.comment_form form{
+    padding-bottom: 0px;
+    display: flex;
+    flex-direction: row;
+}
+
+.comment_form form input{
+    width: 550px;
+    height: 30px;
+    border: none;
+    padding-left: 10px;
+}
+
+.comment_form form #submit{
+    border: none;
+    background-color: white;
+}
+

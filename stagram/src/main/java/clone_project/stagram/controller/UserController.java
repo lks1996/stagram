@@ -26,7 +26,7 @@ public class UserController {
         this.userService = userService;
     }
 
-    @GetMapping("/")
+    @GetMapping("/list")
     public String welcome(Model model) throws Exception{
         List<UserDTO> users = userService.findAllMembers();
 
@@ -85,28 +85,33 @@ public class UserController {
     @PostMapping(value = "/user/signin")
     @ResponseBody
     public String signin(@Valid @RequestBody LoginDTO loginDTO, BindingResult bindingResult, HttpServletRequest request) throws Exception {
+
+        HttpSession session = request.getSession();
+        BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
+        String result;
+
         if (bindingResult.hasErrors()) {
             return "passwordFail";
         }
-        System.out.println("로그인 시도 : " + loginDTO.getIdOrEmail());
 
-        BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
-        String result;
+        if (session.getAttribute(SessionConst.LOGIN_MEMBER) != null) {
+            session.removeAttribute(SessionConst.LOGIN_MEMBER);
+        }
+
+        System.out.println("로그인 시도 : " + loginDTO.getIdOrEmail());
 
         UserDTO loginUser = userService.login(loginDTO.getIdOrEmail());
 
         System.out.println(encoder.matches(loginDTO.getPw(), loginUser.getPassword()));
+
         //입력한 email 이나 id 가 존재하지 않는다면,
         if (loginUser != null) {
             if (encoder.matches(loginDTO.getPw(), loginUser.getPassword())) {
-                HttpSession session = request.getSession();
                 session.setAttribute(SessionConst.LOGIN_MEMBER, loginUser);
+                session.setMaxInactiveInterval(3000);
+                System.out.println("request.getSession()" + session.getAttribute(SessionConst.LOGIN_MEMBER));
 
                 result = "loginSuccess";
-
-
-//                session.setAttribute("logined_user", loginUser);
-//                System.out.println("logined_user 세션 확인 : " + loginUser);
             } else {
                 bindingResult.reject("passwordFail", "비밀번호가 맞지 않습니다.");
                 result = "passwordFail";
@@ -121,10 +126,17 @@ public class UserController {
         return result;
     }
 
-    @GetMapping("/timeline")
-    public String timeline() throws Exception{
-        return "timeline";
-    }
+
+
+//    @GetMapping("/timeline")
+//    public String timeline(HttpSession session, Model model) throws Exception{
+//        System.out.println("request.getSession()" + session.getAttribute("user"));
+//        UserDTO loginUser = (UserDTO) session.getAttribute("user");
+//
+//        model.addAttribute("loginUser", loginUser);
+//
+//        return "timeline2";
+//    }
 
     public String whatTimeIsItNow() {
         Date timestamp = new Timestamp(System.currentTimeMillis());

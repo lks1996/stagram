@@ -126,7 +126,12 @@ public class UserController {
         return result;
     }
 
-
+    @GetMapping("/profile")//프로필페이지 만들기!!!!!!!!!
+    public String profile(@SessionAttribute(name =SessionConst.LOGIN_MEMBER, required = true) UserDTO loginMember,
+                          Model model, String id) throws Exception{
+        model.addAttribute("loginUser", loginMember);
+        return "profile";
+    }
 
 //    @GetMapping("/timeline")
 //    public String timeline(HttpSession session, Model model) throws Exception{

@@ -1,9 +1,6 @@
 package clone_project.stagram.DTO;
 
 import lombok.Data;
-import lombok.Getter;
-import lombok.NonNull;
-import lombok.Setter;
 
 @Data
 public class LoginDTO {

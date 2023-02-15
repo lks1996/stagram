@@ -81,8 +81,14 @@ img {
     margin-right: 3rem;
 }
 
+#btn-modal{
+    background-color: transparent;
+    border: 0;
+}
+
 .profile-image img {
     border-radius: 50%;
+    cursor: pointer;
 }
 
 .profile-user-settings,
@@ -385,60 +391,127 @@ Remove or comment-out the code block below to see how the browser will fall-back
             position: absolute;
             left: 0;
             top: 0;
-            display: none;
-            flex-direction: column;
             align-items: center;
-            justify-content: center;
             background: rgb(0 0 0 / 48%);
-            box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
-            backdrop-filter: blur(1.5px);
-            -webkit-backdrop-filter: blur(1.5px);
-            border-radius: 10px;
-            border: 1px solid rgba(255, 255, 255, 0.18);
+            display: none;
+            justify-content: center;
+            flex-direction: column;
+            box-sizing: border-box;
         }
 
 
-        #modal .modal-window {
-            background: #fafafa;
-            box-shadow: 0 8px 32px 0 rgb(66 66 66 / 37%);
-            backdrop-filter: blur( 13.5px );
-            -webkit-backdrop-filter: blur( 13.5px );
-            border-radius: 10px;
-            border: 1px solid rgb(36 0 0 / 18%);
-            width: 400px;
-            height: 200px;
-            position: relative;
-            top: -100px;
-            padding: 10px;
-        }
+#modal .modal-window {
+    align-items: stretch;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    background: #fafafa;
+    border-radius: 10px;
+    border: 0;
+    width: 400px;
+    height: 230px;
+    position: relative;
+    justify-content: center;
+    margin: 0;
+    padding: 0;
+    vertical-align: baseline;
+}
 
 
-        #modal .title {
-            padding-left: 10px;
-            display: inline;
-            text-shadow: 1px 1px 2px gray;
-            color: white;
-        }
+#modal .title {
+    align-items: stretch;
+    margin-top: 10px;
+    display: flex;
+    border: 0;
+    flex-direction: column;
+    flex-shrink: 0;
+    font-size: 15px;
+    padding: 0;
+    position: relative;
+    text-align: center;
+    vertical-align: baseline;
+}
 
 
-        #modal .title h2 {
-            display: inline;
-        }
+#modal .title h3 {
+    display: block;
+}
 
 
-        #modal .close-area {
-            display: inline;
-            float: right;
-            padding-right: 10px;
-            cursor: pointer;
-            text-shadow: 1px 1px 2px gray;
-            color: white;
-        }
+#modal .close-area {
+    display: inline;
+    float: right;
+    padding-right: 10px;
+    cursor: pointer;
+    text-shadow: 1px 1px 2px gray;
+    color: white;
+}
 
 
-        #modal .content {
-            margin-top: 20px;
-            padding: 0px 10px;
-            text-shadow: 1px 1px 2px gray;
-            color: white;
-        }
+#modal .content {
+    position: relative;
+    margin-top: 10px;
+    padding: 0;
+    flex-direction: column;
+    flex-shrink: 0;
+    vertical-align: baseline;
+    box-sizing: border-box;
+    border: 10px;
+    align-items: stretch;
+    display: flex;
+}
+
+ #modal .profile-upload-btn{
+    color: #4d90fe;
+    background-color: transparent;
+    border-bottom: 0;
+    border-left: 0;
+    border-right: 0;
+    border-top: 1px solid #99999985;
+    cursor: pointer;
+    font-size: 14px;
+    line-height: 1.5;
+    margin: 0;
+    min-height: 48px;
+    padding: 4px 8px;
+    text-align: center;
+    -webkit-user-select: none;
+    vertical-align: middle;
+ }
+
+ #modal .profile-delete-btn{
+     color: #eb1d1d;
+     background-color: transparent;
+     border-bottom: 0;
+     border-left: 0;
+     border-right: 0;
+     border-top: 1px solid #99999985;
+     cursor: pointer;
+     font-size: 14px;
+     line-height: 1.5;
+     margin: 0;
+     min-height: 48px;
+     padding: 4px 8px;
+     text-align: center;
+     -webkit-user-select: none;
+     vertical-align: middle;
+ }
+
+ #modal .cancel-btn{
+    background-color: transparent;
+    border-bottom: 0;
+    border-left: 0;
+    border-right: 0;
+    border-top: 1px solid #99999985;
+    cursor: pointer;
+    font-size: 14px;
+    line-height: 1.5;
+    margin: 0;
+    min-height: 48px;
+    padding: 4px 8px;
+    text-align: center;
+    -webkit-user-select: none;
+    vertical-align: middle;
+ }
+
+

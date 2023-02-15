@@ -1,8 +1,11 @@
 package clone_project.stagram.service;
 
 import clone_project.stagram.DTO.UserDTO;
+import clone_project.stagram.DTO.UserProfileImgDTO;
 import clone_project.stagram.Entity.UserEntity;
+import clone_project.stagram.Entity.UserProfileImgEntity;
 import clone_project.stagram.Mapper;
+import clone_project.stagram.repository.JpaUserProfileImgRepository;
 import clone_project.stagram.repository.JpaUserRepository;
 import clone_project.stagram.repository.JpaUserRepositoryCustom;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -15,14 +18,18 @@ import java.util.Optional;
 @Service
 public class UserService {
 
-    public UserService(JpaUserRepository jpaUserRepository, JpaUserRepositoryCustom jpaUserRepositoryCustom) {
+    private final JpaUserProfileImgRepository jpaUserProfileImgRepository;
+    private final JpaUserRepository jpaUserRepository;
+    private final JpaUserRepositoryCustom jpaUserRepositoryCustom;
+    public UserService(JpaUserRepository jpaUserRepository, JpaUserRepositoryCustom jpaUserRepositoryCustom,
+                       JpaUserProfileImgRepository jpaUserProfileImgRepository) {
         this.jpaUserRepository = jpaUserRepository;
         this.jpaUserRepositoryCustom = jpaUserRepositoryCustom;
+        this.jpaUserProfileImgRepository = jpaUserProfileImgRepository;
     }
 
 
-    private final JpaUserRepository jpaUserRepository;
-    private final JpaUserRepositoryCustom jpaUserRepositoryCustom;
+
 
 
 
@@ -94,5 +101,11 @@ public class UserService {
         }
 
         return null;
+    }
+
+    public void saveProfileImg(UserProfileImgDTO userProfileImgDTO) {
+        UserProfileImgEntity userProfileImgEntity = Mapper.mapToUserProfileImgEntity(userProfileImgDTO);
+
+        jpaUserProfileImgRepository.save(userProfileImgEntity);
     }
 }

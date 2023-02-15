@@ -1,7 +1,11 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" xmlns:c="http://www.w3.org/1999/XSL/Transform">
+<html xmlns:th="http://www.thymeleaf.org">
 <script src="https://kit.fontawesome.com/8437d7db58.js" crossorigin="anonymous"></script>
-
+<script
+        src="https://code.jquery.com/jquery-3.6.1.min.js"
+        integrity="sha256-o88AwQnZB+VDvE9tvIXrMQaPlFFSUTR+nldQm1LuPXQ="
+        crossorigin="anonymous">
+</script>
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width">
@@ -301,16 +305,23 @@
     <div id="modal" class="modal-overlay">
         <div class="modal-window">
             <div class="title">
-                <h2>모달</h2>
+                <h3>프로필 사진 바꾸기</h3>
             </div>
             <div class="content">
-                <p>가나다라마바사 아자차카타파하</p>
-                <p>가나다라마바사 아자차카타파하</p>
-                <p>가나다라마바사 아자차카타파하</p>
+                <button class="profile-upload-btn">
+                    사진 업로드
+                </button>
+                <button class="profile-delete-btn">
+                    현재 사진 삭제
+                </button>
                 <button class="cancel-btn">
                     취소
                 </button>
             </div>
+            <form id="upload-profile-pic-form" action="/upload/profile" method="post" enctype="multipart/form-data">
+<!--                <input type="hidden" id="loginUser_user_no" name="profile-pic" th:value="${loginUser.user_no}" style="display:none;">-->
+                <input type="file" id="profileImg" name="profileImg" style="display:none;" onchange="changeValue(this)">
+            </form>
         </div>
     </div>
 
@@ -346,6 +357,16 @@ modal.addEventListener("click", e => {
         modalOff()
     }
 })
+
+
+$('.profile-upload-btn').click(function (e) {
+    $('#profileImg').click();
+});
+
+function changeValue(obj){
+
+    document.getElementById('upload-profile-pic-form').submit();
+}
 
 
     </script>

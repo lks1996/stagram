@@ -9,7 +9,6 @@ import javax.persistence.*;
 @NoArgsConstructor(access = AccessLevel.PROTECTED) //기본 생성자를 만들어줌
 @Table(name= "user")
 @Getter
-
 public class UserEntity {
 
     @Id  // Primary Key 지정

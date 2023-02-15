@@ -1,7 +1,9 @@
 package clone_project.stagram;
 
 import clone_project.stagram.DTO.UserDTO;
+import clone_project.stagram.DTO.UserProfileImgDTO;
 import clone_project.stagram.Entity.UserEntity;
+import clone_project.stagram.Entity.UserProfileImgEntity;
 import org.modelmapper.ModelMapper;
 import org.springframework.context.annotation.Configuration;
 
@@ -29,7 +31,9 @@ public class Mapper {
 //        UserEntity userEntity = modelMapper.map(userDTO, UserEntity.class);
 //    }
     public static UserEntity mapToEntity(UserDTO userDTO) {
-        UserEntity userEntity = new UserEntity(userDTO.getUser_no(), userDTO.getEmail(), userDTO.getId(), userDTO.getPassword(), userDTO.getName(), userDTO.getBio(), userDTO.getRegDate());
+        UserEntity userEntity = new UserEntity(userDTO.getUser_no(), userDTO.getEmail(),
+                userDTO.getId(), userDTO.getPassword(), userDTO.getName(), userDTO.getBio(),
+                userDTO.getRegDate());
         return userEntity;
     }
 
@@ -61,5 +65,14 @@ public class Mapper {
         userDTO.setRegDate(userEntity.get().getRegDate());
 
         return userDTO;
+    }
+
+
+    public static UserProfileImgEntity mapToUserProfileImgEntity(UserProfileImgDTO userProfileImgDTO) {
+        UserProfileImgEntity userProfileImgEntity = new UserProfileImgEntity(userProfileImgDTO.getUserImgNo(),
+                userProfileImgDTO.getProfileImgOriginName(), userProfileImgDTO.getProfileImgName(),
+                userProfileImgDTO.getProfileImgSize(), userProfileImgDTO.getRegDate(),
+                userProfileImgDTO.getUserNo());
+        return userProfileImgEntity;
     }
 }

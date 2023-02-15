@@ -2,6 +2,7 @@ package clone_project.stagram.controller;
 
 import clone_project.stagram.DTO.LoginDTO;
 import clone_project.stagram.DTO.UserDTO;
+import clone_project.stagram.DTO.UserProfileImgDTO;
 import clone_project.stagram.SessionConst;
 import clone_project.stagram.service.UserService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -9,14 +10,17 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
+import java.io.File;
 import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
+import java.util.UUID;
 
 @Controller
 public class UserController {
@@ -133,15 +137,43 @@ public class UserController {
         return "profile";
     }
 
-//    @GetMapping("/timeline")
-//    public String timeline(HttpSession session, Model model) throws Exception{
-//        System.out.println("request.getSession()" + session.getAttribute("user"));
-//        UserDTO loginUser = (UserDTO) session.getAttribute("user");
-//
-//        model.addAttribute("loginUser", loginUser);
-//
-//        return "timeline2";
-//    }
+/** view 단에 있는 file name 과 @RequestParam의 file name이 일치해야 작동. **/
+    @PostMapping("/upload/profile")
+    public String upload_profile_pic(@SessionAttribute(name =SessionConst.LOGIN_MEMBER, required = true) UserDTO loginMember, @RequestParam MultipartFile profileImg) throws Exception{
+
+
+        String savePath = "C:\\Users\\user\\Desktop";
+
+        if( !profileImg.isEmpty() ) {   //---파일이 없으면 true를 리턴. false일 경우에만 처리함.
+            String uuidForProfilePicName = UUID.randomUUID().toString()+".jpg";
+            File converFile = new File(savePath, uuidForProfilePicName);
+            profileImg.transferTo(converFile);  //--- 저장할 경로를 설정 해당 경로는 각자 원하는 위치로 설정하면 됩니다. 다만, 해당 경로에 접근할 수 있는 권한이 없으면 에러 발생
+
+            UserProfileImgDTO userProfileImgDTO = new UserProfileImgDTO();
+
+            userProfileImgDTO.setProfileImgOriginName(profileImg.getOriginalFilename());
+            userProfileImgDTO.setProfileImgName(uuidForProfilePicName);
+            userProfileImgDTO.setProfileImgSize(profileImg.getSize());
+            userProfileImgDTO.setRegDate(whatTimeIsItNow());
+            userProfileImgDTO.setUserNo(loginMember.getUser_no());
+
+            System.out.println(userProfileImgDTO.getProfileImgOriginName());
+            System.out.println(userProfileImgDTO.getProfileImgName());
+            System.out.println(userProfileImgDTO.getProfileImgSize());
+            System.out.println(userProfileImgDTO.getRegDate());
+            System.out.println(userProfileImgDTO.getUserNo());
+
+            userService.saveProfileImg(userProfileImgDTO);
+
+            return "redirect:/";
+        }
+
+
+        return "redirect:/";
+    }
+
+
+
 
     public String whatTimeIsItNow() {
         Date timestamp = new Timestamp(System.currentTimeMillis());

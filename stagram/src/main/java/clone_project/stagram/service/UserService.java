@@ -108,4 +108,14 @@ public class UserService {
 
         jpaUserProfileImgRepository.save(userProfileImgEntity);
     }
+
+    public String hasProfileImg(Long user_no) {
+        String savePath = "C:\\Users\\user\\Desktop";
+        UserProfileImgEntity userProfileImgEntity = jpaUserProfileImgRepository.getReferenceById(user_no);
+
+        System.out.println("00000-"+userProfileImgEntity.getProfileImgName());
+        savePath += "\\" + userProfileImgEntity.getProfileImgName();
+
+        return savePath;
+    }
 }

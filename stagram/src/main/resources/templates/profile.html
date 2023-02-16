@@ -22,7 +22,9 @@
             <div class="profile-image">
 
                 <button id="btn-modal">
-                    <img src="https://images.unsplash.com/photo-1513721032312-6a18a42c8763?w=152&h=152&fit=crop&crop=faces" alt="">
+                    <img th:src="${profileImg}" alt="">
+
+                    <!--                    <img src="https://images.unsplash.com/photo-1513721032312-6a18a42c8763?w=152&h=152&fit=crop&crop=faces" alt="">-->
                 </button>
 
             </div>
@@ -319,7 +321,6 @@
                 </button>
             </div>
             <form id="upload-profile-pic-form" action="/upload/profile" method="post" enctype="multipart/form-data">
-<!--                <input type="hidden" id="loginUser_user_no" name="profile-pic" th:value="${loginUser.user_no}" style="display:none;">-->
                 <input type="file" id="profileImg" name="profileImg" style="display:none;" onchange="changeValue(this)">
             </form>
         </div>
@@ -332,7 +333,6 @@
 const loremIpsum = document.getElementById("lorem-ipsum")
 fetch("https://baconipsum.com/api/?type=all-meat&paras=200&format=html")
     .then(response => response.text())
-    .then(result => loremIpsum.innerHTML = result)
 const modal = document.getElementById("modal")
 function modalOn() {
     modal.style.display = "flex"

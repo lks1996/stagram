@@ -5,6 +5,11 @@ import clone_project.stagram.DTO.UserDTO;
 import clone_project.stagram.DTO.UserProfileImgDTO;
 import clone_project.stagram.SessionConst;
 import clone_project.stagram.service.UserService;
+import org.apache.commons.io.IOUtils;
+import org.apache.tomcat.jni.FileInfo;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -13,9 +18,14 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.net.URL;
 import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -132,17 +142,37 @@ public class UserController {
 
     @GetMapping("/profile")//프로필페이지 만들기!!!!!!!!!
     public String profile(@SessionAttribute(name =SessionConst.LOGIN_MEMBER, required = true) UserDTO loginMember,
-                          Model model, String id) throws Exception{
+                          Model model) throws Exception{
+
+//        String savePath = userService.hasProfileImg(loginMember.getUser_no());
+//
+//        System.out.println(savePath);
+
+        System.out.println("loginMember.getId()" + loginMember.getId());
+        String savePath = "/userProfileImg/ede66585-692d-4bb9-bd4a-cd90a35d6b8c.jpg";
+        model.addAttribute("profileImg", savePath);
         model.addAttribute("loginUser", loginMember);
         return "profile";
     }
 
+    // feed image 반환하기
+
+//    @GetMapping(value = "userProfileImg/{imagename}", produces = MediaType.IMAGE_JPEG_VALUE)
+//    public ResponseEntity<byte[]> userSearch(@PathVariable("imagename") String imagename) throws IOException {
+//        InputStream imageStream = new FileInputStream("C://User/user/Desktop/study_spring/stagram/stagram/src/main/resources/userProfileImg/" + imagename);
+//        byte[] imageByteArray = IOUtils.toByteArray(imageStream);
+//        imageStream.close();
+//        return new ResponseEntity<byte[]>(imageByteArray, HttpStatus.OK);
+//    }
+
+
 /** view 단에 있는 file name 과 @RequestParam의 file name이 일치해야 작동. **/
     @PostMapping("/upload/profile")
-    public String upload_profile_pic(@SessionAttribute(name =SessionConst.LOGIN_MEMBER, required = true) UserDTO loginMember, @RequestParam MultipartFile profileImg) throws Exception{
+    public String upload_profile_pic(@SessionAttribute(name =SessionConst.LOGIN_MEMBER, required = true) UserDTO loginMember, @RequestParam MultipartFile profileImg,
+                                     Model model) throws Exception{
 
 
-        String savePath = "C:\\Users\\user\\Desktop";
+        String savePath = "C:\\Users\\user\\Desktop\\study_spring\\stagram\\stagram\\src\\main\\resources\\userProfileImg";
 
         if( !profileImg.isEmpty() ) {   //---파일이 없으면 true를 리턴. false일 경우에만 처리함.
             String uuidForProfilePicName = UUID.randomUUID().toString()+".jpg";
@@ -165,7 +195,10 @@ public class UserController {
 
             userService.saveProfileImg(userProfileImgDTO);
 
-            return "redirect:/";
+            //프로필 사진 변경된 거 적용시키기, 앞으로 프로필 페이지 들어올 때마다 프로필 사진 유무 확인, 있으면 가져오기 로직 구성할 것.
+
+//            model.addAttribute("loginUser", loginMember);
+            return "/profile";
         }
 
 

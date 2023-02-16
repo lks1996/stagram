@@ -24,9 +24,11 @@ dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-web'
 	implementation 'org.springframework.boot:spring-boot-starter-validation'
 	implementation 'org.springframework.boot:spring-boot-starter-security'
-	compileOnly 'org.projectlombok:lombok'
+	implementation 'org.projectlombok:lombok'
 	annotationProcessor 'org.projectlombok:lombok'
-	runtimeOnly 'com.h2database:h2'
+	implementation 'mysql:mysql-connector-java:8.0.31'
+//	runtimeOnly 'com.h2database:h2'
+
 	implementation group: 'org.modelmapper', name: 'modelmapper', version: '2.4.2'
 	implementation 'commons-io:commons-io:2.11.0'    /* Apache commons-io */
 	implementation group: 'commons-fileupload', name: 'commons-fileupload', version: '1.4' /* Apache Commons FileUpload */

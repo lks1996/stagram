@@ -6,6 +6,7 @@ import clone_project.stagram.Entity.UserEntity;
 import clone_project.stagram.Entity.UserProfileImgEntity;
 import clone_project.stagram.Mapper;
 import clone_project.stagram.repository.JpaUserProfileImgRepository;
+import clone_project.stagram.repository.JpaUserProfileImgRepositoryCustom;
 import clone_project.stagram.repository.JpaUserRepository;
 import clone_project.stagram.repository.JpaUserRepositoryCustom;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -18,14 +19,17 @@ import java.util.Optional;
 @Service
 public class UserService {
 
-    private final JpaUserProfileImgRepository jpaUserProfileImgRepository;
+
     private final JpaUserRepository jpaUserRepository;
     private final JpaUserRepositoryCustom jpaUserRepositoryCustom;
+    private final JpaUserProfileImgRepository jpaUserProfileImgRepository;
+    private final JpaUserProfileImgRepositoryCustom jpaUserProfileImgRepositoryCustom;
     public UserService(JpaUserRepository jpaUserRepository, JpaUserRepositoryCustom jpaUserRepositoryCustom,
-                       JpaUserProfileImgRepository jpaUserProfileImgRepository) {
+                       JpaUserProfileImgRepository jpaUserProfileImgRepository, JpaUserProfileImgRepositoryCustom jpaUserProfileImgRepositoryCustom) {
         this.jpaUserRepository = jpaUserRepository;
         this.jpaUserRepositoryCustom = jpaUserRepositoryCustom;
         this.jpaUserProfileImgRepository = jpaUserProfileImgRepository;
+        this.jpaUserProfileImgRepositoryCustom = jpaUserProfileImgRepositoryCustom;
     }
 
 
@@ -109,13 +113,16 @@ public class UserService {
         jpaUserProfileImgRepository.save(userProfileImgEntity);
     }
 
-    public String hasProfileImg(Long user_no) {
-        String savePath = "C:\\Users\\user\\Desktop";
-        UserProfileImgEntity userProfileImgEntity = jpaUserProfileImgRepository.getReferenceById(user_no);
 
-        System.out.println("00000-"+userProfileImgEntity.getProfileImgName());
-        savePath += "\\" + userProfileImgEntity.getProfileImgName();
+/** 사용자가 프로필 사진을 등록했었는지 판별 **/
+    public UserProfileImgDTO hasProfileImg(Long user_no) {
+        Optional<UserProfileImgEntity> userProfileImgEntity = jpaUserProfileImgRepositoryCustom.findByUserNo(user_no);
 
-        return savePath;
+        if (userProfileImgEntity.isPresent()) {
+            UserProfileImgDTO userProfileImgDTO = Mapper.mapToUserProfileImgDTO(userProfileImgEntity);
+            return userProfileImgDTO;
+        }
+
+        return null;
     }
 }

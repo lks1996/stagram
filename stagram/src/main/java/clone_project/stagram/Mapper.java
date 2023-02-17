@@ -75,4 +75,16 @@ public class Mapper {
                 userProfileImgDTO.getUserNo());
         return userProfileImgEntity;
     }
+
+    public static UserProfileImgDTO mapToUserProfileImgDTO(Optional<UserProfileImgEntity> upiEntity) {
+        UserProfileImgDTO upiDTO = new UserProfileImgDTO();
+        upiDTO.setUserImgNo(upiEntity.get().getUserImgNo());
+        upiDTO.setProfileImgOriginName(upiEntity.get().getProfileImgOriginName());
+        upiDTO.setProfileImgName(upiEntity.get().getProfileImgName());
+        upiDTO.setProfileImgSize(upiEntity.get().getProfileImgSize());
+        upiDTO.setRegDate(upiEntity.get().getRegDate());
+        upiDTO.setUserNo(upiEntity.get().getUser_no());
+
+        return upiDTO;
+    }
 }

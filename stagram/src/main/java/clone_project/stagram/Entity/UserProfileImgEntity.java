@@ -1,10 +1,8 @@
 package clone_project.stagram.Entity;
 
-import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import org.springframework.web.multipart.MultipartFile;
 
 import javax.persistence.*;
 
@@ -32,7 +30,7 @@ public class UserProfileImgEntity {
     private String regDate;
 
     @Column(name = "user_no")
-    private Long UserNo;
+    private Long user_no;
 
 
     @Builder
@@ -43,6 +41,6 @@ public class UserProfileImgEntity {
         this.profileImgName = profileImgName;
         this.profileImgSize = profileImgSize;
         this.regDate = regDate;
-        this.UserNo = UserNo;
+        this.user_no = UserNo;
     }
 }

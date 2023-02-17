@@ -1,5 +1,7 @@
 package clone_project.stagram;
 
+import clone_project.stagram.repository.JpaUserProfileImgRepositoryCustom;
+import clone_project.stagram.repository.JpaUserProfileImgRepositoryCustomImpl;
 import clone_project.stagram.repository.JpaUserRepositoryCustom;
 import clone_project.stagram.repository.JpaUserRepositoryCustomImpl;
 import org.modelmapper.ModelMapper;
@@ -37,5 +39,10 @@ public class config {
     @Bean
     public JpaUserRepositoryCustom jpaUserRepositoryCustom() {
           return new JpaUserRepositoryCustomImpl(em);
+    }
+
+    @Bean
+    JpaUserProfileImgRepositoryCustom jpaUserProfileImgRepositoryCustom() {
+        return new JpaUserProfileImgRepositoryCustomImpl(em);
     }
 }

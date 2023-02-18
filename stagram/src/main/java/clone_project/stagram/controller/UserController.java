@@ -3,14 +3,11 @@ package clone_project.stagram.controller;
 import clone_project.stagram.DTO.LoginDTO;
 import clone_project.stagram.DTO.UserDTO;
 import clone_project.stagram.DTO.UserProfileImgDTO;
+import clone_project.stagram.SavePath;
 import clone_project.stagram.SessionConst;
 import clone_project.stagram.service.UserService;
 import org.apache.commons.io.IOUtils;
-import org.apache.tomcat.jni.FileInfo;
 
-import org.springframework.core.io.FileSystemResource;
-import org.springframework.core.io.Resource;
-import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -22,17 +19,12 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.net.URL;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -147,6 +139,15 @@ public class UserController {
         return result;
     }
 
+    @GetMapping("/logout")
+        public String logout(HttpServletRequest request){
+
+        HttpSession session = request.getSession();
+
+        session.invalidate();
+        return "redirect:/";
+    }
+
     @GetMapping("/profile")
     public String profile(@SessionAttribute(name =SessionConst.LOGIN_MEMBER, required = true) UserDTO loginMember,
                           Model model) throws Exception{
@@ -166,11 +167,10 @@ public class UserController {
 
         //등록된 프로필 사진이 없다면, default 이미지 경로 설정.
         if (userProfileImgDTO == null) {
-            profileImg = "c:\\Users\\user\\Desktop\\study_spring\\stagram\\stagram\\src\\main\\resources\\static\\images\\profile_frame.jpg";
+            profileImg = SavePath.USER_PROFILE_IMG_DEFAULT;
 
         } else {
-            String savedPath = "c:\\Users\\user\\Desktop\\study_spring\\stagram\\stagram\\src\\main\\resources\\userProfileImg";
-            profileImg = savedPath + "\\" + userProfileImgDTO.getProfileImgName();
+            profileImg = SavePath.USER_PROFILE_IMG_SAVE_PATH + "\\" + userProfileImgDTO.getProfileImgName();
         }
 
         InputStream imageStream = new FileInputStream(profileImg);
@@ -184,15 +184,13 @@ public class UserController {
 
 /** view 단에 있는 file name 과 @RequestParam의 file name이 일치해야 작동. **/
     @PostMapping("/upload/profile")
-    public String upload_profile_pic(@SessionAttribute(name =SessionConst.LOGIN_MEMBER, required = true) UserDTO loginMember, @RequestParam MultipartFile profileImg,
-                                     Model model) throws Exception{
+    public String upload_profile_pic(@SessionAttribute(name =SessionConst.LOGIN_MEMBER) UserDTO loginMember, @RequestParam MultipartFile profileImg) throws Exception{
 
 
-        String savePath = "C:\\Users\\user\\Desktop\\study_spring\\stagram\\stagram\\src\\main\\resources\\userProfileImg";
 
         if( !profileImg.isEmpty() ) {   //파일이 비어있지 않다면.
             String uuidForProfilePicName = UUID.randomUUID().toString()+".jpg";
-            File converFile = new File(savePath, uuidForProfilePicName);
+            File converFile = new File(SavePath.USER_PROFILE_IMG_SAVE_PATH, uuidForProfilePicName);
             profileImg.transferTo(converFile);  //--- 저장할 경로를 설정 해당 경로는 각자 원하는 위치로 설정하면 됩니다. 다만, 해당 경로에 접근할 수 있는 권한이 없으면 에러 발생
 
             UserProfileImgDTO userProfileImgDTO = new UserProfileImgDTO();
@@ -211,20 +209,36 @@ public class UserController {
 
             UserProfileImgDTO checkProfileImg = userService.hasProfileImg(loginMember.getUser_no());
 
-            //사용자가 프로필 사진이 있는지 조회 후 업다면, 업로드한 사진을 그냥 sava.
+            //사용자가 프로필 사진이 있는지 조회 후 없다면, 업로드한 사진을 그냥 save를 통한 insert.
             if (checkProfileImg == null) {
                 userService.saveProfileImg(userProfileImgDTO);
-            } else { //그렇지 않다면 즉, 이미 DB에 저장된 프로필 사진이 있다면 update.
+            } else { //그렇지 않다면 즉, 이미 DB에 저장된 프로필 사진이 있다면 save를 통한 update.
 
+                userProfileImgDTO.setUserImgNo(checkProfileImg.getUserImgNo());
+                userProfileImgDTO.setRegDate(whatTimeIsItNow());
+                userService.saveProfileImg(userProfileImgDTO);
             }
 
-
-//            model.addAttribute("loginUser", loginMember);
             return "redirect:/profile";
         }
 
 
         return "redirect:/";
+    }
+
+    @GetMapping("/delete/profileImg")
+    public String deleteProfileImg(@SessionAttribute(name =SessionConst.LOGIN_MEMBER) UserDTO loginMember) {
+        UserProfileImgDTO checkProfileImg = userService.hasProfileImg(loginMember.getUser_no());
+
+        //프로필 사진이 없는 사용자가 사진 삭제를 누를 경우,
+        if (checkProfileImg == null) {
+            return "redirect:/profile";
+        }
+
+        userService.deleteProfileImg(checkProfileImg);
+
+        return "redirect:/profile";
+
     }
 
 

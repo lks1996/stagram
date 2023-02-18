@@ -1,4 +1,4 @@
-package clone_project.stagram.repository;
+package clone_project.stagram.repository.userProfile;
 
 import clone_project.stagram.Entity.UserProfileImgEntity;
 

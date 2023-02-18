@@ -1,12 +1,13 @@
-package clone_project.stagram.repository;
+package clone_project.stagram.repository.userProfile;
 
 import clone_project.stagram.Entity.UserProfileImgEntity;
+import clone_project.stagram.repository.userProfile.JpaUserProfileImgRepositoryCustom;
 
 import javax.persistence.EntityManager;
 import java.util.List;
 import java.util.Optional;
 
-public class JpaUserProfileImgRepositoryCustomImpl implements JpaUserProfileImgRepositoryCustom{
+public class JpaUserProfileImgRepositoryCustomImpl implements JpaUserProfileImgRepositoryCustom {
 
     private final EntityManager em;
 

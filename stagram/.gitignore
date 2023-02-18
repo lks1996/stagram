@@ -8,6 +8,9 @@ build/
 application.properties
 images
 userProfileImg
+postImg
+SessionConst
+SavePath
 
 ### STS ###
 .apt_generated

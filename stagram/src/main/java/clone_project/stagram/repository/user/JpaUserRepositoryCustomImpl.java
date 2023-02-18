@@ -1,4 +1,4 @@
-package clone_project.stagram.repository;
+package clone_project.stagram.repository.user;
 
 import clone_project.stagram.Entity.UserEntity;
 
@@ -6,7 +6,7 @@ import javax.persistence.EntityManager;
 import java.util.List;
 import java.util.Optional;
 
-public class JpaUserRepositoryCustomImpl implements JpaUserRepositoryCustom{
+public class JpaUserRepositoryCustomImpl implements JpaUserRepositoryCustom {
 
     private final EntityManager em;
 

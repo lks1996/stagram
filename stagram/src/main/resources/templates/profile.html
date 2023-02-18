@@ -13,6 +13,52 @@
     <link rel="stylesheet" type="text/css" th:href="@{/css/profile.css}">
 </head>
 <body>
+
+
+<div class="side_menu">
+    <ul>
+        <div class="side_dock_logo">
+            <li><a class="home" href="/"><img src="/images/stagram.jpg" alt="stagram"></a></li>
+        </div>
+        <div class="side_docks">
+            <li>
+                <a href="#">
+                    <i class="fa-solid fa-house"></i>
+                    홈
+                </a>
+            </li>
+            <li>
+                <a href="#">
+                    <i class="fa-solid fa-magnifying-glass"></i>
+                    검색
+                </a>
+            </li>
+            <li>
+                <a href="#">
+                    <i class="fa-regular fa-heart"></i>
+                    알림
+                </a>
+            </li>
+            <li>
+                <a href="#">
+                    <i class="fa-regular fa-square-plus"></i>
+                    만들기
+                </a>
+            </li>
+            <li>
+                <div class="side_menu_profile">
+                    <a th:href="@{/profile(id = ${loginUser.id})}">
+                        <img class="pic" th:src="display" alt="마이페이지">
+                        프로필
+                    </a>
+                </div>
+
+            </li>
+        </div>
+    </ul>
+</div>
+
+
 <header>
 
     <div class="container">
@@ -35,7 +81,7 @@
 
                 <button class="btn profile-edit-btn">Edit Profile</button>
 
-                <button class="btn profile-settings-btn" aria-label="profile settings"><i class="fas fa-cog" aria-hidden="true"></i></button>
+                <button class="btn profile-settings-btn" id="btn-modal2" aria-label="profile settings"><i class="fas fa-cog" aria-hidden="true"></i></button>
 
             </div>
 
@@ -65,13 +111,6 @@
 
     </div>
     <!-- End of container -->
-
-
-
-
-
-
-
 </header>
 
 <main>
@@ -304,7 +343,9 @@
     </div>
     <!-- End of container -->
 
-    <div id="modal" class="modal-overlay">
+
+    <!-- Modal Windows-->
+    <div id="modal_for_profile_img" class="modal-overlay">
         <div class="modal-window">
             <div class="title">
                 <h3>프로필 사진 바꾸기</h3>
@@ -313,7 +354,7 @@
                 <button class="profile-upload-btn">
                     사진 업로드
                 </button>
-                <button class="profile-delete-btn">
+                <button class="profile-delete-btn" onclick = "location.href = '/delete/profileImg'" >
                     현재 사진 삭제
                 </button>
                 <button class="cancel-btn">
@@ -327,13 +368,25 @@
     </div>
 
 
+    <div id="modal_for_profile_setting" class="modal-overlay">
+        <div class="modal-window">
+            <div class="content">
+                <button class="logout-btn" onclick = "location.href = '/logout'" >
+                    로그아웃
+                </button>
+                <button class="cancel-btn2">
+                    취소
+                </button>
+            </div>
+        </div>
+    </div>
+
 </main>
 
 <script>
-const loremIpsum = document.getElementById("lorem-ipsum")
 fetch("https://baconipsum.com/api/?type=all-meat&paras=200&format=html")
     .then(response => response.text())
-const modal = document.getElementById("modal")
+const modal = document.getElementById("modal_for_profile_img")
 function modalOn() {
     modal.style.display = "flex"
 }
@@ -357,6 +410,41 @@ modal.addEventListener("click", e => {
         modalOff()
     }
 })
+
+
+
+
+
+<!--톱니바퀴(프로필 옆에)-->
+const modal2 = document.getElementById("modal_for_profile_setting")
+function modalOn2() {
+    modal2.style.display = "flex"
+}
+function isModalOn2() {
+    return modal2.style.display === "flex"
+}
+function modalOff2() {
+    modal2.style.display = "none"
+}
+const btnModal2 = document.getElementById("btn-modal2")
+btnModal2.addEventListener("click", e => {
+    modalOn2()
+})
+const closeBtn2 = modal2.querySelector(".cancel-btn2")
+closeBtn2.addEventListener("click", e => {
+    modalOff2()
+})
+modal2.addEventListener("click", e => {
+    const evTarget = e.target
+    if(evTarget.classList.contains("modal-overlay")) {
+        modalOff2()
+    }
+})
+
+
+
+
+
 
 
 $('.profile-upload-btn').click(function (e) {

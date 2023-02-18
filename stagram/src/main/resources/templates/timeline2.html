@@ -17,9 +17,9 @@
 <!-- navigation -->
 <nav>
     <div class="nav-container">
-        <div class="nav-1">
-            <a class="home" href="/"><img src="/images/stagram.jpg" alt="stagram"></a>
-        </div>
+<!--        <div class="nav-1">-->
+<!--            <a class="home" href="/"><img src="/images/stagram.jpg" alt="stagram"></a>-->
+<!--        </div>-->
         <input id="searchInput" type="search" class="input-search" placeholder="검색">
         <div class="nav-2">
             <a href="/">
@@ -35,11 +35,57 @@
                 <img src="https://s3.ap-northeast-2.amazonaws.com/cdn.wecode.co.kr/bearu/heart.png" alt="하트">
             </a>
             <a th:href="@{/profile(id = ${loginUser.id})}">
-                <img class="pic" src="images/profile_frame.jpg" alt="마이페이지">
+                <img class="pic" th:src="display" alt="마이페이지">
             </a>
         </div>
     </div>
 </nav>
+
+
+<div class="side_menu">
+    <ul>
+        <div class="side_dock_logo">
+            <li><a class="home" href="/"><img src="/images/stagram.jpg" alt="stagram"></a></li>
+        </div>
+        <div class="side_docks">
+            <li>
+                <a href="#">
+                    <i class="fa-solid fa-house"></i>
+                    홈
+                </a>
+            </li>
+            <li>
+                <a href="#">
+                    <i class="fa-solid fa-magnifying-glass"></i>
+                    검색
+                </a>
+            </li>
+            <li>
+                <a href="#">
+                    <i class="fa-regular fa-heart"></i>
+                    알림
+                </a>
+            </li>
+            <li>
+                <button id="post-btn-modal">
+                    <i class="fa-regular fa-square-plus"></i>
+                    만들기
+                </button>
+            </li>
+
+            <li>
+                <div class="side_menu_profile">
+                    <a th:href="@{/profile(id = ${loginUser.id})}">
+                        <img class="pic" th:src="display" alt="마이페이지">
+                        프로필
+                    </a>
+                </div>
+
+            </li>
+        </div>
+    </ul>
+</div>
+
 <!-- main -->
 <main>
     <div class="feeds">
@@ -114,7 +160,7 @@
                 <div class="icons-left">
                     <img class="icon-react" src="https://s3.ap-northeast-2.amazonaws.com/cdn.wecode.co.kr/bearu/heart.png" alt="하트">
                     <img class="icon-react" src="https://s3.ap-northeast-2.amazonaws.com/cdn.wecode.co.kr/bearu/comment.png" alt="말풍선">
-                    <img class="icon-react" src="img/dm.png" alt="DM">
+                    <img class="icon-react" src="images/dm.png" alt="DM">
                 </div>
                 <img class="icon-react" src="https://s3.ap-northeast-2.amazonaws.com/cdn.wecode.co.kr/bearu/bookmark.png" alt="북마크">
             </div>
@@ -151,8 +197,8 @@
     <!-- main-right -->
     <div class="main-right">
         <div class="myProfile">
-            <a href="#">
-                <img class="pic" src="images/profile_frame.jpg" alt="thisisyourhyung님의 프로필 사진">
+            <a th:href="@{/profile(id = ${loginUser.id})}">
+                <img class="pic" th:src="display" alt="${loginUser.name} 프로필 사진">
             </a>
             <div>
                 <a th:href="@{/profile(id = ${loginUser.id})}">
@@ -262,5 +308,49 @@
     </div>
 </main>
 
+<!-- Modal Windows-->
+<div id="modal_for_post" class="modal-overlay">
+    <div class="modal-window">
+        <div class="title">
+            <h3>새 게시물 만들기</h3>
+        </div>
+        <div class="content">
+            <div class="space">
+                <button class="select-img-btn">
+                    컴퓨터에서 선택
+                </button>
+            </div>
+
+        </div>
+        <form id="upload-profile-pic-form" action="/upload/profile" method="post" enctype="multipart/form-data">
+            <input type="file" id="profileImg" name="profileImg" style="display:none;" onchange="changeValue(this)">
+        </form>
+    </div>
+</div>
 </body>
+<script>
+fetch("https://baconipsum.com/api/?type=all-meat&paras=200&format=html")
+    .then(response => response.text())
+const modal = document.getElementById("modal_for_post")
+function modalOn() {
+    modal.style.display = "flex"
+}
+function isModalOn() {
+    return modal.style.display === "flex"
+}
+function modalOff() {
+    modal.style.display = "none"
+}
+const btnModal = document.getElementById("post-btn-modal")
+btnModal.addEventListener("click", e => {
+    modalOn()
+})
+
+modal.addEventListener("click", e => {
+    const evTarget = e.target
+    if(evTarget.classList.contains("modal-overlay")) {
+        modalOff()
+    }
+})
+</script>
 </html>

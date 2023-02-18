@@ -5,10 +5,10 @@ import clone_project.stagram.DTO.UserProfileImgDTO;
 import clone_project.stagram.Entity.UserEntity;
 import clone_project.stagram.Entity.UserProfileImgEntity;
 import clone_project.stagram.Mapper;
-import clone_project.stagram.repository.JpaUserProfileImgRepository;
-import clone_project.stagram.repository.JpaUserProfileImgRepositoryCustom;
-import clone_project.stagram.repository.JpaUserRepository;
-import clone_project.stagram.repository.JpaUserRepositoryCustom;
+import clone_project.stagram.repository.userProfile.JpaUserProfileImgRepository;
+import clone_project.stagram.repository.userProfile.JpaUserProfileImgRepositoryCustom;
+import clone_project.stagram.repository.user.JpaUserRepository;
+import clone_project.stagram.repository.user.JpaUserRepositoryCustom;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -124,5 +124,13 @@ public class UserService {
         }
 
         return null;
+    }
+
+
+    public void deleteProfileImg(UserProfileImgDTO upiDTO) {
+        UserProfileImgEntity upiEntity = Mapper.mapToUserProfileImgEntity(upiDTO);
+
+        jpaUserProfileImgRepository.delete(upiEntity);
+
     }
 }

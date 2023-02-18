@@ -11,7 +11,7 @@ public class UserProfileImgDTO {
 
     private String profileImgName;
 
-    private long profileImgSize;
+    private Long profileImgSize;
 
     private String regDate;
 

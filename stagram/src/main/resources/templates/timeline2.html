@@ -1,7 +1,11 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" xmlns:c="http://www.w3.org/1999/XSL/Transform">
 <script src="https://kit.fontawesome.com/8437d7db58.js" crossorigin="anonymous"></script>
-
+<script
+        src="https://code.jquery.com/jquery-3.6.1.min.js"
+        integrity="sha256-o88AwQnZB+VDvE9tvIXrMQaPlFFSUTR+nldQm1LuPXQ="
+        crossorigin="anonymous">
+</script>
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width">
@@ -312,18 +316,24 @@
 <div id="modal_for_post" class="modal-overlay">
     <div class="modal-window">
         <div class="title">
-            <h3>새 게시물 만들기</h3>
+            <div class="div_h3">
+                <h3>새 게시물 만들기</h3>
+            </div>
+            <div class="nextBtn_div">
+                <button id="nextBtn">다음</button>
+            </div>
         </div>
         <div class="content">
             <div class="space">
-                <button class="select-img-btn">
+                <img id="preview" style="display:none;"/>
+                <button class="select-img-btn" id="select-img-btn">
                     컴퓨터에서 선택
                 </button>
             </div>
-
+<!--사진 업로드하면 모달창에 사진 미리보기 해주고, 다음 넘어가기 버튼, 뒤로가기(이미지 삭제) 버튼 생성 할 것-->
         </div>
         <form id="upload-profile-pic-form" action="/upload/profile" method="post" enctype="multipart/form-data">
-            <input type="file" id="profileImg" name="profileImg" style="display:none;" onchange="changeValue(this)">
+            <input type="file" id="postImg" name="postImg" accept=".gif, .jpg, .png, .jpeg" style="display:none;" onchange="readURL(this)">
         </form>
     </div>
 </div>
@@ -331,17 +341,29 @@
 <script>
 fetch("https://baconipsum.com/api/?type=all-meat&paras=200&format=html")
     .then(response => response.text())
+
 const modal = document.getElementById("modal_for_post")
+const btnModal = document.getElementById("post-btn-modal")
+const btnSelectImg = document.getElementById("select-img-btn")
+const preview = document.getElementById("preview")
+const nextBtn = document.getElementById("nextBtn")
+
 function modalOn() {
     modal.style.display = "flex"
+    btnSelectImg.style.display = "flex"
 }
+
+function modalOff() {
+    modal.style.display = "none"
+    preview.src = "";
+    preview.style.display = "none"
+    nextBtn.style.display = "none"
+}
+
 function isModalOn() {
     return modal.style.display === "flex"
 }
-function modalOff() {
-    modal.style.display = "none"
-}
-const btnModal = document.getElementById("post-btn-modal")
+
 btnModal.addEventListener("click", e => {
     modalOn()
 })
@@ -352,5 +374,28 @@ modal.addEventListener("click", e => {
         modalOff()
     }
 })
+
+
+$('.select-img-btn').click(function (e) {
+    $('#postImg').click();
+});
+
+
+function readURL(input) {
+  if (input.files && input.files[0]) {
+    var reader = new FileReader();
+    reader.onload = function(e) {
+      document.getElementById('preview').src = e.target.result;
+    };
+    reader.readAsDataURL(input.files[0]);
+    preview.style.display = "flex";
+    btnSelectImg.style.display = "none";
+    nextBtn.style.display = "flex";
+  }
+ else {
+    preview.src = "";
+  }
+}
+
 </script>
 </html>

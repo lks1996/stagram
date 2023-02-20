@@ -314,39 +314,50 @@
 
 <!-- Modal Windows-->
 <div id="modal_for_post" class="modal-overlay">
-    <div class="modal-window">
+    <div id="modal_window" class="modal-window">
         <div class="title">
             <div class="div_h3">
                 <h3>새 게시물 만들기</h3>
             </div>
             <div class="nextBtn_div">
-                <button id="nextBtn">다음</button>
+                <button id="nextBtn" onclick="visibleContents()">다음</button>
+                <button id="shareBtn" style="display: none;" onclick="form_submit()">공유</button>
             </div>
         </div>
-        <div class="content">
-            <div class="space">
-                <img id="preview" style="display:none;"/>
-                <button class="select-img-btn" id="select-img-btn">
-                    컴퓨터에서 선택
-                </button>
+        <div class="data_space">
+            <div class="content">
+                <div class="space">
+                    <img id="preview" style="display:none;"/>
+                    <button class="select-img-btn" id="select-img-btn">
+                        컴퓨터에서 선택
+                    </button>
+                </div>
+                <!--사진 업로드하면 모달창에 사진 미리보기 해주고, 다음 넘어가기 버튼, 뒤로가기(이미지 삭제) 버튼 생성 할 것-->
             </div>
-<!--사진 업로드하면 모달창에 사진 미리보기 해주고, 다음 넘어가기 버튼, 뒤로가기(이미지 삭제) 버튼 생성 할 것-->
+            <div class="content_text">
+                <div class="text_space">
+                    <input type="text" id="postContents" name="postContents" style="display:none;" placeholder="문구 입력...">
+                </div>
+            </div>
         </div>
-        <form id="upload-profile-pic-form" action="/upload/profile" method="post" enctype="multipart/form-data">
+
+        <form id="upload-post-pic-form" action="/upload/post" method="post" enctype="multipart/form-data">
             <input type="file" id="postImg" name="postImg" accept=".gif, .jpg, .png, .jpeg" style="display:none;" onchange="readURL(this)">
+            <input type="text" id="postContentsInForm" name="postContentsInForm" style="display:none;">
         </form>
     </div>
 </div>
 </body>
 <script>
-fetch("https://baconipsum.com/api/?type=all-meat&paras=200&format=html")
-    .then(response => response.text())
-
 const modal = document.getElementById("modal_for_post")
+const modal_window = document.getElementById("modal_window")
 const btnModal = document.getElementById("post-btn-modal")
 const btnSelectImg = document.getElementById("select-img-btn")
 const preview = document.getElementById("preview")
 const nextBtn = document.getElementById("nextBtn")
+const shareBtn = document.getElementById("shareBtn")
+const postContents = document.getElementById("postContents")
+const postContentsInForm = document.getElementById('postContentsInForm')
 
 function modalOn() {
     modal.style.display = "flex"
@@ -358,6 +369,10 @@ function modalOff() {
     preview.src = "";
     preview.style.display = "none"
     nextBtn.style.display = "none"
+    modal_window.style.width = "";
+    shareBtn.style.display = "none";
+    postContents.style.display = "none";
+    postContentsInForm.value = "";
 }
 
 function isModalOn() {
@@ -385,7 +400,7 @@ function readURL(input) {
   if (input.files && input.files[0]) {
     var reader = new FileReader();
     reader.onload = function(e) {
-      document.getElementById('preview').src = e.target.result;
+      preview.src = e.target.result;
     };
     reader.readAsDataURL(input.files[0]);
     preview.style.display = "flex";
@@ -396,6 +411,22 @@ function readURL(input) {
     preview.src = "";
   }
 }
+
+function visibleContents(){
+modal_window.style.width = "900px";
+nextBtn.style.display = "none";
+shareBtn.style.display = "flex";
+postContents.style.display = "flex";
+
+}
+
+
+function form_submit(){
+    postContentsInForm.value = postContents.value;
+    document.getElementById('upload-post-pic-form').submit();
+
+}
+
 
 </script>
 </html>

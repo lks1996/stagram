@@ -1,7 +1,9 @@
 package clone_project.stagram;
 
+import clone_project.stagram.DTO.PostDTO;
 import clone_project.stagram.DTO.UserDTO;
 import clone_project.stagram.DTO.UserProfileImgDTO;
+import clone_project.stagram.Entity.PostEntity;
 import clone_project.stagram.Entity.UserEntity;
 import clone_project.stagram.Entity.UserProfileImgEntity;
 import org.modelmapper.ModelMapper;
@@ -86,5 +88,12 @@ public class Mapper {
         upiDTO.setUserNo(upiEntity.get().getUser_no());
 
         return upiDTO;
+    }
+
+    public static PostEntity mapToPostEntity(PostDTO postDTO) {
+        PostEntity postEntity = new PostEntity(postDTO.getPost_no(), postDTO.getContents(), postDTO.getPost_regDate(),
+                postDTO.getUser_no(), postDTO.getUser_id(), postDTO.getPostImgOriginName(), postDTO.getPostImgName(), postDTO.getPostImgSize());
+
+        return postEntity;
     }
 }

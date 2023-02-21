@@ -96,4 +96,26 @@ public class Mapper {
 
         return postEntity;
     }
+
+    public static PostDTO mapToPostDTO(Optional<PostEntity> postEntity) {
+        PostDTO postDTO = new PostDTO();
+        postDTO.setPost_no(postEntity.get().getPost_no());
+        postDTO.setContents(postEntity.get().getContents());
+        postDTO.setPost_regDate(postEntity.get().getPost_regDate());
+        postDTO.setUser_no(postEntity.get().getUser_no());
+        postDTO.setUser_id(postEntity.get().getUser_id());
+        postDTO.setPostImgOriginName(postEntity.get().getPostImgOriginName());
+        postDTO.setPostImgName(postEntity.get().getPostImgName());
+        postDTO.setPostImgSize(postEntity.get().getPostImgSize());
+
+        return postDTO;
+    }
+
+    public static List<PostDTO> ListMapToPostDTO(List<PostEntity> postEntities) {
+        List<PostDTO> postDTO = postEntities
+                .stream()
+                .map(post -> modelMapper.map(post, PostDTO.class))
+                .collect(Collectors.toList());
+        return postDTO;
+    }
 }

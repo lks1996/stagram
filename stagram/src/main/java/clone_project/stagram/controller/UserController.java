@@ -159,8 +159,8 @@ public class UserController {
     }
 
 
-    @GetMapping(value = "/display", produces = MediaType.IMAGE_JPEG_VALUE)
-    public ResponseEntity<byte[]> userSearch(@SessionAttribute(name =SessionConst.LOGIN_MEMBER) UserDTO loginMember) throws IOException {
+    @GetMapping(value = "/user/display", produces = MediaType.IMAGE_JPEG_VALUE)
+    public ResponseEntity<byte[]> userProfileDisplay(@SessionAttribute(name =SessionConst.LOGIN_MEMBER) UserDTO loginMember) throws IOException {
         String profileImg;
 
         UserProfileImgDTO userProfileImgDTO = userService.hasProfileImg(loginMember.getUser_no());

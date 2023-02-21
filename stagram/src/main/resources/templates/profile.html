@@ -48,7 +48,7 @@
             <li>
                 <div class="side_menu_profile">
                     <a th:href="@{/profile(id = ${loginUser.id})}">
-                        <img class="pic" th:src="display" alt="마이페이지">
+                        <img class="pic" th:src="@{/user/display}" alt="마이페이지">
                         프로필
                     </a>
                 </div>
@@ -68,7 +68,7 @@
             <div class="profile-image">
 
                 <button id="btn-modal">
-                    <img th:src="display" alt="" style="width: 150px; height: 150px;">
+                    <img th:src="@{/user/display}" alt="" style="width: 150px; height: 150px;">
 
                     <!--                    <img src="https://images.unsplash.com/photo-1513721032312-6a18a42c8763?w=152&h=152&fit=crop&crop=faces" alt="">-->
                 </button>

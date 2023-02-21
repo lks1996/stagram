@@ -39,7 +39,7 @@
                 <img src="https://s3.ap-northeast-2.amazonaws.com/cdn.wecode.co.kr/bearu/heart.png" alt="하트">
             </a>
             <a th:href="@{/profile(id = ${loginUser.id})}">
-                <img class="pic" th:src="display" alt="마이페이지">
+                <img class="pic" th:src="@{/user/display}" alt="마이페이지">
             </a>
         </div>
     </div>
@@ -80,7 +80,7 @@
             <li>
                 <div class="side_menu_profile">
                     <a th:href="@{/profile(id = ${loginUser.id})}">
-                        <img class="pic" th:src="display" alt="마이페이지">
+                        <img class="pic" th:src="@{/user/display}" alt="마이페이지">
                         프로필
                     </a>
                 </div>
@@ -94,71 +94,16 @@
 <main>
     <div class="feeds">
         <!-- article -->
-        <article>
+        <article th:each = "post: ${posts}">
             <header>
                 <div class="profile-of-article">
-                    <img class="img-profile pic" src="https://scontent-gmp1-1.cdninstagram.com/v/t51.2885-19/s320x320/28434316_190831908314778_1954023563480530944_n.jpg?_nc_ht=scontent-gmp1-1.cdninstagram.com&_nc_ohc=srwTEwYMC28AX8gftqw&oh=98c7bf39e441e622c9723ae487cd26a0&oe=5F68C630" alt="dlwlrma님의 프로필 사진">
-                    <span class="userID main-id point-span">dlwlrma</span>
+                    <img class="img-profile pic" th:src="@{/post/userProfileImgs(user_no = ${post.user_no})}" alt="thisisyourhyung님의 프로필 사진">
+                    <span class="userID main-id point-span"><td th:text="${post.user_id}"></td></span>
                 </div>
                 <img class="icon-react icon-more" src="https://s3.ap-northeast-2.amazonaws.com/cdn.wecode.co.kr/bearu/more.png" alt="more">
             </header>
             <div class="main-image">
-                <img src="images/sample.jpg" alt="dlwlrma님의 피드 사진" class="mainPic">
-            </div>
-            <div class="icons-react">
-                <div class="icons-left">
-                    <a href="#">
-                        <img class="icon-react" src="https://s3.ap-northeast-2.amazonaws.com/cdn.wecode.co.kr/bearu/heart.png" alt="하트">
-                    </a>
-                    <a href="#">
-                        <img class="icon-react" src="https://s3.ap-northeast-2.amazonaws.com/cdn.wecode.co.kr/bearu/comment.png" alt="말풍선">
-                    </a>
-                    <a href="#">
-                        <img class="icon-react" src="images/dm.png" alt="DM">
-                    </a>
-                </div>
-                <a href="#">
-                    <img class="icon-react" src="https://s3.ap-northeast-2.amazonaws.com/cdn.wecode.co.kr/bearu/bookmark.png" alt="북마크">
-                </a>
-            </div>
-            <!-- article text data -->
-            <div class="reaction">
-                <div class="liked-people">
-                    <img class="pic" src="https://scontent-gmp1-1.cdninstagram.com/v/t51.2885-19/s150x150/89296253_1521373131359783_504744616755462144_n.jpg?_nc_ht=scontent-gmp1-1.cdninstagram.com&_nc_ohc=_9raiaB11CAAX_u7RhK&oh=c162d17b1570f31f94a1a28e19167609&oe=5F6C7A90" alt="johnnyjsuh님의 프로필 사진">
-                    <p><span class="point-span">johnnyjsuh</span>님 <span class="point-span">외 2,412,751명</span>이 좋아합니다</p>
-                </div>
-                <div class="description">
-                    <p><span class="point-span userID">dlwlrma</span><span class="at-tag">@wkorea @gucci</span> 🌱</p>
-                </div>
-                <div class="comment-section">
-                    <ul class="comments">
-                        <li>
-                            <span><span class="point-span userID">postmalone</span>내가 입으면 더 잘어울릴 것 같아</span>
-                            <img class="comment-heart" src="https://s3.ap-northeast-2.amazonaws.com/cdn.wecode.co.kr/bearu/heart.png" alt="하트">
-                        </li>
-                        <!-- input 값 여기에 추가 -->
-                    </ul>
-                    <div class="time-log">
-                        <span>32분 전</span>
-                    </div>
-                </div>
-            </div>
-            <div class="hl"></div>
-            <div class="comment">
-                <input id="input-comment" class="input-comment" type="text" placeholder="댓글 달기..." >
-                <button type="submit" class="submit-comment" disabled>게시</button>
-            </div>
-        </article>
-        <article>
-            <header>
-                <div class="profile-of-article">
-                    <img class="img-profile pic" src="https://scontent-gmp1-1.cdninstagram.com/v/t51.2885-19/s150x150/71022783_513111249480681_2188078115513696256_n.jpg?_nc_ht=scontent-gmp1-1.cdninstagram.com&_nc_ohc=7Rl_bMO8TN4AX9C-AKS&oh=64741fc0f2635ebb63f94d5285798e08&oe=5F6A0524" alt="thisisyourhyung님의 프로필 사진">
-                    <span class="userID main-id point-span">thisisyourhyung</span>
-                </div>
-                <img class="icon-react icon-more" src="https://s3.ap-northeast-2.amazonaws.com/cdn.wecode.co.kr/bearu/more.png" alt="more">
-            </header>
-            <div class="main-image">
-                <img src="https://scontent-gmp1-1.cdninstagram.com/v/t51.2885-15/e35/s1080x1080/79434917_534650640475337_2021528862608628648_n.jpg?_nc_ht=scontent-gmp1-1.cdninstagram.com&_nc_cat=105&_nc_ohc=o9KdUxfdCisAX8rVvat&oh=bf1dab8ef73aca5ca6ad22b637d9b670&oe=5F6D5ABB" alt="thisisyourhyung님의 피드 사진" class="mainPic">
+                <img th:src="@{/post/display(postName = ${post.postImgName})}" alt="" class="mainPic">
             </div>
             <div class="icons-react">
                 <div class="icons-left">
@@ -175,7 +120,7 @@
                     <p><span class="point-span">_jeongjaehyun</span>님 <span class="point-span">외 4,612,203명</span>이 좋아합니다</p>
                 </div>
                 <div class="description">
-                    <p><span class="point-span userID">thisisyourhyung</span>코로나 언제 사라지나 ㅠㅠ 여행 가고 싶다~~</p>
+                    <p><span class="point-span userID"><td th:text="${post.user_id}"></td></span><td th:text="${post.contents}"></td></p>
                 </div>
                 <div class="comment-section">
                     <ul class="comments">
@@ -202,7 +147,7 @@
     <div class="main-right">
         <div class="myProfile">
             <a th:href="@{/profile(id = ${loginUser.id})}">
-                <img class="pic" th:src="display" alt="${loginUser.name} 프로필 사진">
+                <img class="pic" th:src="@{/user/display}" alt="${loginUser.name} 프로필 사진">
             </a>
             <div>
                 <a th:href="@{/profile(id = ${loginUser.id})}">

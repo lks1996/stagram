@@ -6,15 +6,13 @@ import clone_project.stagram.DTO.UserProfileImgDTO;
 import clone_project.stagram.SavePath;
 import clone_project.stagram.SessionConst;
 import clone_project.stagram.service.PostService;
+import clone_project.stagram.service.UserService;
 import org.apache.commons.io.IOUtils;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.SessionAttribute;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
@@ -30,10 +28,13 @@ import java.util.UUID;
 public class PostController {
 
     private final PostService postService;
+    private final UserService userService;
 
-    public PostController(PostService postService) {
+    public PostController(PostService postService, UserService userService) {
         this.postService = postService;
+        this.userService = userService;
     }
+
 
     @PostMapping("/upload/post")
     public String upload_profile_pic(@SessionAttribute(name =SessionConst.LOGIN_MEMBER) UserDTO loginMember, @RequestParam MultipartFile postImg, @RequestParam String postContentsInForm) throws Exception{
@@ -71,6 +72,50 @@ public class PostController {
 
         return "redirect:/";
     }
+
+    @GetMapping(value = "/post/display", produces = MediaType.IMAGE_JPEG_VALUE)
+    public ResponseEntity<byte[]> postDisplay(@SessionAttribute(name =SessionConst.LOGIN_MEMBER) UserDTO loginMember, String postName) throws IOException {
+        String profileImg;
+
+        PostDTO postDTO = postService.isValidPost(postName);
+
+        //등록된 프로필 사진이 없다면, default 이미지 경로 설정.
+        if (postDTO == null) {
+            profileImg = SavePath.USER_PROFILE_IMG_DEFAULT;
+
+        } else {
+            profileImg = SavePath.POST_IMG_SAVE_PATH + "\\" + postName;
+        }
+
+        InputStream imageStream = new FileInputStream(profileImg);
+
+        byte[] imageByteArray = IOUtils.toByteArray(imageStream);
+        imageStream.close();
+        return new ResponseEntity<byte[]>(imageByteArray, HttpStatus.OK);
+    }
+
+    @GetMapping(value = "/post/userProfileImgs", produces = MediaType.IMAGE_JPEG_VALUE)
+    public ResponseEntity<byte[]> postDisplayProfileImgs(@SessionAttribute(name =SessionConst.LOGIN_MEMBER) UserDTO loginMember, Long user_no) throws IOException {
+        String profileImg;
+
+        UserProfileImgDTO upiDTO = userService.hasProfileImg(user_no);
+
+        //등록된 프로필 사진이 없다면, default 이미지 경로 설정.
+        if (upiDTO == null) {
+            profileImg = SavePath.USER_PROFILE_IMG_DEFAULT;
+
+        } else {
+            profileImg = SavePath.USER_PROFILE_IMG_SAVE_PATH + "\\" + upiDTO.getProfileImgName();
+        }
+
+        InputStream imageStream = new FileInputStream(profileImg);
+
+        byte[] imageByteArray = IOUtils.toByteArray(imageStream);
+        imageStream.close();
+        return new ResponseEntity<byte[]>(imageByteArray, HttpStatus.OK);
+    }
+
+
     public String whatTimeIsItNow() {
         Date timestamp = new Timestamp(System.currentTimeMillis());
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");

@@ -15,10 +15,18 @@ public class JpaPostRepositoryCustomImpl implements JpaPostRepositoryCustom {
     }
 
     @Override
-    public Optional<PostEntity> findByUserNoAndPostImgName(String postImgName) {
+    public Optional<PostEntity> findByPostImgName(String postImgName) {
         List<PostEntity> postEntity = em.createQuery("select m from PostEntity m where m.postImgName =:postImgName", PostEntity.class)
                 .setParameter("postImgName", postImgName)
                 .getResultList();
         return postEntity.stream().findAny();
+    }
+
+    @Override
+    public List<PostEntity> findAllUserById(String user_id) {
+        List<PostEntity> postEntity = em.createQuery("select m from PostEntity m where m.user_id =:user_id", PostEntity.class)
+                .setParameter("user_id", user_id)
+                .getResultList();
+        return postEntity;
     }
 }

@@ -1,10 +1,13 @@
 package clone_project.stagram.controller;
 
 import clone_project.stagram.DTO.LoginDTO;
+import clone_project.stagram.DTO.PostDTO;
 import clone_project.stagram.DTO.UserDTO;
 import clone_project.stagram.DTO.UserProfileImgDTO;
+import clone_project.stagram.Entity.PostEntity;
 import clone_project.stagram.SavePath;
 import clone_project.stagram.SessionConst;
+import clone_project.stagram.service.PostService;
 import clone_project.stagram.service.UserService;
 import org.apache.commons.io.IOUtils;
 
@@ -29,14 +32,17 @@ import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 @Controller
 public class UserController {
     private final UserService userService;
+    private final PostService postService;
 
-    public UserController(UserService userService) {
+    public UserController(UserService userService, PostService postService) {
         this.userService = userService;
+        this.postService = postService;
     }
 
     @GetMapping("/list")
@@ -149,21 +155,52 @@ public class UserController {
     }
 
     @GetMapping("/profile")
-    public String profile(@SessionAttribute(name =SessionConst.LOGIN_MEMBER, required = true) UserDTO loginMember,
-                          Model model) throws Exception{
+    public String profile(@SessionAttribute(name =SessionConst.LOGIN_MEMBER) UserDTO loginMember,
+                          String id, Model model) throws Exception{
 
-        System.out.println("loginMember.getId()" + loginMember.getId());
+        System.out.println("넘어온 id = " + id);
 
-        model.addAttribute("loginUser", loginMember);
-        return "profile";
+        /** 본인 프로필로 들어가려는것이라면. **/
+        if (loginMember.getId() == id) {
+            System.out.println("loginMember.getId()" + loginMember.getId());
+
+            List<PostDTO> userPosts = postService.getOwnPost(loginMember.getId());
+
+            model.addAttribute("profileChangeBtn_disabled", "true");
+            model.addAttribute("user", loginMember);
+            model.addAttribute("userPosts", userPosts);
+            model.addAttribute("loginUser", loginMember);
+            return "profile";
+        }
+
+        /** 다른 유저의 프로필로 들어가려는것이라면. **/
+        UserDTO nowUser = userService.isDuplicateId(id);
+        if (!(nowUser == null)) {
+            List<PostDTO> userPosts = postService.getOwnPost(id);
+            model.addAttribute("profileChangeBtn_disabled", "false");
+            model.addAttribute("user", nowUser);
+            model.addAttribute("userPosts", userPosts);
+            model.addAttribute("loginUser", loginMember);
+            return "profile";
+        }
+
+        return "/";
     }
 
 
     @GetMapping(value = "/user/display", produces = MediaType.IMAGE_JPEG_VALUE)
-    public ResponseEntity<byte[]> userProfileDisplay(@SessionAttribute(name =SessionConst.LOGIN_MEMBER) UserDTO loginMember) throws IOException {
+    public ResponseEntity<byte[]> userProfileDisplay(@SessionAttribute(name =SessionConst.LOGIN_MEMBER) UserDTO loginMember,
+                                                     String id) throws IOException {
         String profileImg;
+        UserProfileImgDTO userProfileImgDTO;
+        UserDTO nowUser = userService.isDuplicateId(id);
 
-        UserProfileImgDTO userProfileImgDTO = userService.hasProfileImg(loginMember.getUser_no());
+        if (loginMember.getId() == id) {
+            userProfileImgDTO = userService.hasProfileImg(loginMember.getUser_no());
+        } else {
+            userProfileImgDTO = userService.hasProfileImg(nowUser.getUser_no());
+        }
+
 
         //등록된 프로필 사진이 없다면, default 이미지 경로 설정.
         if (userProfileImgDTO == null) {

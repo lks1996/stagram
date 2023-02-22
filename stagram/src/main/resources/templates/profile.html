@@ -40,15 +40,15 @@
                 </a>
             </li>
             <li>
-                <a href="#">
+                <button id="post-btn-modal">
                     <i class="fa-regular fa-square-plus"></i>
                     만들기
-                </a>
+                </button>
             </li>
             <li>
                 <div class="side_menu_profile">
                     <a th:href="@{/profile(id = ${loginUser.id})}">
-                        <img class="pic" th:src="@{/user/display}" alt="마이페이지">
+                        <img class="pic" th:src="@{/user/display(id = ${loginUser.id})}" alt="마이페이지">
                         프로필
                     </a>
                 </div>
@@ -67,8 +67,8 @@
 
             <div class="profile-image">
 
-                <button id="btn-modal">
-                    <img th:src="@{/user/display}" alt="" style="width: 150px; height: 150px;">
+                <button id="btn-modal" th:disabled="${profileChangeBtn_disabled}">
+                    <img th:src="@{/user/display(id = ${user.id})}" alt="" style="width: 150px; height: 150px;">
 
                     <!--                    <img src="https://images.unsplash.com/photo-1513721032312-6a18a42c8763?w=152&h=152&fit=crop&crop=faces" alt="">-->
                 </button>
@@ -77,7 +77,7 @@
 
             <div class="profile-user-settings">
 
-                <h1 class="profile-user-name"><td th:text="${loginUser.id}"></h1>
+                <h1 class="profile-user-name"><td th:text="${user.id}"></h1>
 
                 <button class="btn profile-edit-btn">Edit Profile</button>
 
@@ -99,9 +99,9 @@
 
                 <p>
                     <span class="profile-real-name">
-                        <td th:text="${loginUser.name}"></td>
+                        <td th:text="${user.name}"></td>
                     </span><br>
-                    <td th:text="${loginUser.bio}">
+                    <td th:text="${user.bio}">
                 </p>
 
             </div>
@@ -119,215 +119,14 @@
 
         <div class="gallery">
 
-            <div class="gallery-item" tabindex="0">
+            <div class="gallery-item" tabindex="0" th:each = "userPost: ${userPosts}">
 
-                <img src="https://images.unsplash.com/photo-1511765224389-37f0e77cf0eb?w=500&h=500&fit=crop" class="gallery-image" alt="">
+                <img th:src="@{/post/display(postName = ${userPost.postImgName})}" class="gallery-image" alt="">
 
                 <div class="gallery-item-info">
 
                     <ul>
                         <li class="gallery-item-likes"><span class="visually-hidden">Likes:</span><i class="fas fa-heart" aria-hidden="true"></i> 56</li>
-                        <li class="gallery-item-comments"><span class="visually-hidden">Comments:</span><i class="fas fa-comment" aria-hidden="true"></i> 2</li>
-                    </ul>
-
-                </div>
-
-            </div>
-
-            <div class="gallery-item" tabindex="0">
-
-                <img src="https://images.unsplash.com/photo-1497445462247-4330a224fdb1?w=500&h=500&fit=crop" class="gallery-image" alt="">
-
-                <div class="gallery-item-info">
-
-                    <ul>
-                        <li class="gallery-item-likes"><span class="visually-hidden">Likes:</span><i class="fas fa-heart" aria-hidden="true"></i> 89</li>
-                        <li class="gallery-item-comments"><span class="visually-hidden">Comments:</span><i class="fas fa-comment" aria-hidden="true"></i> 5</li>
-                    </ul>
-
-                </div>
-
-            </div>
-
-            <div class="gallery-item" tabindex="0">
-
-                <img src="https://images.unsplash.com/photo-1426604966848-d7adac402bff?w=500&h=500&fit=crop" class="gallery-image" alt="">
-
-                <div class="gallery-item-type">
-
-                    <span class="visually-hidden">Gallery</span><i class="fas fa-clone" aria-hidden="true"></i>
-
-                </div>
-
-                <div class="gallery-item-info">
-
-                    <ul>
-                        <li class="gallery-item-likes"><span class="visually-hidden">Likes:</span><i class="fas fa-heart" aria-hidden="true"></i> 42</li>
-                        <li class="gallery-item-comments"><span class="visually-hidden">Comments:</span><i class="fas fa-comment" aria-hidden="true"></i> 1</li>
-                    </ul>
-
-                </div>
-
-            </div>
-
-            <div class="gallery-item" tabindex="0">
-
-                <img src="https://images.unsplash.com/photo-1502630859934-b3b41d18206c?w=500&h=500&fit=crop" class="gallery-image" alt="">
-
-                <div class="gallery-item-type">
-
-                    <span class="visually-hidden">Video</span><i class="fas fa-video" aria-hidden="true"></i>
-
-                </div>
-
-                <div class="gallery-item-info">
-
-                    <ul>
-                        <li class="gallery-item-likes"><span class="visually-hidden">Likes:</span><i class="fas fa-heart" aria-hidden="true"></i> 38</li>
-                        <li class="gallery-item-comments"><span class="visually-hidden">Comments:</span><i class="fas fa-comment" aria-hidden="true"></i> 0</li>
-                    </ul>
-
-                </div>
-
-            </div>
-
-            <div class="gallery-item" tabindex="0">
-
-                <img src="https://images.unsplash.com/photo-1498471731312-b6d2b8280c61?w=500&h=500&fit=crop" class="gallery-image" alt="">
-
-                <div class="gallery-item-type">
-
-                    <span class="visually-hidden">Gallery</span><i class="fas fa-clone" aria-hidden="true"></i>
-
-                </div>
-
-                <div class="gallery-item-info">
-
-                    <ul>
-                        <li class="gallery-item-likes"><span class="visually-hidden">Likes:</span><i class="fas fa-heart" aria-hidden="true"></i> 47</li>
-                        <li class="gallery-item-comments"><span class="visually-hidden">Comments:</span><i class="fas fa-comment" aria-hidden="true"></i> 1</li>
-                    </ul>
-
-                </div>
-
-            </div>
-
-            <div class="gallery-item" tabindex="0">
-
-                <img src="https://images.unsplash.com/photo-1515023115689-589c33041d3c?w=500&h=500&fit=crop" class="gallery-image" alt="">
-
-                <div class="gallery-item-info">
-
-                    <ul>
-                        <li class="gallery-item-likes"><span class="visually-hidden">Likes:</span><i class="fas fa-heart" aria-hidden="true"></i> 94</li>
-                        <li class="gallery-item-comments"><span class="visually-hidden">Comments:</span><i class="fas fa-comment" aria-hidden="true"></i> 3</li>
-                    </ul>
-
-                </div>
-
-            </div>
-
-            <div class="gallery-item" tabindex="0">
-
-                <img src="https://images.unsplash.com/photo-1504214208698-ea1916a2195a?w=500&h=500&fit=crop" class="gallery-image" alt="">
-
-                <div class="gallery-item-type">
-
-                    <span class="visually-hidden">Gallery</span><i class="fas fa-clone" aria-hidden="true"></i>
-
-                </div>
-
-                <div class="gallery-item-info">
-
-                    <ul>
-                        <li class="gallery-item-likes"><span class="visually-hidden">Likes:</span><i class="fas fa-heart" aria-hidden="true"></i> 52</li>
-                        <li class="gallery-item-comments"><span class="visually-hidden">Comments:</span><i class="fas fa-comment" aria-hidden="true"></i> 4</li>
-                    </ul>
-
-                </div>
-
-            </div>
-
-            <div class="gallery-item" tabindex="0">
-
-                <img src="https://images.unsplash.com/photo-1515814472071-4d632dbc5d4a?w=500&h=500&fit=crop" class="gallery-image" alt="">
-
-                <div class="gallery-item-info">
-
-                    <ul>
-                        <li class="gallery-item-likes"><span class="visually-hidden">Likes:</span><i class="fas fa-heart" aria-hidden="true"></i> 66</li>
-                        <li class="gallery-item-comments"><span class="visually-hidden">Comments:</span><i class="fas fa-comment" aria-hidden="true"></i> 2</li>
-                    </ul>
-
-                </div>
-
-            </div>
-
-            <div class="gallery-item" tabindex="0">
-
-                <img src="https://images.unsplash.com/photo-1511407397940-d57f68e81203?w=500&h=500&fit=crop" class="gallery-image" alt="">
-
-                <div class="gallery-item-type">
-
-                    <span class="visually-hidden">Gallery</span><i class="fas fa-clone" aria-hidden="true"></i>
-
-                </div>
-
-                <div class="gallery-item-info">
-
-                    <ul>
-                        <li class="gallery-item-likes"><span class="visually-hidden">Likes:</span><i class="fas fa-heart" aria-hidden="true"></i> 45</li>
-                        <li class="gallery-item-comments"><span class="visually-hidden">Comments:</span><i class="fas fa-comment" aria-hidden="true"></i> 0</li>
-                    </ul>
-
-                </div>
-
-            </div>
-
-            <div class="gallery-item" tabindex="0">
-
-                <img src="https://images.unsplash.com/photo-1518481612222-68bbe828ecd1?w=500&h=500&fit=crop" class="gallery-image" alt="">
-
-                <div class="gallery-item-info">
-
-                    <ul>
-                        <li class="gallery-item-likes"><span class="visually-hidden">Likes:</span><i class="fas fa-heart" aria-hidden="true"></i> 34</li>
-                        <li class="gallery-item-comments"><span class="visually-hidden">Comments:</span><i class="fas fa-comment" aria-hidden="true"></i> 1</li>
-                    </ul>
-
-                </div>
-
-            </div>
-
-            <div class="gallery-item" tabindex="0">
-
-                <img src="https://images.unsplash.com/photo-1505058707965-09a4469a87e4?w=500&h=500&fit=crop" class="gallery-image" alt="">
-
-                <div class="gallery-item-info">
-
-                    <ul>
-                        <li class="gallery-item-likes"><span class="visually-hidden">Likes:</span><i class="fas fa-heart" aria-hidden="true"></i> 41</li>
-                        <li class="gallery-item-comments"><span class="visually-hidden">Comments:</span><i class="fas fa-comment" aria-hidden="true"></i> 0</li>
-                    </ul>
-
-                </div>
-
-            </div>
-
-            <div class="gallery-item" tabindex="0">
-
-                <img src="https://images.unsplash.com/photo-1423012373122-fff0a5d28cc9?w=500&h=500&fit=crop" class="gallery-image" alt="">
-
-                <div class="gallery-item-type">
-
-                    <span class="visually-hidden">Video</span><i class="fas fa-video" aria-hidden="true"></i>
-
-                </div>
-
-                <div class="gallery-item-info">
-
-                    <ul>
-                        <li class="gallery-item-likes"><span class="visually-hidden">Likes:</span><i class="fas fa-heart" aria-hidden="true"></i> 30</li>
                         <li class="gallery-item-comments"><span class="visually-hidden">Comments:</span><i class="fas fa-comment" aria-hidden="true"></i> 2</li>
                     </ul>
 
@@ -342,68 +141,104 @@
 
     </div>
     <!-- End of container -->
-
-
-    <!-- Modal Windows-->
-    <div id="modal_for_profile_img" class="modal-overlay">
-        <div class="modal-window">
-            <div class="title">
-                <h3>프로필 사진 바꾸기</h3>
-            </div>
-            <div class="content">
-                <button class="profile-upload-btn">
-                    사진 업로드
-                </button>
-                <button class="profile-delete-btn" onclick = "location.href = '/delete/profileImg'" >
-                    현재 사진 삭제
-                </button>
-                <button class="cancel-btn">
-                    취소
-                </button>
-            </div>
-            <form id="upload-profile-pic-form" action="/upload/profile" method="post" enctype="multipart/form-data">
-                <input type="file" id="profileImg" name="profileImg" style="display:none;" onchange="changeValue(this)">
-            </form>
-        </div>
-    </div>
-
-
-    <div id="modal_for_profile_setting" class="modal-overlay">
-        <div class="modal-window">
-            <div class="content">
-                <button class="logout-btn" onclick = "location.href = '/logout'" >
-                    로그아웃
-                </button>
-                <button class="cancel-btn2">
-                    취소
-                </button>
-            </div>
-        </div>
-    </div>
-
 </main>
 
+<!-- Modal Windows-->
+<div id="modal_for_profile_img" class="modal-overlay">
+    <div class="modal-window">
+        <div class="title">
+            <h3>프로필 사진 바꾸기</h3>
+        </div>
+        <div class="content">
+            <button class="profile-upload-btn">
+                사진 업로드
+            </button>
+            <button class="profile-delete-btn" onclick = "location.href = '/delete/profileImg'" >
+                현재 사진 삭제
+            </button>
+            <button class="cancel-btn">
+                취소
+            </button>
+        </div>
+        <form id="upload-profile-pic-form" action="/upload/profile" method="post" enctype="multipart/form-data">
+            <input type="file" id="profileImg" name="profileImg" style="display:none;" onchange="changeValue(this)">
+        </form>
+    </div>
+</div>
+
+
+<div id="modal_for_profile_setting" class="modal-overlay">
+    <div class="modal-window">
+        <div class="content">
+            <button class="logout-btn" onclick = "location.href = '/logout'" >
+                로그아웃
+            </button>
+            <button class="cancel-btn2">
+                취소
+            </button>
+        </div>
+    </div>
+</div>
+
+
+<div id="modal_for_post" class="modal-overlay">
+    <div id="modal_window" class="modal-window">
+        <div class="title">
+            <div class="div_h3">
+                <h3>새 게시물 만들기</h3>
+            </div>
+            <div class="nextBtn_div">
+                <button id="nextBtn" onclick="visibleContents()">다음</button>
+                <button id="shareBtn" style="display: none;" onclick="form_submit()">공유</button>
+            </div>
+        </div>
+        <div class="data_space">
+            <div class="content">
+                <div class="space">
+                    <img id="preview" style="display:none;"/>
+                    <button class="select-img-btn" id="select-img-btn">
+                        컴퓨터에서 선택
+                    </button>
+                </div>
+            </div>
+            <div class="content_text">
+                <div class="text_space">
+                    <input type="text" id="postContents" name="postContents" style="display:none;" placeholder="문구 입력...">
+                </div>
+            </div>
+        </div>
+        <form id="upload-post-pic-form" action="/upload/post" method="post" enctype="multipart/form-data">
+            <input type="file" id="postImg" name="postImg" accept=".gif, .jpg, .png, .jpeg" style="display:none;" onchange="readURL(this)">
+            <input type="text" id="postContentsInForm" name="postContentsInForm" style="display:none;">
+        </form>
+    </div>
+</div>
+
 <script>
-fetch("https://baconipsum.com/api/?type=all-meat&paras=200&format=html")
-    .then(response => response.text())
 const modal = document.getElementById("modal_for_profile_img")
+const btnModal = document.getElementById("btn-modal")
+
 function modalOn() {
     modal.style.display = "flex"
 }
+
 function isModalOn() {
     return modal.style.display === "flex"
 }
+
 function modalOff() {
     modal.style.display = "none"
 }
-const btnModal = document.getElementById("btn-modal")
+
 btnModal.addEventListener("click", e => {
     modalOn()
 })
+
 const closeBtn = modal.querySelector(".cancel-btn")
 closeBtn.addEventListener("click", e => {
     modalOff()
 })
+
 modal.addEventListener("click", e => {
     const evTarget = e.target
     if(evTarget.classList.contains("modal-overlay")) {
@@ -414,38 +249,37 @@ modal.addEventListener("click", e => {
 
 
 
-
 <!--톱니바퀴(프로필 옆에)-->
 const modal2 = document.getElementById("modal_for_profile_setting")
+const btnModal2 = document.getElementById("btn-modal2")
+const closeBtn2 = modal2.querySelector(".cancel-btn2")
+
 function modalOn2() {
     modal2.style.display = "flex"
 }
+
 function isModalOn2() {
     return modal2.style.display === "flex"
 }
+
 function modalOff2() {
     modal2.style.display = "none"
 }
-const btnModal2 = document.getElementById("btn-modal2")
+
 btnModal2.addEventListener("click", e => {
     modalOn2()
 })
-const closeBtn2 = modal2.querySelector(".cancel-btn2")
+
 closeBtn2.addEventListener("click", e => {
     modalOff2()
 })
+
 modal2.addEventListener("click", e => {
     const evTarget = e.target
     if(evTarget.classList.contains("modal-overlay")) {
         modalOff2()
     }
 })
-
-
-
-
-
-
 
 $('.profile-upload-btn').click(function (e) {
     $('#profileImg').click();
@@ -456,7 +290,85 @@ function changeValue(obj){
     document.getElementById('upload-profile-pic-form').submit();
 }
 
+const modal3 = document.getElementById("modal_for_post")
+const modal_window = document.getElementById("modal_window")
+const btnModal3 = document.getElementById("post-btn-modal")
+const btnSelectImg = document.getElementById("select-img-btn")
+const preview = document.getElementById("preview")
+const nextBtn = document.getElementById("nextBtn")
+const shareBtn = document.getElementById("shareBtn")
+const postContents = document.getElementById("postContents")
+const postContentsInForm = document.getElementById('postContentsInForm')
 
-    </script>
+function modal3On() {
+    modal3.style.display = "flex"
+    btnSelectImg.style.display = "flex"
+}
+
+function modal3Off() {
+    modal3.style.display = "none"
+    preview.src = "";
+    preview.style.display = "none"
+    nextBtn.style.display = "none"
+    modal_window.style.width = "";
+    shareBtn.style.display = "none";
+    postContents.style.display = "none";
+    postContentsInForm.value = "";
+}
+
+function isModal3On() {
+    return modal3.style.display === "flex"
+}
+
+btnModal3.addEventListener("click", e => {
+    modal3On()
+})
+
+modal3.addEventListener("click", e => {
+    const evTarget = e.target
+    if(evTarget.classList.contains("modal-overlay")) {
+        modal3Off()
+    }
+})
+
+
+$('.select-img-btn').click(function (e) {
+    $('#postImg').click();
+});
+
+
+function readURL(input) {
+  if (input.files && input.files[0]) {
+    var reader = new FileReader();
+    reader.onload = function(e) {
+      preview.src = e.target.result;
+    };
+    reader.readAsDataURL(input.files[0]);
+    preview.style.display = "flex";
+    btnSelectImg.style.display = "none";
+    nextBtn.style.display = "flex";
+  }
+ else {
+    preview.src = "";
+  }
+}
+
+function visibleContents(){
+    modal_window.style.width = "900px";
+    nextBtn.style.display = "none";
+    shareBtn.style.display = "flex";
+    postContents.style.display = "flex";
+}
+
+
+function form_submit(){
+    postContentsInForm.value = postContents.value;
+    document.getElementById('upload-post-pic-form').submit();
+
+}
+
+
+
+</script>
 </body>
 </html>

@@ -94,26 +94,27 @@ public class PostController {
         return new ResponseEntity<byte[]>(imageByteArray, HttpStatus.OK);
     }
 
-    @GetMapping(value = "/post/userProfileImgs", produces = MediaType.IMAGE_JPEG_VALUE)
-    public ResponseEntity<byte[]> postDisplayProfileImgs(@SessionAttribute(name =SessionConst.LOGIN_MEMBER) UserDTO loginMember, Long user_no) throws IOException {
-        String profileImg;
+//    @GetMapping(value = "/post/userProfileImgs", produces = MediaType.IMAGE_JPEG_VALUE)
+//    public ResponseEntity<byte[]> postDisplayProfileImgs(@SessionAttribute(name =SessionConst.LOGIN_MEMBER) UserDTO loginMember, Long user_no) throws IOException {
+//        String profileImg;
+//
+//        UserProfileImgDTO upiDTO = userService.hasProfileImg(user_no);
+//
+//        //등록된 프로필 사진이 없다면, default 이미지 경로 설정.
+//        if (upiDTO == null) {
+//            profileImg = SavePath.USER_PROFILE_IMG_DEFAULT;
+//
+//        } else {
+//            profileImg = SavePath.USER_PROFILE_IMG_SAVE_PATH + "\\" + upiDTO.getProfileImgName();
+//        }
+//
+//        InputStream imageStream = new FileInputStream(profileImg);
+//
+//        byte[] imageByteArray = IOUtils.toByteArray(imageStream);
+//        imageStream.close();
+//        return new ResponseEntity<byte[]>(imageByteArray, HttpStatus.OK);
+//    }
 
-        UserProfileImgDTO upiDTO = userService.hasProfileImg(user_no);
-
-        //등록된 프로필 사진이 없다면, default 이미지 경로 설정.
-        if (upiDTO == null) {
-            profileImg = SavePath.USER_PROFILE_IMG_DEFAULT;
-
-        } else {
-            profileImg = SavePath.USER_PROFILE_IMG_SAVE_PATH + "\\" + upiDTO.getProfileImgName();
-        }
-
-        InputStream imageStream = new FileInputStream(profileImg);
-
-        byte[] imageByteArray = IOUtils.toByteArray(imageStream);
-        imageStream.close();
-        return new ResponseEntity<byte[]>(imageByteArray, HttpStatus.OK);
-    }
 
 
     public String whatTimeIsItNow() {

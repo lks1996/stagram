@@ -27,7 +27,7 @@ public class PostService {
     }
 
     public PostDTO isValidPost(String postImgName) {
-        Optional<PostEntity> postEntity = jpaPostRepositoryCustom.findByUserNoAndPostImgName(postImgName);
+        Optional<PostEntity> postEntity = jpaPostRepositoryCustom.findByPostImgName(postImgName);
 
         if (postEntity.isPresent()) {
             PostDTO postDTO = Mapper.mapToPostDTO(postEntity);
@@ -44,4 +44,10 @@ public class PostService {
         return postDTOS;
     }
 
+    public List<PostDTO> getOwnPost(String user_id) {
+        List<PostEntity> postEntities = jpaPostRepositoryCustom.findAllUserById(user_id);
+        List<PostDTO> postDTOS = Mapper.ListMapToPostDTO(postEntities);
+
+        return postDTOS;
+    }
 }

@@ -39,7 +39,7 @@ public class HomeController {
 
         System.out.println("세션 아이디 : " + loginMember.getId());
 
-        // 쿠키에 대응되는 멤버 있는지 확인
+        // 세션에 대응되는 멤버 있는지 확인
         UserDTO validUser = userService.isDuplicateId(loginMember.getId());
 
         if (validUser == null) {

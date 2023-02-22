@@ -39,7 +39,7 @@
                 <img src="https://s3.ap-northeast-2.amazonaws.com/cdn.wecode.co.kr/bearu/heart.png" alt="하트">
             </a>
             <a th:href="@{/profile(id = ${loginUser.id})}">
-                <img class="pic" th:src="@{/user/display}" alt="마이페이지">
+                <img class="pic" th:src="@{/user/display(id = ${loginUser.id})}" alt="마이페이지">
             </a>
         </div>
     </div>
@@ -80,7 +80,7 @@
             <li>
                 <div class="side_menu_profile">
                     <a th:href="@{/profile(id = ${loginUser.id})}">
-                        <img class="pic" th:src="@{/user/display}" alt="마이페이지">
+                        <img class="pic" th:src="@{/user/display(id = ${loginUser.id})}" alt="마이페이지">
                         프로필
                     </a>
                 </div>
@@ -97,8 +97,8 @@
         <article th:each = "post: ${posts}">
             <header>
                 <div class="profile-of-article">
-                    <img class="img-profile pic" th:src="@{/post/userProfileImgs(user_no = ${post.user_no})}" alt="thisisyourhyung님의 프로필 사진">
-                    <span class="userID main-id point-span"><td th:text="${post.user_id}"></td></span>
+                    <img class="img-profile pic" th:src="@{/user/display(id = ${post.user_id})}" alt="thisisyourhyung님의 프로필 사진">
+                    <span class="userID main-id point-span"><a th:href="@{/profile(id = ${post.user_id})}"><td th:text="${post.user_id}"></td></a></span>
                 </div>
                 <img class="icon-react icon-more" src="https://s3.ap-northeast-2.amazonaws.com/cdn.wecode.co.kr/bearu/more.png" alt="more">
             </header>
@@ -147,7 +147,7 @@
     <div class="main-right">
         <div class="myProfile">
             <a th:href="@{/profile(id = ${loginUser.id})}">
-                <img class="pic" th:src="@{/user/display}" alt="${loginUser.name} 프로필 사진">
+                <img class="pic" th:src="@{/user/display(id = ${loginUser.id})}" alt="${loginUser.name} 프로필 사진">
             </a>
             <div>
                 <a th:href="@{/profile(id = ${loginUser.id})}">

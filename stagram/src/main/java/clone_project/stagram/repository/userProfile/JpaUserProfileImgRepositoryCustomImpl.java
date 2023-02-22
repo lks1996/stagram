@@ -22,4 +22,5 @@ public class JpaUserProfileImgRepositoryCustomImpl implements JpaUserProfileImgR
                 .getResultList();
         return userProfileImgEntities.stream().findAny();
     }
+
 }

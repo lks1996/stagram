@@ -2,7 +2,6 @@ package clone_project.stagram.controller;
 
 import clone_project.stagram.DTO.PostDTO;
 import clone_project.stagram.DTO.UserDTO;
-import clone_project.stagram.DTO.UserProfileImgDTO;
 import clone_project.stagram.SavePath;
 import clone_project.stagram.SessionConst;
 import clone_project.stagram.service.PostService;
@@ -93,29 +92,6 @@ public class PostController {
         imageStream.close();
         return new ResponseEntity<byte[]>(imageByteArray, HttpStatus.OK);
     }
-
-//    @GetMapping(value = "/post/userProfileImgs", produces = MediaType.IMAGE_JPEG_VALUE)
-//    public ResponseEntity<byte[]> postDisplayProfileImgs(@SessionAttribute(name =SessionConst.LOGIN_MEMBER) UserDTO loginMember, Long user_no) throws IOException {
-//        String profileImg;
-//
-//        UserProfileImgDTO upiDTO = userService.hasProfileImg(user_no);
-//
-//        //등록된 프로필 사진이 없다면, default 이미지 경로 설정.
-//        if (upiDTO == null) {
-//            profileImg = SavePath.USER_PROFILE_IMG_DEFAULT;
-//
-//        } else {
-//            profileImg = SavePath.USER_PROFILE_IMG_SAVE_PATH + "\\" + upiDTO.getProfileImgName();
-//        }
-//
-//        InputStream imageStream = new FileInputStream(profileImg);
-//
-//        byte[] imageByteArray = IOUtils.toByteArray(imageStream);
-//        imageStream.close();
-//        return new ResponseEntity<byte[]>(imageByteArray, HttpStatus.OK);
-//    }
-
-
 
     public String whatTimeIsItNow() {
         Date timestamp = new Timestamp(System.currentTimeMillis());

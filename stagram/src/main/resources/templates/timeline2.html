@@ -21,9 +21,6 @@
 <!-- navigation -->
 <nav>
     <div class="nav-container">
-<!--        <div class="nav-1">-->
-<!--            <a class="home" href="/"><img src="/images/stagram.jpg" alt="stagram"></a>-->
-<!--        </div>-->
         <input id="searchInput" type="search" class="input-search" placeholder="검색">
         <div class="nav-2">
             <a href="/">
@@ -45,51 +42,9 @@
     </div>
 </nav>
 
-
-<div class="side_menu">
-    <ul>
-        <div class="side_dock_logo">
-            <li><a class="home" href="/"><img src="/images/stagram.jpg" alt="stagram"></a></li>
-        </div>
-        <div class="side_docks">
-            <li>
-                <a href="#">
-                    <i class="fa-solid fa-house"></i>
-                    홈
-                </a>
-            </li>
-            <li>
-                <a href="#">
-                    <i class="fa-solid fa-magnifying-glass"></i>
-                    검색
-                </a>
-            </li>
-            <li>
-                <a href="#">
-                    <i class="fa-regular fa-heart"></i>
-                    알림
-                </a>
-            </li>
-            <li>
-                <button id="post-btn-modal">
-                    <i class="fa-regular fa-square-plus"></i>
-                    만들기
-                </button>
-            </li>
-
-            <li>
-                <div class="side_menu_profile">
-                    <a th:href="@{/profile(id = ${loginUser.id})}">
-                        <img class="pic" th:src="@{/user/display(id = ${loginUser.id})}" alt="마이페이지">
-                        프로필
-                    </a>
-                </div>
-
-            </li>
-        </div>
-    </ul>
+<!-- side menu -->
+<div class="side_menu" th:replace="~{/fragment/sideMenu :: sideMenuFragment}">
 </div>
-
 <!-- main -->
 <main>
     <div class="feeds">

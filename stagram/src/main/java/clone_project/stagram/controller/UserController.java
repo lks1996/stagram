@@ -159,15 +159,20 @@ public class UserController {
                           String id, Model model) throws Exception{
 
         System.out.println("넘어온 id = " + id);
+        System.out.println("세션id = " + loginMember.getId());
+        System.out.println("loginMember.getId().equals(id)"+loginMember.getId().equals(id));
 
         /** 본인 프로필로 들어가려는것이라면. **/
-        if (loginMember.getId() == id) {
+        if (loginMember.getId().equals(id)) {
             System.out.println("loginMember.getId()" + loginMember.getId());
 
             List<PostDTO> userPosts = postService.getOwnPost(loginMember.getId());
 
-            model.addAttribute("profileChangeBtn_disabled", "true");
+            model.addAttribute("profileChangeBtn_disabled", false);
+            model.addAttribute("hiddenProfileEditBtn", false);
+            model.addAttribute("hiddenFollowBtn", true);
             model.addAttribute("user", loginMember);
+            model.addAttribute("postCount", userPosts.stream().count());
             model.addAttribute("userPosts", userPosts);
             model.addAttribute("loginUser", loginMember);
             return "profile";
@@ -177,14 +182,18 @@ public class UserController {
         UserDTO nowUser = userService.isDuplicateId(id);
         if (!(nowUser == null)) {
             List<PostDTO> userPosts = postService.getOwnPost(id);
-            model.addAttribute("profileChangeBtn_disabled", "false");
+
+            model.addAttribute("profileChangeBtn_disabled", true);
+            model.addAttribute("hiddenProfileEditBtn", true);
+            model.addAttribute("hiddenFollowBtn", false);
             model.addAttribute("user", nowUser);
+            model.addAttribute("postCount", userPosts.stream().count());
             model.addAttribute("userPosts", userPosts);
             model.addAttribute("loginUser", loginMember);
             return "profile";
         }
 
-        return "/";
+        return "/logout";
     }
 
 
@@ -256,7 +265,7 @@ public class UserController {
                 userService.saveProfileImg(userProfileImgDTO);
             }
 
-            return "redirect:/profile";
+            return "redirect:/profile?id=" + loginMember.getId();
         }
 
 
@@ -269,16 +278,21 @@ public class UserController {
 
         //프로필 사진이 없는 사용자가 사진 삭제를 누를 경우,
         if (checkProfileImg == null) {
-            return "redirect:/profile";
+            return "redirect:/profile?id=" + loginMember.getId();
         }
 
         userService.deleteProfileImg(checkProfileImg);
 
-        return "redirect:/profile";
+        return "redirect:/profile?id=" + loginMember.getId();
 
     }
 
 
+    @GetMapping("/user/edit")
+    public String profileUpdate(@SessionAttribute(name = SessionConst.LOGIN_MEMBER) UserDTO loginMember, Model model) {
+        model.addAttribute("loginUser", loginMember);
+        return "profileEdit";
+    }
 
 
     public String whatTimeIsItNow() {

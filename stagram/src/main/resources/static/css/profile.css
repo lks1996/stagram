@@ -204,15 +204,31 @@ height: 30px;
 .profile-edit-btn {
     font-size: 1.4rem;
     line-height: 1.8;
-    border: 0.1rem solid #dbdbdb;
+    border: none;
     border-radius: 0.3rem;
     padding: 0 2.4rem;
     margin-left: 2rem;
+    cursor: pointer;
+}
+
+.follow-btn {
+    font-size: 1.4rem;
+    line-height: 1.8;
+    border: none;
+    border-radius: 0.3rem;
+    padding: 0 2.4rem;
+    margin-left: 2rem;
+    cursor: pointer;
+    background-color: #4d90fe;
+    color: white;
+    border-radius: 8px;
 }
 
 .profile-settings-btn {
     font-size: 2rem;
     margin-left: 1rem;
+    border: none;
+    padding: 0;
 }
 
 .profile-stats {
@@ -240,7 +256,8 @@ height: 30px;
 
 .profile-real-name,
 .profile-stat-count,
-.profile-edit-btn {
+.profile-edit-btn,
+.follow-btn{
     font-weight: 600;
 }
 
@@ -301,8 +318,8 @@ height: 30px;
 }
 
 .gallery-image {
-    width: 100%;
-    height: 100%;
+    width: 250px;
+    height: 250px;
     object-fit: cover;
 }
 
@@ -354,14 +371,14 @@ height: 30px;
         font-size: 2.2rem;
     }
 
-    .profile-edit-btn {
+    .profile-edit-btn, .follow-btn {
         order: 1;
         padding: 0;
         text-align: center;
         margin-top: 1rem;
     }
 
-    .profile-edit-btn {
+    .profile-edit-btn, .follow-btn {
         margin-left: 0;
     }
 
@@ -372,7 +389,8 @@ height: 30px;
 
     .profile-edit-btn,
     .profile-bio,
-    .profile-stats {
+    .profile-stats,
+    .follow-btn {
         flex-basis: 100%;
     }
 
@@ -462,6 +480,7 @@ Remove or comment-out the code block below to see how the browser will fall-back
         }
 
         .profile-edit-btn,
+        .follow-btn,
         .profile-stats,
         .profile-bio {
             grid-column: 1 / -1;
@@ -469,6 +488,7 @@ Remove or comment-out the code block below to see how the browser will fall-back
 
         .profile-user-settings,
         .profile-edit-btn,
+        .follow-btn,
         .profile-settings-btn,
         .profile-bio,
         .profile-stats {

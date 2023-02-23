@@ -13,51 +13,9 @@
     <link rel="stylesheet" type="text/css" th:href="@{/css/profile.css}">
 </head>
 <body>
-
-
-<div class="side_menu">
-    <ul>
-        <div class="side_dock_logo">
-            <li><a class="home" href="/"><img src="/images/stagram.jpg" alt="stagram"></a></li>
-        </div>
-        <div class="side_docks">
-            <li>
-                <a href="#">
-                    <i class="fa-solid fa-house"></i>
-                    홈
-                </a>
-            </li>
-            <li>
-                <a href="#">
-                    <i class="fa-solid fa-magnifying-glass"></i>
-                    검색
-                </a>
-            </li>
-            <li>
-                <a href="#">
-                    <i class="fa-regular fa-heart"></i>
-                    알림
-                </a>
-            </li>
-            <li>
-                <button id="post-btn-modal">
-                    <i class="fa-regular fa-square-plus"></i>
-                    만들기
-                </button>
-            </li>
-            <li>
-                <div class="side_menu_profile">
-                    <a th:href="@{/profile(id = ${loginUser.id})}">
-                        <img class="pic" th:src="@{/user/display(id = ${loginUser.id})}" alt="마이페이지">
-                        프로필
-                    </a>
-                </div>
-
-            </li>
-        </div>
-    </ul>
+<!-- side menu -->
+<div class="side_menu" th:replace="~{/fragment/sideMenu :: sideMenuFragment}">
 </div>
-
 
 <header>
 
@@ -68,9 +26,8 @@
             <div class="profile-image">
 
                 <button id="btn-modal" th:disabled="${profileChangeBtn_disabled}">
-                    <img th:src="@{/user/display(id = ${user.id})}" alt="" style="width: 150px; height: 150px;">
 
-                    <!--                    <img src="https://images.unsplash.com/photo-1513721032312-6a18a42c8763?w=152&h=152&fit=crop&crop=faces" alt="">-->
+                    <img th:src="@{/user/display(id = ${user.id})}" alt="" style="width: 150px; height: 150px;">
                 </button>
 
             </div>
@@ -79,16 +36,17 @@
 
                 <h1 class="profile-user-name"><td th:text="${user.id}"></h1>
 
-                <button class="btn profile-edit-btn">Edit Profile</button>
+                <button class="profile-edit-btn" th:hidden="${hiddenProfileEditBtn}">Edit Profile</button>
+                <button class="follow-btn" th:hidden="${hiddenFollowBtn}">Follow</button>
 
-                <button class="btn profile-settings-btn" id="btn-modal2" aria-label="profile settings"><i class="fas fa-cog" aria-hidden="true"></i></button>
+                <button class="profile-settings-btn" id="btn-modal2" th:hidden="${hiddenProfileEditBtn}" aria-label="profile settings"><i class="fas fa-cog" aria-hidden="true"></i></button>
 
             </div>
 
             <div class="profile-stats">
 
                 <ul>
-                    <li><span class="profile-stat-count">164</span> posts</li>
+                    <li><span class="profile-stat-count"><td th:text="${postCount}"></span> posts</li>
                     <li><span class="profile-stat-count">188</span> followers</li>
                     <li><span class="profile-stat-count">206</span> following</li>
                 </ul>
@@ -119,7 +77,7 @@
 
         <div class="gallery">
 
-            <div class="gallery-item" tabindex="0" th:each = "userPost: ${userPosts}">
+            <div class="gallery-item" tabindex="0" th:each = "userPost: ${userPosts}" style="width: 250px; height: 250px;">
 
                 <img th:src="@{/post/display(postName = ${userPost.postImgName})}" class="gallery-image" alt="">
 
@@ -245,6 +203,11 @@ modal.addEventListener("click", e => {
         modalOff()
     }
 })
+
+
+
+
+
 
 
 

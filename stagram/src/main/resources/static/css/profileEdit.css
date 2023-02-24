@@ -29,34 +29,86 @@ button {
 
 /*로그인 섹션*/
 .login {
-  width: 100%;
-  max-width: 935px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
+    margin: 30px auto 0;
+    max-width: 935px;
+    border: 1px solid #c7c7c7;
+    border-radius: 3px;
+    display: flex;
+    flex-direction: row;
+    flex-grow: 1;
+    justify-content: stretch;
+    overflow: hidden;
+    width: 100%;
+    margin-bottom: 30px;
+}
+
+.side_bar{
+    background-color: white;
+    height: -webkit-fill-available;
+    width: 200px;
+}
+
+.side_bar ul{
+    display: flex;
+    flex-basis: 236px;
+    flex-direction: column;
+    flex-grow: 0;
+    flex-shrink: 0;
+    list-style: none;
+    padding-left: 20px;
+    padding-top: 30px;
+}
+
+.side_bar a{
+    display: flex;
+    height: 45px;
+    width: 150px;
+    color: black;
+    background-color: transparent;
+    line-height: 20px;
+    padding-left: 0;
+    padding-top: 0;
+    padding-right: 0;
+    margin-top: 0;
+    margin-bottom: 0;
+    margin-right: 0;
+    border-right-width: 0;
+    border-bottom-width: 0;
+    border-bottom-style: solid;
+    touch-action: manipulation;
+    text-decoration: none;
+    flex-direction: column;
+    outline-style: none;
+    align-items: stretch;
+    text-align: inherit;
+    position: relative;
 }
 
 /*로그인폼과 가입하기를 감싸는 컨테이너*/
 .login__form__container {
-  width: 350px;
-  height: 100%;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
+    align-items: stretch;
+    display: flex;
+    flex: 1 1 400px;
+    flex-direction: column;
+    margin: 0;
+    min-width: 50px;
+    padding: 0;
+    position: relative;
+    vertical-align: baseline;
 }
 
 /*로그인폼, 가입하기 박스 디자인*/
 .login__form {
-  padding: 10px 0 20px;
-  text-align: center;
-  border: 1px solid rgba(var(--b6a, 219, 219, 219), 1);
-  background-color: #fff;
-  justify-content: stretch;
-  display: flex;
-  overflow: hidden;
-  flex-grow: 1;
-  margin: 30px auto 0;
+    text-align: center;
+    border-left: 1px solid #c7c7c7;
+    background-color: #fff;
+    justify-content: stretch;
+    display: flex;
+    overflow: hidden;
+    flex-grow: 1;
 }
+
+
 
 /*로고이미지를 담을 블록요소*/
 .login__form h1 {
@@ -88,42 +140,70 @@ button {
 }
 
 /*로그인 인풋태그*/
-.login__input input {
-  width: 100%;
-  height: 38px;
-  padding: 9px 0 7px 8px;
-  border: 1px solid rgba(var(--ca6, 219, 219, 219), 1);
-  border-radius: 3px;
-  margin-bottom: 6px;
-}
-
-.div_email, .div_id {
-    flex-direction: column;
-    margin-bottom: 8px;
-    /* width: 270px; */
+.div_input_outer {
+    flex-basis: 355px;
+    flex-direction: row;
+    padding-right: 60px;
+    align-items: stretch;
+    border: 0;
     display: flex;
+    flex-grow: 1;
+    flex-shrink: 0;
     justify-content: flex-start;
+    margin: 0;
+    padding: 0;
+    position: relative;
+    vertical-align: baseline;
 }
 
-.div_email input, #password, #name , #id {
+.div_input_inner{
+    width: 100%;
+    max-width: 355px;
+    flex: 0 0 auto;
+    display: inline-block;
+    position: relative;
+}
+
+.div_input_inner_for_bio{
+    justify-content: flex-start;
+    flex-direction: row;
+    align-items: stretch;
+    display: flex;
+    width: 100%;
+    max-width: 355px;
+    flex: 0 0 auto;
+    position: relative;
+}
+
+.div_input_inner_for_bio textarea {
+    width:100%;
+    font-size: 14px;
+    background: transparent;
+    border: 1px solid #c7c7c7;
+    border-radius: 3px;
+    -webkit-appearance: none;
+    height: 110px;
+    flex: 0 1 355px;
+    padding: 6px 10px;
+    resize: vertical;
+}
+
+.login__input input{
+    background: transparent;
+    border: 1px solid #c7c7c7;
+    border-radius: 3px;
+    height: 35px;
+    padding: 0 10px;
+    width: 100%;
+    -webkit-appearance: none;
+
+}
+
+#password, #name , #id {
     width: 100%;
     padding: 0px 10px;
     font-size: 14px;
     -webkit-appearance: none;
-}
-
-/*로그인 버튼*/
-.login__input button {
-  border: 0;
-  outline: 0;
-  width: 100%;
-  height: 30px;
-  background-color: #accbdf;
-  color: #fff;
-  margin-top: 15px;
-  font-weight: 700;
-  border-radius: 3px;
-  transition: background 0.5s;
 }
 
 
@@ -256,45 +336,134 @@ height: 30px;
 
 
 
-.div_email {
+.div_name,
+.div_id,
+.div_bio {
   position: relative;
   width: 270px;
+  flex-direction: row;
+  margin-bottom: 8px;
+  display: flex;
+  justify-content: flex-start;
 }
 
-.div_email input {
+.aside_name, .aside_id, .aside_bio{
+    padding-left: 32px;
+    padding-right: 32px;
+    text-align: right;
+    flex: 0 0 150px;
+    font-weight: 600;
+    line-height: 18px;
+    margin-top: 6px;
+}
+
+.login__input label{
+    vertical-align: baseline;
+}
+
+.div_name input,
+.div_id input,
+.div_bio input {
   width: 100%;
   padding: 10px 12px;
   font-size: 14px;
 }
 
-.div_email span {
-  position : absolute;
-  width: 17px;
-  top: 10px;
-  right: 12px;
-  margin: 0;
+.explanation_outer{
+    width: 100%;
+    max-width: 355px;
+    margin-top: 10px;
+    margin-bottom: 20px;
+    justify-content: flex-start;
+    flex-direction: column;
+    align-items: stretch;
+    display: flex;
+    position: relative;
+    font-size: 12px;
 }
 
-.div_id {
-  position: relative;
-  width: 270px;
+.explanation_inner{
+    text-align: start;
+    display: block;
+    font-weight: lighter;
+    color: #aaa;
+    margin: -2px 0 -3px;
 }
 
-.div_id input {
-  width: 100%;
-  padding: 10px 12px;
-  font-size: 14px;
+
+.bottom_part{
+    flex-direction: row;
+    display: flex;
+    justify-content: flex-start;
+    margin-bottom: 16px;
 }
 
-.div_id span {
-  position : absolute;
-  width: 17px;
-  top: 10px;
-  right: 12px;
-  margin: 0;
+.btn_part_of_form_outer{
+    flex-basis: 355px;
+    flex-direction: row;
+    padding-right: 60px;
+    align-items: stretch;
+    border: 0;
+    display: flex;
+    flex-grow: 1;
+    flex-shrink: 0;
+    justify-content: flex-start;
+    position: relative;
+    vertical-align: baseline;
 }
 
-.join_btn{
-  cursor: default;
+.btn_part_of_form{
+    align-items: center;
+    border: 0;
+    display: flex;
+    flex-direction: row;
+    flex-shrink: 0;
+    margin-top: 16px;
+    position: relative;
+    vertical-align: baseline;
 }
 
+
+.submit_btn{
+    border: none;
+    border-radius: 8px;
+    position: relative;
+    text-align: center;
+    background: none;
+    background-color: #0095f6;
+    cursor: pointer;
+    display: block;
+    padding: 7px 16px;
+    pointer-events: auto;
+    text-overflow: ellipsis;
+    width: 70px;
+    color: #fff;
+    font-weight: 700;
+}
+
+.delete_member{
+    margin-left: 235px;
+    align-items: flex-start;
+    display: flex;
+    flex-direction: column;
+    flex-shrink: 0;
+    margin-right: 4px;
+    position: relative;
+    vertical-align: baseline;
+}
+
+
+.delete_member_btn{
+    width: 100%;
+    border: 0;
+    color: #0095f6;
+    display: inline-block;
+    position: relative;
+    text-align: center;
+    background: none;
+    cursor: pointer;
+    font-weight: bolder;
+    pointer-events: auto;
+    text-overflow: ellipsis;
+    -webkit-user-select: none;
+}

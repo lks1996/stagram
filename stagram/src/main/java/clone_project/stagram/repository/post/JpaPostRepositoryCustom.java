@@ -9,5 +9,5 @@ public interface JpaPostRepositoryCustom {
 
     Optional<PostEntity> findByPostImgName(String postImgName);
 
-    List<PostEntity> findAllUserById(String user_id);
+    List<PostEntity> findAllUserById(Long user_no);
 }

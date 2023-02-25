@@ -102,7 +102,7 @@ public class Mapper {
         postDTO.setPost_no(postEntity.get().getPost_no());
         postDTO.setContents(postEntity.get().getContents());
         postDTO.setPost_regDate(postEntity.get().getPost_regDate());
-        postDTO.setUser_no(postEntity.get().getUser_no());
+//        postDTO.setUser_no(postEntity.get().getUser_no());
         postDTO.setUser_id(postEntity.get().getUser_id());
         postDTO.setPostImgOriginName(postEntity.get().getPostImgOriginName());
         postDTO.setPostImgName(postEntity.get().getPostImgName());

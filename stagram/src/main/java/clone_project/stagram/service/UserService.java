@@ -77,6 +77,11 @@ public class UserService {
         jpaUserRepository.save(userEntity);
     }
 
+    public void updateProfile(UserDTO updatedUserDTO) {
+        UserEntity updatedUserEntity = Mapper.mapToEntity(updatedUserDTO);
+        jpaUserRepository.save(updatedUserEntity);
+    }
+
 
     public UserDTO login(String idOrEmail) {
         //전달 받은 데이터가 이메일이면,

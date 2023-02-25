@@ -36,7 +36,8 @@ public class PostController {
 
 
     @PostMapping("/upload/post")
-    public String upload_profile_pic(@SessionAttribute(name =SessionConst.LOGIN_MEMBER) UserDTO loginMember, @RequestParam MultipartFile postImg, @RequestParam String postContentsInForm) throws Exception{
+    public String upload_profile_pic(@SessionAttribute(name =SessionConst.LOGIN_MEMBER) UserDTO loginMember, @RequestParam MultipartFile postImg,
+                                     @RequestParam String postContentsInForm) throws Exception{
 
         if( !postImg.isEmpty() ) {   //파일이 비어있지 않다면.
             String uuidForProfilePicName = UUID.randomUUID().toString()+".jpg";

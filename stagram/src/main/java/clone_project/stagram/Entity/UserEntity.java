@@ -4,6 +4,8 @@ import lombok.*;
 import org.apache.catalina.User;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @NoArgsConstructor(access = AccessLevel.PROTECTED) //기본 생성자를 만들어줌
@@ -27,6 +29,9 @@ public class UserEntity {
     @Column(name = "regDate")
     private String regDate;
 
+    @OneToMany(mappedBy = "userEntity", fetch = FetchType.EAGER)
+    private List<PostEntity> postEntityList = new ArrayList<>();
+
     @Builder
     public UserEntity(Long user_no, String email, String id,
                       String password, String name, String bio,
@@ -39,5 +44,10 @@ public class UserEntity {
         this.bio = bio;
         this.regDate = regDate;
     }
+
+//    public void addPost(PostEntity postEntity){
+//        this.postEntityList.add(postEntity);
+//        postEntity.updateUserEntity(this);
+//    }
 }
 

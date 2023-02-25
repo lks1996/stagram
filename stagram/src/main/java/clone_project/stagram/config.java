@@ -52,4 +52,6 @@ public class config {
     JpaPostRepositoryCustom jpaPostRepositoryCustom(){
         return new JpaPostRepositoryCustomImpl(em);
     }
+
+
 }

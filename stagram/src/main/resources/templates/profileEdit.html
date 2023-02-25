@@ -22,10 +22,14 @@
             <div class="side_bar">
                 <ul class="side_bar_ul">
                     <li>
-                        <a href="#">프로필 편집</a>
+                        <a href="#" class="a_edit_profile">
+                            <div>프로필 편집</div>
+                        </a>
                     </li>
                     <li>
-                        <a href="#">비밀번호 변경</a>
+                        <a href="#" class="a_edit_password">
+                            <div>비밀번호 변경</div>
+                        </a>
                     </li>
                 </ul>
             </div>
@@ -35,7 +39,7 @@
                 <div class="login__form">
 
                     <!--인풋-->
-                    <form class="login__input"  action="/user/signup" method="post">
+                    <div class="login__input">
 
                         <div class="div_name">
                             <aside class="aside_name">
@@ -43,7 +47,7 @@
                             </aside>
                             <div class="div_input_outer">
                                 <div class="div_input_inner">
-                                    <input type="text" id="name" name="name" placeholder="이름" readonly/>
+                                    <input type="text" th:id="name" th:name="name" placeholder="이름" th:value="${loginUser.name}"/>
                                     <div class="explanation_outer">
                                         <div class="explanation_inner">
                                             사람들이 이름, 별명 또는 비즈니스 이름 등 회원님의 알려진 이름을 사용하여 회원님의 계정을 찾을 수 있도록 도와주세요.
@@ -59,28 +63,47 @@
                             </aside>
                             <div class="div_input_outer">
                                 <div class="div_input_inner">
-                                    <input type="text" id="id" name="id" placeholder="사용자 이름" readonly/>
+                                    <input type="text" th:id="id" th:name="id" placeholder="사용자 이름" th:value="${loginUser.id}"/>
                                     <div class="explanation_outer">
                                         <div class="explanation_inner">
-                                            대부분의 경우 이후 14일 동안 사용자 이름을 다시 ________(으)로 변경할 수 있습니다.
+                                            대부분의 경우 이후 14일 동안 사용자 이름을 다시<td th:text="${loginUser.id}"></td>(으)로 변경할 수 있습니다.
+                                        </div>
+                                        <div id="exist_id_msg" class="explanation_inner" style="display:none;">
+                                            사용 중인 사용자 이름입니다.
                                         </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
 
-
+<!-- 프로필 수정 버튼 여기서도 가능하게 하기. side_bar 버튼 호리즌 적용해보기, 서버 쪽 프로그램 작성하기.-->
                         <div class="div_bio">
                             <aside class="aside_bio">
                                 <label class="label_name">소개</label>
                             </aside>
                             <div class="div_input_outer">
                                 <div class="div_input_inner_for_bio">
-                                    <textarea id="bio" name="bio" placeholder="소개" readonly></textarea>
+                                    <textarea th:id="bio" th:name="bio" placeholder="소개" th:text="${loginUser.bio}">
+                                    </textarea>
                                 </div>
                             </div>
                         </div>
 
+                        <div class="div_email">
+                            <aside class="aside_email">
+                                <label class="label_name">이메일</label>
+                            </aside>
+                            <div class="div_input_outer">
+                                <div class="div_input_inner">
+                                    <input type="text" th:id="email" th:name="email" placeholder="email" th:value="${loginUser.email}"/>
+                                    <div class="explanation_outer">
+                                        <div id="exist_email_msg" class="explanation_inner" style="display:none;">
+                                            사용 중인 이메일 입니다.
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
 
                         <div class="bottom_part">
 
@@ -92,7 +115,7 @@
 
                                 <div class="btn_part_of_form">
 
-                                    <button class="submit_btn">제출</button>
+                                    <button class="submit_btn" th:onclick="updateProfileAjax()">제출</button>
 
                                     <div class="delete_member">
                                         <button class="delete_member_btn">회원 탈퇴</button>
@@ -104,7 +127,7 @@
 
                         </div>
 
-                    </form>
+                    </div>
                     <!--회원가입 인풋end-->
                 </div>
                 <!--회원가입 폼end-->
@@ -113,4 +136,40 @@
     </main>
 </div>
 </body>
+<script>
+    //ajax 함수
+     function updateProfileAjax(){
+          const data = {
+            name: $('#name').val(),
+            id: $('#id').val(),
+            bio: $('#bio').val(),
+            email: $('#email').val()
+         };
+        $.ajax({
+            url: '/user/update',
+            type: 'POST',
+            contentType: 'application/json; charset=utf-8',
+            data: JSON.stringify(data)
+            }).done(function(result){
+                console.log("ajax result : " + result);
+
+                if(result === "idFail"){
+                    $('#exist_id_msg').css("display", "inline-block");
+
+                } else if(result === "emailFail"){
+                    $('#exist_email_msg').css("display", "inline-block");
+
+                } else if(result === "updateSuccessful") {
+                    alert("로그인 성공");
+                    window.location.href="/";
+                } else if(result === "fail"){
+                    $('#exist_id_msg').css("display", "inline-block");
+                    $('#exist_email_msg').css("display", "inline-block");
+
+                }
+            }).fail(function(error){
+                alert(JSON.stringify(error));
+            });
+};
+</script>
 </html>

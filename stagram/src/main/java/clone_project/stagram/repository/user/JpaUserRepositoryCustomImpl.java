@@ -28,4 +28,6 @@ public class JpaUserRepositoryCustomImpl implements JpaUserRepositoryCustom {
                 .setParameter("id", id)
                 .getResultList();
         return userEntity.stream().findAny();    }
+
+
 }

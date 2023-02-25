@@ -46,6 +46,7 @@ button {
     background-color: white;
     height: -webkit-fill-available;
     width: 200px;
+    position: relative;
 }
 
 .side_bar ul{
@@ -55,14 +56,26 @@ button {
     flex-grow: 0;
     flex-shrink: 0;
     list-style: none;
-    padding-left: 20px;
     padding-top: 30px;
+}
+
+.side_bar li{
+  transition: box-shadow 300ms ease-in-out, color 300ms ease-in-out;
+}
+
+.a_edit_profile {
+    border-left: 2px solid black;
+    box-shadow: 0 0 40px 40px #c7c7c7 inset;
+}
+
+.a_edit_password:hover{
+    border-left: 2px solid black;
+    box-shadow: 0 0 40px 40px #eee inset;
 }
 
 .side_bar a{
     display: flex;
     height: 45px;
-    width: 150px;
     color: black;
     background-color: transparent;
     line-height: 20px;
@@ -81,8 +94,15 @@ button {
     outline-style: none;
     align-items: stretch;
     text-align: inherit;
+    justify-content: center;
     position: relative;
 }
+
+.side_bar_ul div{
+padding-left: 20px;
+}
+
+
 
 /*로그인폼과 가입하기를 감싸는 컨테이너*/
 .login__form__container {
@@ -197,13 +217,6 @@ button {
     width: 100%;
     -webkit-appearance: none;
 
-}
-
-#password, #name , #id {
-    width: 100%;
-    padding: 0px 10px;
-    font-size: 14px;
-    -webkit-appearance: none;
 }
 
 
@@ -338,7 +351,8 @@ height: 30px;
 
 .div_name,
 .div_id,
-.div_bio {
+.div_bio,
+.div_email {
   position: relative;
   width: 270px;
   flex-direction: row;
@@ -347,7 +361,7 @@ height: 30px;
   justify-content: flex-start;
 }
 
-.aside_name, .aside_id, .aside_bio{
+.aside_name, .aside_id, .aside_bio, .aside_email{
     padding-left: 32px;
     padding-right: 32px;
     text-align: right;
@@ -363,7 +377,8 @@ height: 30px;
 
 .div_name input,
 .div_id input,
-.div_bio input {
+.div_bio input,
+.div_email input {
   width: 100%;
   padding: 10px 12px;
   font-size: 14px;

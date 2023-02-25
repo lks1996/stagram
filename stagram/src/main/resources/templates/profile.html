@@ -36,7 +36,7 @@
 
                 <h1 class="profile-user-name"><td th:text="${user.id}"></h1>
 
-                <button class="profile-edit-btn" th:hidden="${hiddenProfileEditBtn}">Edit Profile</button>
+                <button class="profile-edit-btn" th:hidden="${hiddenProfileEditBtn}" th:onclick="location.href='/user/edit'">Edit Profile</button>
                 <button class="follow-btn" th:hidden="${hiddenFollowBtn}">Follow</button>
 
                 <button class="profile-settings-btn" id="btn-modal2" th:hidden="${hiddenProfileEditBtn}" aria-label="profile settings"><i class="fas fa-cog" aria-hidden="true"></i></button>

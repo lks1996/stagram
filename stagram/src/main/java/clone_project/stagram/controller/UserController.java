@@ -4,7 +4,6 @@ import clone_project.stagram.DTO.LoginDTO;
 import clone_project.stagram.DTO.PostDTO;
 import clone_project.stagram.DTO.UserDTO;
 import clone_project.stagram.DTO.UserProfileImgDTO;
-import clone_project.stagram.Entity.PostEntity;
 import clone_project.stagram.SavePath;
 import clone_project.stagram.SessionConst;
 import clone_project.stagram.service.PostService;
@@ -14,6 +13,7 @@ import org.apache.commons.io.IOUtils;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -32,13 +32,13 @@ import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
-import java.util.Optional;
 import java.util.UUID;
 
 @Controller
 public class UserController {
     private final UserService userService;
     private final PostService postService;
+
 
     public UserController(UserService userService, PostService postService) {
         this.userService = userService;
@@ -164,9 +164,9 @@ public class UserController {
 
         /** 본인 프로필로 들어가려는것이라면. **/
         if (loginMember.getId().equals(id)) {
-            System.out.println("loginMember.getId()" + loginMember.getId());
+            System.out.println("@@@@@@@@@loginMember.getId()" + loginMember.getUser_no());
 
-            List<PostDTO> userPosts = postService.getOwnPost(loginMember.getId());
+            List<PostDTO> userPosts = postService.getOwnPost(loginMember.getUser_no());
 
             model.addAttribute("profileChangeBtn_disabled", false);
             model.addAttribute("hiddenProfileEditBtn", false);
@@ -181,7 +181,8 @@ public class UserController {
         /** 다른 유저의 프로필로 들어가려는것이라면. **/
         UserDTO nowUser = userService.isDuplicateId(id);
         if (!(nowUser == null)) {
-            List<PostDTO> userPosts = postService.getOwnPost(id);
+
+            List<PostDTO> userPosts = postService.getOwnPost(nowUser.getUser_no());
 
             model.addAttribute("profileChangeBtn_disabled", true);
             model.addAttribute("hiddenProfileEditBtn", true);
@@ -294,6 +295,83 @@ public class UserController {
         return "profileEdit";
     }
 
+    @PostMapping("/user/update")
+    @ResponseBody
+    public String updateProfile(HttpServletRequest request, @SessionAttribute(name = SessionConst.LOGIN_MEMBER) UserDTO loginMember,
+                                @RequestBody UserDTO updatedUserDTO) {
+
+        HttpSession session = request.getSession();
+
+        System.out.println(updatedUserDTO.getEmail());
+        System.out.println(updatedUserDTO.getBio());
+
+        updatedUserDTO.setUser_no(loginMember.getUser_no());
+        updatedUserDTO.setPassword(loginMember.getPassword());
+        updatedUserDTO.setRegDate(loginMember.getRegDate());
+
+        //사용자가 id와 email을 변경하지 않았을 경우.
+        if ((loginMember.getId().equals(updatedUserDTO.getId())) && (loginMember.getEmail().equals(updatedUserDTO.getEmail()))) {
+            userService.updateProfile(updatedUserDTO);
+            session.setAttribute(SessionConst.LOGIN_MEMBER, updatedUserDTO);
+            session.setMaxInactiveInterval(3000);
+
+            return "updateSuccessful";
+
+            //사용자가 id만 변경한 경우,
+        } else if (!(loginMember.getId().equals(updatedUserDTO.getId())) && (loginMember.getEmail().equals(updatedUserDTO.getEmail()))) {
+            UserDTO isDuplicatedId = userService.isDuplicateId(updatedUserDTO.getId());
+
+            if (isDuplicatedId == null) {
+                userService.updateProfile(updatedUserDTO);
+                session.setAttribute(SessionConst.LOGIN_MEMBER, updatedUserDTO);
+                session.setMaxInactiveInterval(3000);
+
+                return "updateSuccessful";
+            } else {
+                return "idFail";
+            }
+
+            //사용자가 email만 변경한 경우,
+        } else if ((loginMember.getId().equals(updatedUserDTO.getId())) && !(loginMember.getEmail().equals(updatedUserDTO.getEmail()))) {
+            UserDTO isDuplicatedEmail = userService.isDuplicateEmail(updatedUserDTO.getEmail());
+
+            if (isDuplicatedEmail == null) {
+                userService.updateProfile(updatedUserDTO);
+                session.setAttribute(SessionConst.LOGIN_MEMBER, updatedUserDTO);
+                session.setMaxInactiveInterval(3000);
+
+                return "updateSuccessful";
+            } else {
+                return "emailFail";
+            }
+
+            //사용자가 id와 email 모두 변경한 경우.
+        } else {
+            UserDTO isDuplicatedEmail = userService.isDuplicateEmail(updatedUserDTO.getEmail());
+            UserDTO isDuplicatedId = userService.isDuplicateId(updatedUserDTO.getId());
+
+            //변경한 id와 email이 모두 사용 가능할 경우,
+            if ((isDuplicatedId == null) && (isDuplicatedEmail == null)) {
+                userService.updateProfile(updatedUserDTO);
+                session.setAttribute(SessionConst.LOGIN_MEMBER, updatedUserDTO);
+                session.setMaxInactiveInterval(3000);
+
+                return "updateSuccessful";
+
+                //변경한 id와 email 중 id가 중복일 경우,
+            } else if (!(isDuplicatedId == null) && (isDuplicatedEmail == null)) {
+                return "idFail";
+
+                //변경한 id와 email 중 email이 중복일 경우,
+            } else if ((isDuplicatedId == null) && !(isDuplicatedEmail == null)) {
+                return "emailFail";
+
+                ////변경한 id와 email 모두 중복일 경우,
+            } else {
+                return "fail";
+            }
+        }
+    }
 
     public String whatTimeIsItNow() {
         Date timestamp = new Timestamp(System.currentTimeMillis());

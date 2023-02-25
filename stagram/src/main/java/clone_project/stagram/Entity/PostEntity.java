@@ -20,8 +20,8 @@ public class PostEntity {
     @Column(name = "post_regDate")
     private String post_regDate;
 
-    @Column(name = "user_no")
-    private Long user_no;
+//    @Column(name = "user_no")
+//    private Long user_no;
     @Column(name = "user_id")
     private String user_id;
 
@@ -32,16 +32,22 @@ public class PostEntity {
     @Column(name = "postImgSize")
     private Long postImgSize;
 
+    @ManyToOne
+    @JoinColumn(name = "user_no")
+    private UserEntity userEntity;
+
     public PostEntity(Long post_no, String contents, String post_regDate,
                       Long user_no, String user_id,
                       String postImgOriginName, String postImgName, Long postImgSize) {
         this.post_no = post_no;
         this.contents = contents;
         this.post_regDate = post_regDate;
-        this.user_no = user_no;
+//        this.user_no = user_no;
         this.user_id = user_id;
         this.postImgOriginName = postImgOriginName;
         this.postImgName = postImgName;
         this.postImgSize = postImgSize;
+
     }
+
 }

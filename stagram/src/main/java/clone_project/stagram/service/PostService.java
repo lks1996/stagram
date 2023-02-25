@@ -44,8 +44,8 @@ public class PostService {
         return postDTOS;
     }
 
-    public List<PostDTO> getOwnPost(String user_id) {
-        List<PostEntity> postEntities = jpaPostRepositoryCustom.findAllUserById(user_id);
+    public List<PostDTO> getOwnPost(Long user_no) {
+        List<PostEntity> postEntities = jpaPostRepositoryCustom.findAllUserById(user_no);
         List<PostDTO> postDTOS = Mapper.ListMapToPostDTO(postEntities);
 
         return postDTOS;

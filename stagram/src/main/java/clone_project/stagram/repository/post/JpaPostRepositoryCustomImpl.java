@@ -23,9 +23,10 @@ public class JpaPostRepositoryCustomImpl implements JpaPostRepositoryCustom {
     }
 
     @Override
-    public List<PostEntity> findAllUserById(String user_id) {
-        List<PostEntity> postEntity = em.createQuery("select m from PostEntity m where m.user_id =:user_id", PostEntity.class)
-                .setParameter("user_id", user_id)
+    public List<PostEntity> findAllUserById(Long user_no) {
+        System.out.println("DDDDDDDDDDDDDDDDDDDDDDDDDDDD:" + user_no);
+        List<PostEntity> postEntity = em.createQuery("select m from PostEntity m where m.userEntity.user_no =:user_no", PostEntity.class)
+                .setParameter("user_no", user_no)
                 .getResultList();
         return postEntity;
     }

@@ -47,6 +47,7 @@ public class HomeController {
         }
 
         List<PostDTO> posts = postService.selectPost();
+
         //정상 로그인
 //        UserDTO loginUser = (UserDTO) session.getAttribute("user");
         //model.addAttribute("postName", "97b89484-c51e-4f4c-9350-dcd425ac5af9.jpg");

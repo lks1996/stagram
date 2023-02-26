@@ -1,16 +1,16 @@
 package clone_project.stagram.Entity;
 
-import lombok.AccessLevel;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
+import org.apache.catalina.User;
 
 import javax.persistence.*;
+import java.io.Serializable;
 
 @Entity
 @NoArgsConstructor(access = AccessLevel.PROTECTED) //기본 생성자를 만들어줌
 @Table(name= "post")
 @Getter
-public class PostEntity {
+public class PostEntity implements Serializable {
 
     @Id  // Primary Key 지정
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -37,8 +37,8 @@ public class PostEntity {
     private UserEntity userEntity;
 
     public PostEntity(Long post_no, String contents, String post_regDate,
-                      Long user_no, String user_id,
-                      String postImgOriginName, String postImgName, Long postImgSize) {
+                      String user_id, String postImgOriginName, String postImgName,
+                      Long postImgSize, UserEntity userEntity) {
         this.post_no = post_no;
         this.contents = contents;
         this.post_regDate = post_regDate;
@@ -47,7 +47,7 @@ public class PostEntity {
         this.postImgOriginName = postImgOriginName;
         this.postImgName = postImgName;
         this.postImgSize = postImgSize;
-
+        this.userEntity = userEntity;
     }
 
 }

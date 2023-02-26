@@ -16,9 +16,8 @@
 <div class="side_menu" th:replace="~{/fragment/sideMenu :: sideMenuFragment}">
 </div>
 <div class="container">
-    <main class="loginMain">
-        <!--회원가입섹션-->
-        <section class="login">
+    <main class="editMain">
+        <section class="sideSection">
             <div class="side_bar">
                 <ul class="side_bar_ul">
                     <li>
@@ -33,13 +32,12 @@
                     </li>
                 </ul>
             </div>
-            <article class="login__form__container">
 
-                <!--폼-->
-                <div class="login__form">
+            <article class="edit_article_container">
 
+                <div class="edit_div">
                     <!--인풋-->
-                    <div class="login__input">
+                    <div class="edit__input">
 
                         <div class="div_name">
                             <aside class="aside_name">
@@ -118,7 +116,7 @@
                                     <button class="submit_btn" th:onclick="updateProfileAjax()">제출</button>
 
                                     <div class="delete_member">
-                                        <button class="delete_member_btn">회원 탈퇴</button>
+                                        <button class="delete_member_btn" th:onclick="location.href='/user/secession'">회원 탈퇴</button>
                                     </div>
 
                                 </div>
@@ -128,9 +126,9 @@
                         </div>
 
                     </div>
-                    <!--회원가입 인풋end-->
+
                 </div>
-                <!--회원가입 폼end-->
+
             </article>
         </section>
     </main>

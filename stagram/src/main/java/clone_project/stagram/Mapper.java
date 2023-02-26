@@ -60,7 +60,7 @@ public class Mapper {
         UserDTO userDTO = new UserDTO();
         userDTO.setUser_no(userEntity.get().getUser_no());
         userDTO.setEmail(userEntity.get().getEmail());
-        userDTO.setId(userEntity.get().getId());
+        userDTO.setId(userEntity.get().getUser_id());
         userDTO.setPassword(userEntity.get().getPassword());
         userDTO.setName(userEntity.get().getName());
         userDTO.setBio(userEntity.get().getBio());
@@ -90,9 +90,10 @@ public class Mapper {
         return upiDTO;
     }
 
-    public static PostEntity mapToPostEntity(PostDTO postDTO) {
+    public static PostEntity mapToPostEntity(PostDTO postDTO, UserEntity userEntity) {
         PostEntity postEntity = new PostEntity(postDTO.getPost_no(), postDTO.getContents(), postDTO.getPost_regDate(),
-                postDTO.getUser_no(), postDTO.getUser_id(), postDTO.getPostImgOriginName(), postDTO.getPostImgName(), postDTO.getPostImgSize());
+                postDTO.getUser_id(), postDTO.getPostImgOriginName(), postDTO.getPostImgName(), postDTO.getPostImgSize(),
+                userEntity);
 
         return postEntity;
     }

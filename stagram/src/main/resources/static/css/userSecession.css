@@ -27,7 +27,7 @@ button {
   cursor: pointer;
 }
 
-/*로그인 섹션*/
+
 .sideSection {
     margin: 30px auto 0;
     max-width: 935px;
@@ -63,7 +63,7 @@ button {
   transition: box-shadow 300ms ease-in-out, color 300ms ease-in-out;
 }
 
-.a_edit_profile {
+.a_edit_profile:hover {
     border-left: 2px solid black;
     box-shadow: 0 0 40px 40px #c7c7c7 inset;
 }
@@ -104,7 +104,7 @@ padding-left: 20px;
 
 
 
-/*로그인폼과 가입하기를 감싸는 컨테이너*/
+/*article 컨테이너*/
 .edit_article_container {
     align-items: stretch;
     display: flex;
@@ -115,109 +115,206 @@ padding-left: 20px;
     padding: 0;
     position: relative;
     vertical-align: baseline;
-}
-
-/*로그인폼, 가입하기 박스 디자인*/
-.edit_div {
-    text-align: center;
     border-left: 1px solid #c7c7c7;
-    background-color: #fff;
-    justify-content: stretch;
-    display: flex;
-    overflow: hidden;
-    flex-grow: 1;
+    background-color: white;
+}
+
+.div_frame{
+    padding-bottom: 32px;
+    padding-left: 65px;
+    padding-right: 32px;
+}
+
+.div_frame h1{
+    border: 0;
+    font: inherit;
+    font-size: 24px;
+    font-weight: normal;
+    line-height: 38px;
+    margin: 32px 0;
+    padding: 0;
+    vertical-align: baseline;
 }
 
 
-
-/*로고이미지를 담을 블록요소*/
-.edit_div h1 {
-  height: 86px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+.div_frame p{
+    line-height: 20px;
+    margin-bottom: 15px;
 }
 
-/*로고 이미지*/
-.edit_div h1 img {
-  height: 80px;
-  width: 250px;
+.span_hi{
+    border: 0;
+    font: inherit;
+    font-size: 100%;
+    font-weight: bold;
+    margin: 0;
+    padding: 0;
+    vertical-align: baseline;
 }
 
-/*로그인 인풋박스*/
-.edit__input {
+.p_explanation{
+    border: 0;
+    border-bottom: 1px solid #c7c7c7;
+    font: inherit;
+    font-size: 100%;
+    margin: 0;
+    padding: 0;
+    padding-bottom: 32px;
+    vertical-align: baseline;
+}
+
+.check_pw_form{
+    align-items: stretch;
     border: 0;
     display: flex;
     flex-direction: column;
-    align-items: stretch;
-    padding: 0 40px;
-    flex: 1 1 400px;
-    position: relative;
+    font: inherit;
+    font-size: 100%;
+    margin: 0;
+    margin-top: 20px;
+    padding: 0;
     vertical-align: baseline;
-    margin-bottom: 16px;
-    margin-top: 16px;
-
 }
 
-/*로그인 인풋태그*/
-.div_input_outer {
+.div_aside_frame{
+    flex-direction: row;
+    display: flex;
+    justify-content: flex-start;
+    margin-bottom: 16px;
+    font: inherit;
+    font-size: 100%;
+}
+
+.aside_for_label {
+    padding-right: 32px;
+    text-align: right;
+    box-sizing: border-box;
+    color: rgb(var(--ig-primary-text));
+    flex: 0 0 226px;
+    line-height: 18px;
+}
+
+.aside_for_label label{
+    font-size: 16px;
+    font-weight: 600;
+    vertical-align: baseline;
+}
+
+.div_for_pw_input{
     flex-basis: 355px;
     flex-direction: row;
     padding-right: 60px;
     align-items: stretch;
     border: 0;
+    box-sizing: border-box;
+    color: rgb(var(--ig-primary-text));
     display: flex;
     flex-grow: 1;
     flex-shrink: 0;
+    font: inherit;
+    font-size: 16px;
     justify-content: flex-start;
     margin: 0;
-    padding: 0;
     position: relative;
     vertical-align: baseline;
 }
 
-.div_input_inner{
-    width: 100%;
-    max-width: 355px;
-    flex: 0 0 auto;
-    display: inline-block;
-    position: relative;
-}
-
-.div_input_inner_for_bio{
-    justify-content: flex-start;
-    flex-direction: row;
-    align-items: stretch;
+.div_for_pw_input_inner{
+    overflow-y: visible;
+    border-bottom-left-radius: 0;
+    background-color: transparent;
+    flex-direction: column;
+    box-sizing: border-box;
     display: flex;
-    width: 100%;
-    max-width: 355px;
-    flex: 0 0 auto;
+    border-bottom-right-radius: 0;
+    flex-shrink: 0;
+    position: static;
+    align-items: stretch;
+    overflow-x: visible;
+    align-self: auto;
+    justify-content: flex-start;
+    flex-grow: 0;
+    border-top-left-radius: 0;
+    border-top-right-radius: 0;
+}
+
+
+._aaie{
+    background: transparent;
+    border: 1px solid #c7c7c7;
+    border-radius: 5px;
+    flex-grow: 1;
+    font-size: 20px;
+    line-height: 30px;
+    margin: 0;
+    overflow: visible;
+    padding: 4px 12px;
+    outline: none!important;
+}
+
+.div_for_space{
+    align-items: stretch;
+    border: 0;
+    border-bottom: 1px solid #c7c7c7;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    flex-shrink: 0;
+    font: inherit;
+    font-size: 100%;
+    margin: 0;
+    margin-bottom: 32px;
+    padding: 0;
+    padding-top: 16px;
     position: relative;
+    vertical-align: baseline;
 }
 
-.div_input_inner_for_bio textarea {
-    width:100%;
+.div_for_secession_btn{
+    align-items: stretch;
+    border: 0;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: row;
+    flex-shrink: 0;
+    font: inherit;
+    font-size: 100%;
+    margin: 0;
+    padding: 18px 0;
+    position: relative;
+    vertical-align: baseline;
+}
+
+.div_for_secession_btn button{
+    background-color: #0095f6;
+    color: white;
+    opacity: .7;
+    border: none;
+    border-radius: 8px;
+    position: relative;
+    text-align: center;
+    -webkit-appearance: none;
+    box-sizing: border-box;
+    cursor: pointer;
+    display: block;
     font-size: 14px;
-    background: transparent;
-    border: 1px solid #c7c7c7;
-    border-radius: 3px;
-    -webkit-appearance: none;
-    height: 110px;
-    flex: 0 1 355px;
-    padding: 6px 10px;
-    resize: vertical;
+    font-weight: bolder;
+    padding: 7px 16px!important;
+    text-overflow: ellipsis;
+    text-transform: inherit;
+    -webkit-user-select: none;
+    width: auto;
+    line-height: 18px;
 }
 
-.edit__input input{
-    background: transparent;
-    border: 1px solid #c7c7c7;
-    border-radius: 3px;
-    height: 35px;
-    padding: 0 10px;
-    width: 100%;
-    -webkit-appearance: none;
 
-}
+
+
+
+
+
+
+
 
 
 

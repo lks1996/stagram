@@ -24,8 +24,8 @@ public class JpaUserRepositoryCustomImpl implements JpaUserRepositoryCustom {
 
     @Override
     public Optional<UserEntity> findById(String id) {
-        List<UserEntity> userEntity = em.createQuery("select m from UserEntity m where m.id = :id", UserEntity.class)
-                .setParameter("id", id)
+        List<UserEntity> userEntity = em.createQuery("select m from UserEntity m where m.user_id = :user_id", UserEntity.class)
+                .setParameter("user_id", id)
                 .getResultList();
         return userEntity.stream().findAny();    }
 

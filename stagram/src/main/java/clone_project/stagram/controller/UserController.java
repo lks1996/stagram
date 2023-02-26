@@ -311,22 +311,14 @@ public class UserController {
 
         //사용자가 id와 email을 변경하지 않았을 경우.
         if ((loginMember.getId().equals(updatedUserDTO.getId())) && (loginMember.getEmail().equals(updatedUserDTO.getEmail()))) {
-            userService.updateProfile(updatedUserDTO);
-            session.setAttribute(SessionConst.LOGIN_MEMBER, updatedUserDTO);
-            session.setMaxInactiveInterval(3000);
 
-            return "updateSuccessful";
 
             //사용자가 id만 변경한 경우,
         } else if (!(loginMember.getId().equals(updatedUserDTO.getId())) && (loginMember.getEmail().equals(updatedUserDTO.getEmail()))) {
             UserDTO isDuplicatedId = userService.isDuplicateId(updatedUserDTO.getId());
 
             if (isDuplicatedId == null) {
-                userService.updateProfile(updatedUserDTO);
-                session.setAttribute(SessionConst.LOGIN_MEMBER, updatedUserDTO);
-                session.setMaxInactiveInterval(3000);
 
-                return "updateSuccessful";
             } else {
                 return "idFail";
             }
@@ -336,11 +328,7 @@ public class UserController {
             UserDTO isDuplicatedEmail = userService.isDuplicateEmail(updatedUserDTO.getEmail());
 
             if (isDuplicatedEmail == null) {
-                userService.updateProfile(updatedUserDTO);
-                session.setAttribute(SessionConst.LOGIN_MEMBER, updatedUserDTO);
-                session.setMaxInactiveInterval(3000);
 
-                return "updateSuccessful";
             } else {
                 return "emailFail";
             }
@@ -352,11 +340,7 @@ public class UserController {
 
             //변경한 id와 email이 모두 사용 가능할 경우,
             if ((isDuplicatedId == null) && (isDuplicatedEmail == null)) {
-                userService.updateProfile(updatedUserDTO);
-                session.setAttribute(SessionConst.LOGIN_MEMBER, updatedUserDTO);
-                session.setMaxInactiveInterval(3000);
 
-                return "updateSuccessful";
 
                 //변경한 id와 email 중 id가 중복일 경우,
             } else if (!(isDuplicatedId == null) && (isDuplicatedEmail == null)) {
@@ -371,6 +355,38 @@ public class UserController {
                 return "fail";
             }
         }
+
+        //user 테이블과 post 테이블에 업데이트 정보 반영.
+        userService.updateProfile(updatedUserDTO);
+        postService.updatePostUserId(updatedUserDTO.getUser_no(), updatedUserDTO.getId());
+
+        //업데이트된 session으로 재부여.
+        session.setAttribute(SessionConst.LOGIN_MEMBER, updatedUserDTO);
+        session.setMaxInactiveInterval(3000);
+
+        return "updateSuccessful";
+    }
+
+    @GetMapping("/user/secession")
+    public String userSecession(@SessionAttribute(name = SessionConst.LOGIN_MEMBER) UserDTO loginMember, Model model) {
+
+        model.addAttribute("loginUser", loginMember);
+        return "userSecession";
+    }
+
+    @PostMapping("/user/secession")
+    @ResponseBody
+    public String deleteUser(@SessionAttribute(name = SessionConst.LOGIN_MEMBER) UserDTO loginMember,
+                             @RequestParam String password, HttpServletRequest request) {
+
+        System.out.println("INPUT_PASSWORD : "+ password);
+
+        BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
+        System.out.println(encoder.matches(password, loginMember.getPassword()));
+
+
+
+        return null;
     }
 
     public String whatTimeIsItNow() {

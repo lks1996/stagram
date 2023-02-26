@@ -30,4 +30,18 @@ public class JpaPostRepositoryCustomImpl implements JpaPostRepositoryCustom {
                 .getResultList();
         return postEntity;
     }
+
+    @Override
+    public void updatePostUser(Long user_no, String id) {
+        System.out.println("user_no가 " + user_no + "인 사용자의 사용자 이름을 " + id + "수정시작.");
+
+        em.createQuery("update PostEntity m set m.user_id =:user_id where m.userEntity.user_no = :user_no")
+                .setParameter("user_id", id)
+                .setParameter("user_no", user_no)
+                .executeUpdate();
+        em.clear();
+
+        System.out.println("수정 완료");
+    }
+
 }

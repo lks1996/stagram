@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<script src="https://kit.fontawesome.com/8437d7db58.js" crossorigin="anonymous"></script>
+<script
+        src="https://code.jquery.com/jquery-3.6.1.min.js"
+        integrity="sha256-o88AwQnZB+VDvE9tvIXrMQaPlFFSUTR+nldQm1LuPXQ="
+        crossorigin="anonymous">
+</script>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width">
+    <link rel="stylesheet" type="text/css" th:href="@{/css/userSecession.css}">
+</head>
+<body>
+<!-- side menu -->
+<div class="side_menu" th:replace="~{/fragment/sideMenu :: sideMenuFragment}">
+</div>
+<div class="container">
+    <main class="editMain">
+        <section class="sideSection">
+            <div class="side_bar">
+                <ul class="side_bar_ul">
+                    <li>
+                        <a href="#" class="a_edit_profile">
+                            <div>프로필 편집</div>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#" class="a_edit_password">
+                            <div>비밀번호 변경</div>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+
+            <article class="edit_article_container">
+                <div class="div_frame">
+                    <h1>회원 탈퇴하기</h1>
+                    <p>
+                        <span class="span_hi">
+                            <td th:text="${loginUser.id}"></td>
+                        </span>
+                        님, 안녕하세요!
+                    </p>
+                    <p class="p_explanation">계정을 삭제하시려면 아래를 따르십시오.</p>
+
+                    <form class="check_pw_form" action="/user/secession" method="post">
+                        <div class="div_aside_frame">
+                            <aside class="aside_for_label">
+                                <label>계속 하려면 비밀번호를 다시 입력하세요</label>
+                            </aside>
+                            <div class="div_for_pw_input">
+                                <div class="div_for_pw_input_inner">
+                                    <input class="_aaie" id="password" name="password" required="" spellcheck="true" type="password" value="">
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="div_for_space"></div>
+
+                        <p>
+                            아래 버튼을 누르면 회원 정보가 모두 삭제됩니다.
+                        </p>
+
+                        <div class="div_for_secession_btn">
+                            <button>회원 탈퇴하기</button>
+                        </div>
+
+                    </form>
+
+                </div>
+
+
+            </article>
+        </section>
+    </main>
+</div>
+</body>
+</html>

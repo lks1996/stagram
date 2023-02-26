@@ -64,7 +64,7 @@ public class PostController {
             System.out.println(postDTO.getUser_id());
 
 
-            postService.savePost(postDTO);
+            postService.savePost(postDTO, loginMember);
 
 
             return "redirect:/";

@@ -1,5 +1,6 @@
 package clone_project.stagram.Entity;
 
+import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -8,7 +9,7 @@ import javax.persistence.*;
 
 
 @Entity
-@NoArgsConstructor //기본 생성자를 만들어줌
+@NoArgsConstructor(access = AccessLevel.PROTECTED) //기본 생성자를 만들어줌
 @Table(name= "user_profile_img")
 @Getter
 public class UserProfileImgEntity {
@@ -29,18 +30,21 @@ public class UserProfileImgEntity {
     @Column(name = "regDate")
     private String regDate;
 
-    @Column(name = "user_no")
-    private Long user_no;
+//    @Column(name = "user_no")
+//    private Long user_no;
+    @ManyToOne
+    @JoinColumn(name = "user_no")
+    private UserEntity userEntity;
 
 
-    @Builder
     public UserProfileImgEntity(Long userImgNo, String profileImgOriginName, String profileImgName,
-                                long profileImgSize, String regDate, Long UserNo) {
+                                Long profileImgSize, String regDate, UserEntity userEntity) {
         this.userImgNo = userImgNo;
         this.profileImgOriginName = profileImgOriginName;
         this.profileImgName = profileImgName;
         this.profileImgSize = profileImgSize;
         this.regDate = regDate;
-        this.user_no = UserNo;
+//        this.user_no = UserNo;
+        this.userEntity = userEntity;
     }
 }

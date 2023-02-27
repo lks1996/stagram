@@ -60,4 +60,11 @@ public class PostService {
     public void updatePostUserId(Long user_no, String id) {
         jpaPostRepositoryCustom.updatePostUser(user_no, id);
     }
+
+    @Transactional
+    public void deletePost(Long user_no) {
+        jpaPostRepositoryCustom.deleteByUserNo(user_no);
+
+        System.out.println("1. 사용자의 게시글 모두 삭제 완료.");
+    }
 }

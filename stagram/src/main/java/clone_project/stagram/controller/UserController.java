@@ -54,6 +54,7 @@ public class UserController {
         return "home";
     }
 
+/** 회원 가입 **/
     @GetMapping("/user/signup")
     public String createUser() throws Exception{
         return "signup";
@@ -97,6 +98,9 @@ public class UserController {
     }
 
 
+
+
+/** 로그인 **/
     @GetMapping("/user/signin")
     public String home() throws Exception{
         return "signin";
@@ -145,6 +149,9 @@ public class UserController {
         return result;
     }
 
+
+
+/** 로그아웃 **/
     @GetMapping("/logout")
         public String logout(HttpServletRequest request){
 
@@ -154,6 +161,9 @@ public class UserController {
         return "redirect:/";
     }
 
+
+
+/** 개인 프로필 페이지 **/
     @GetMapping("/profile")
     public String profile(@SessionAttribute(name =SessionConst.LOGIN_MEMBER) UserDTO loginMember,
                           String id, Model model) throws Exception{
@@ -162,7 +172,7 @@ public class UserController {
         System.out.println("세션id = " + loginMember.getId());
         System.out.println("loginMember.getId().equals(id)"+loginMember.getId().equals(id));
 
-        /** 본인 프로필로 들어가려는것이라면. **/
+        // 본인 프로필로 들어가려는것이라면.
         if (loginMember.getId().equals(id)) {
             System.out.println("@@@@@@@@@loginMember.getId()" + loginMember.getUser_no());
 
@@ -178,7 +188,7 @@ public class UserController {
             return "profile";
         }
 
-        /** 다른 유저의 프로필로 들어가려는것이라면. **/
+        // 다른 유저의 프로필로 들어가려는것이라면.
         UserDTO nowUser = userService.isDuplicateId(id);
         if (!(nowUser == null)) {
 
@@ -198,97 +208,10 @@ public class UserController {
     }
 
 
-    @GetMapping(value = "/user/display", produces = MediaType.IMAGE_JPEG_VALUE)
-    public ResponseEntity<byte[]> userProfileDisplay(@SessionAttribute(name =SessionConst.LOGIN_MEMBER) UserDTO loginMember,
-                                                     String id) throws IOException {
-        String profileImg;
-        UserProfileImgDTO userProfileImgDTO;
-        UserDTO nowUser = userService.isDuplicateId(id);
-
-        if (loginMember.getId() == id) {
-            userProfileImgDTO = userService.hasProfileImg(loginMember.getUser_no());
-        } else {
-            userProfileImgDTO = userService.hasProfileImg(nowUser.getUser_no());
-        }
-
-
-        //등록된 프로필 사진이 없다면, default 이미지 경로 설정.
-        if (userProfileImgDTO == null) {
-            profileImg = SavePath.USER_PROFILE_IMG_DEFAULT;
-
-        } else {
-            profileImg = SavePath.USER_PROFILE_IMG_SAVE_PATH + "\\" + userProfileImgDTO.getProfileImgName();
-        }
-
-        InputStream imageStream = new FileInputStream(profileImg);
-
-        byte[] imageByteArray = IOUtils.toByteArray(imageStream);
-        imageStream.close();
-        return new ResponseEntity<byte[]>(imageByteArray, HttpStatus.OK);
-    }
 
 
 
-/** view 단에 있는 file name 과 @RequestParam의 file name이 일치해야 작동. **/
-    @PostMapping("/upload/profile")
-    public String upload_profile_pic(@SessionAttribute(name =SessionConst.LOGIN_MEMBER) UserDTO loginMember, @RequestParam MultipartFile profileImg) throws Exception{
-
-
-
-        if( !profileImg.isEmpty() ) {   //파일이 비어있지 않다면.
-            String uuidForProfilePicName = UUID.randomUUID().toString()+".jpg";
-            File converFile = new File(SavePath.USER_PROFILE_IMG_SAVE_PATH, uuidForProfilePicName);
-            profileImg.transferTo(converFile);  //--- 저장할 경로를 설정 해당 경로는 각자 원하는 위치로 설정하면 됩니다. 다만, 해당 경로에 접근할 수 있는 권한이 없으면 에러 발생
-
-            UserProfileImgDTO userProfileImgDTO = new UserProfileImgDTO();
-
-            userProfileImgDTO.setProfileImgOriginName(profileImg.getOriginalFilename());
-            userProfileImgDTO.setProfileImgName(uuidForProfilePicName);
-            userProfileImgDTO.setProfileImgSize(profileImg.getSize());
-            userProfileImgDTO.setRegDate(whatTimeIsItNow());
-            userProfileImgDTO.setUserNo(loginMember.getUser_no());
-
-            System.out.println(userProfileImgDTO.getProfileImgOriginName());
-            System.out.println(userProfileImgDTO.getProfileImgName());
-            System.out.println(userProfileImgDTO.getProfileImgSize());
-            System.out.println(userProfileImgDTO.getRegDate());
-            System.out.println(userProfileImgDTO.getUserNo());
-
-            UserProfileImgDTO checkProfileImg = userService.hasProfileImg(loginMember.getUser_no());
-
-            //사용자가 프로필 사진이 있는지 조회 후 없다면, 업로드한 사진을 그냥 save를 통한 insert.
-            if (checkProfileImg == null) {
-                userService.saveProfileImg(userProfileImgDTO);
-            } else { //그렇지 않다면 즉, 이미 DB에 저장된 프로필 사진이 있다면 save를 통한 update.
-
-                userProfileImgDTO.setUserImgNo(checkProfileImg.getUserImgNo());
-                userProfileImgDTO.setRegDate(whatTimeIsItNow());
-                userService.saveProfileImg(userProfileImgDTO);
-            }
-
-            return "redirect:/profile?id=" + loginMember.getId();
-        }
-
-
-        return "redirect:/";
-    }
-
-    @GetMapping("/delete/profileImg")
-    public String deleteProfileImg(@SessionAttribute(name =SessionConst.LOGIN_MEMBER) UserDTO loginMember) {
-        UserProfileImgDTO checkProfileImg = userService.hasProfileImg(loginMember.getUser_no());
-
-        //프로필 사진이 없는 사용자가 사진 삭제를 누를 경우,
-        if (checkProfileImg == null) {
-            return "redirect:/profile?id=" + loginMember.getId();
-        }
-
-        userService.deleteProfileImg(checkProfileImg);
-
-        return "redirect:/profile?id=" + loginMember.getId();
-
-    }
-
-
+/** 회원 정보 수정 **/
     @GetMapping("/user/edit")
     public String profileUpdate(@SessionAttribute(name = SessionConst.LOGIN_MEMBER) UserDTO loginMember, Model model) {
         model.addAttribute("loginUser", loginMember);
@@ -367,6 +290,10 @@ public class UserController {
         return "updateSuccessful";
     }
 
+
+
+
+/** 회원 탈퇴 **/
     @GetMapping("/user/secession")
     public String userSecession(@SessionAttribute(name = SessionConst.LOGIN_MEMBER) UserDTO loginMember, Model model) {
 
@@ -384,11 +311,117 @@ public class UserController {
         BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
         System.out.println(encoder.matches(password, loginMember.getPassword()));
 
-
+        /** 회원 탈퇴 서비스, jpa에서 처리시키기, css 중복 코드 제거하기 **/
+        if (encoder.matches(password, loginMember.getPassword())) {
+            postService.deletePost(loginMember.getUser_no());
+            userService.deleteProfileImg(loginMember.getUser_no());
+            userService.deleteUser(loginMember.getUser_no());
+        }
 
         return null;
     }
 
+
+
+
+
+
+/** 회원 프로필 사진 등록 **/
+    /** view 단에 있는 file name 과 @RequestParam의 file name이 일치해야 작동. **/
+    @PostMapping("/upload/profile")
+    public String upload_profile_pic(@SessionAttribute(name =SessionConst.LOGIN_MEMBER) UserDTO loginMember, @RequestParam MultipartFile profileImg) throws Exception{
+
+
+
+        if( !profileImg.isEmpty() ) {   //파일이 비어있지 않다면.
+            String uuidForProfilePicName = UUID.randomUUID().toString()+".jpg";
+            File converFile = new File(SavePath.USER_PROFILE_IMG_SAVE_PATH, uuidForProfilePicName);
+            profileImg.transferTo(converFile);  //--- 저장할 경로를 설정 해당 경로는 각자 원하는 위치로 설정하면 됩니다. 다만, 해당 경로에 접근할 수 있는 권한이 없으면 에러 발생
+
+            UserProfileImgDTO userProfileImgDTO = new UserProfileImgDTO();
+
+            userProfileImgDTO.setProfileImgOriginName(profileImg.getOriginalFilename());
+            userProfileImgDTO.setProfileImgName(uuidForProfilePicName);
+            userProfileImgDTO.setProfileImgSize(profileImg.getSize());
+            userProfileImgDTO.setRegDate(whatTimeIsItNow());
+            userProfileImgDTO.setUserNo(loginMember.getUser_no());
+
+            System.out.println(userProfileImgDTO.getProfileImgOriginName());
+            System.out.println(userProfileImgDTO.getProfileImgName());
+            System.out.println(userProfileImgDTO.getProfileImgSize());
+            System.out.println(userProfileImgDTO.getRegDate());
+            System.out.println(userProfileImgDTO.getUserNo());
+
+            UserProfileImgDTO checkProfileImg = userService.hasProfileImg(loginMember);
+
+            //사용자가 프로필 사진이 있는지 조회 후 없다면, 업로드한 사진을 그냥 save를 통한 insert.
+            if (checkProfileImg == null) {
+                userService.saveProfileImg(userProfileImgDTO, loginMember);
+            } else { //그렇지 않다면 즉, 이미 DB에 저장된 프로필 사진이 있다면 save를 통한 update.
+
+                userProfileImgDTO.setUserImgNo(checkProfileImg.getUserImgNo());
+                userProfileImgDTO.setRegDate(whatTimeIsItNow());
+                userService.saveProfileImg(userProfileImgDTO, loginMember);
+            }
+
+            return "redirect:/profile?id=" + loginMember.getId();
+        }
+
+
+        return "redirect:/";
+    }
+
+/** 회원 프로필 사진 삭제 **/
+    @GetMapping("/delete/profileImg")
+    public String deleteProfileImg(@SessionAttribute(name =SessionConst.LOGIN_MEMBER) UserDTO loginMember) {
+        UserProfileImgDTO checkProfileImg = userService.hasProfileImg(loginMember);
+
+        //프로필 사진이 없는 사용자가 사진 삭제를 누를 경우,
+        if (checkProfileImg == null) {
+            return "redirect:/profile?id=" + loginMember.getId();
+        }
+
+        userService.deleteProfileImg(loginMember.getUser_no());
+
+        return "redirect:/profile?id=" + loginMember.getId();
+
+    }
+
+
+
+/** 로컬에 있는 프로필 사진 가져오기 **/
+    @GetMapping(value = "/user/display", produces = MediaType.IMAGE_JPEG_VALUE)
+    public ResponseEntity<byte[]> userProfileDisplay(@SessionAttribute(name =SessionConst.LOGIN_MEMBER) UserDTO loginMember,
+                                                     String id) throws IOException {
+        String profileImg;
+        UserProfileImgDTO userProfileImgDTO;
+        UserDTO nowUser = userService.isDuplicateId(id);
+
+        if (loginMember.getId() == id) {
+            userProfileImgDTO = userService.hasProfileImg(loginMember);
+        } else {
+            userProfileImgDTO = userService.hasProfileImg(nowUser);
+        }
+
+
+        //등록된 프로필 사진이 없다면, default 이미지 경로 설정.
+        if (userProfileImgDTO == null) {
+            profileImg = SavePath.USER_PROFILE_IMG_DEFAULT;
+
+        } else {
+            profileImg = SavePath.USER_PROFILE_IMG_SAVE_PATH + "\\" + userProfileImgDTO.getProfileImgName();
+        }
+
+        InputStream imageStream = new FileInputStream(profileImg);
+
+        byte[] imageByteArray = IOUtils.toByteArray(imageStream);
+        imageStream.close();
+        return new ResponseEntity<byte[]>(imageByteArray, HttpStatus.OK);
+    }
+
+
+
+/** 현재 시간 구하기 **/
     public String whatTimeIsItNow() {
         Date timestamp = new Timestamp(System.currentTimeMillis());
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");

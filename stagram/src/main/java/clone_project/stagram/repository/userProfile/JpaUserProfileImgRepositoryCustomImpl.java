@@ -17,10 +17,18 @@ public class JpaUserProfileImgRepositoryCustomImpl implements JpaUserProfileImgR
 
     @Override
     public Optional<UserProfileImgEntity> findByUserNo(Long user_no) {
-        List<UserProfileImgEntity> userProfileImgEntities = em.createQuery("select m from UserProfileImgEntity m where m.user_no = :user_no", UserProfileImgEntity.class)
+        List<UserProfileImgEntity> userProfileImgEntities = em.createQuery("select m from UserProfileImgEntity m where m.userEntity.user_no = :user_no", UserProfileImgEntity.class)
                 .setParameter("user_no", user_no)
                 .getResultList();
         return userProfileImgEntities.stream().findAny();
+    }
+
+    @Override
+    public void deleteByUserNo(Long user_no) {
+        em.createQuery("delete from UserProfileImgEntity m where m.userEntity.user_no = :user_no")
+                .setParameter("user_no", user_no)
+                .executeUpdate();
+        em.clear();
     }
 
 }

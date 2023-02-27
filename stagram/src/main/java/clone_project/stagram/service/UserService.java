@@ -108,16 +108,17 @@ public class UserService {
         return null;
     }
 
-    public void saveProfileImg(UserProfileImgDTO userProfileImgDTO) {
-        UserProfileImgEntity userProfileImgEntity = Mapper.mapToUserProfileImgEntity(userProfileImgDTO);
+    public void saveProfileImg(UserProfileImgDTO userProfileImgDTO, UserDTO userDTO) {
+        UserEntity userEntity = Mapper.mapToEntity(userDTO);
+        UserProfileImgEntity userProfileImgEntity = Mapper.mapToUserProfileImgEntity(userProfileImgDTO, userEntity);
 
         jpaUserProfileImgRepository.save(userProfileImgEntity);
     }
 
 
 /** 사용자가 프로필 사진을 등록했었는지 판별 **/
-    public UserProfileImgDTO hasProfileImg(Long user_no) {
-        Optional<UserProfileImgEntity> userProfileImgEntity = jpaUserProfileImgRepositoryCustom.findByUserNo(user_no);
+    public UserProfileImgDTO hasProfileImg(UserDTO userDTO) {
+        Optional<UserProfileImgEntity> userProfileImgEntity = jpaUserProfileImgRepositoryCustom.findByUserNo(userDTO.getUser_no());
 
         if (userProfileImgEntity.isPresent()) {
             UserProfileImgDTO userProfileImgDTO = Mapper.mapToUserProfileImgDTO(userProfileImgEntity);
@@ -127,11 +128,16 @@ public class UserService {
         return null;
     }
 
+    @Transactional
+    public void deleteProfileImg(Long user_no) {
+        jpaUserProfileImgRepositoryCustom.deleteByUserNo(user_no);
 
-    public void deleteProfileImg(UserProfileImgDTO upiDTO) {
-        UserProfileImgEntity upiEntity = Mapper.mapToUserProfileImgEntity(upiDTO);
+        System.out.println("2. 사용자 프로필 사진 삭제 완료.");
 
-        jpaUserProfileImgRepository.delete(upiEntity);
+    }
 
+    public void deleteUser(Long user_no) {
+        jpaUserRepository.deleteById(user_no);
+        System.out.println("2. 사용자 회원 탈퇴 완료");
     }
 }

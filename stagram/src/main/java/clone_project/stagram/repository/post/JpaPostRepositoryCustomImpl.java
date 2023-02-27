@@ -44,4 +44,12 @@ public class JpaPostRepositoryCustomImpl implements JpaPostRepositoryCustom {
         System.out.println("수정 완료");
     }
 
+    @Override
+    public void deleteByUserNo(Long user_no) {
+        em.createQuery("delete from PostEntity m where m.userEntity.user_no = :user_no")
+                .setParameter("user_no", user_no)
+                .executeUpdate();
+        em.clear();
+    }
+
 }

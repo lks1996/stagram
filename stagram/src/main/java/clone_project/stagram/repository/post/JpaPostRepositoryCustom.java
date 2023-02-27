@@ -13,4 +13,7 @@ public interface JpaPostRepositoryCustom {
     List<PostEntity> findAllUserById(Long user_no);
 
     void updatePostUser(Long user_no, String id);
+
+    void deleteByUserNo(Long user_no);
+
 }

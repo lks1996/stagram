@@ -19,89 +19,131 @@
 <div class="side_menu" th:replace="~{/fragment/sideMenu :: sideMenuFragment}">
 </div>
 
-<header>
+<section>
+    <main>
+        <div class="a">
+            <header>
+                <div class="a_1">
+                    <div class="a_2">
+                        <div class="a_3">
+                            <button id="btn-modal" th:disabled="${profileChangeBtn_disabled}">
 
-    <div class="container">
-
-        <div class="profile">
-
-            <div class="profile-image">
-
-                <button id="btn-modal" th:disabled="${profileChangeBtn_disabled}">
-
-                    <img th:src="@{/user/display(id = ${user.id})}" alt="" style="width: 150px; height: 150px;">
-                </button>
-
-            </div>
-
-            <div class="profile-user-settings">
-
-                <h1 class="profile-user-name"><td th:text="${user.id}"></h1>
-
-                <button class="profile-edit-btn" th:hidden="${hiddenProfileEditBtn}" th:onclick="location.href='/user/edit'">Edit Profile</button>
-                <button class="follow-btn" th:hidden="${hiddenFollowBtn}">Follow</button>
-
-                <button class="profile-settings-btn" id="btn-modal2" th:hidden="${hiddenProfileEditBtn}" aria-label="profile settings"><i class="fas fa-cog" aria-hidden="true"></i></button>
-
-            </div>
-
-            <div class="profile-stats">
-
-                <ul>
-                    <li><span class="profile-stat-count"><td th:text="${postCount}"></span> posts</li>
-                    <li><span class="profile-stat-count">188</span> followers</li>
-                    <li><span class="profile-stat-count">206</span> following</li>
-                </ul>
-
-            </div>
-
-            <div class="profile-bio">
-
-                <p>
-                    <span class="profile-real-name">
-                        <td th:text="${user.name}"></td>
-                    </span><br>
-                    <td th:text="${user.bio}">
-                </p>
-
-            </div>
-
-        </div>
-        <!-- End of profile section -->
-
-    </div>
-    <!-- End of container -->
-</header>
-
-<main>
-
-    <div class="container">
-
-        <div class="gallery">
-
-            <div class="gallery-item" tabindex="0" th:each = "userPost: ${userPosts}" style="width: 250px; height: 250px;">
-
-                <img th:src="@{/post/display(postName = ${userPost.postImgName})}" class="gallery-image" alt="">
-
-                <div class="gallery-item-info">
-
-                    <ul>
-                        <li class="gallery-item-likes"><span class="visually-hidden">Likes:</span><i class="fas fa-heart" aria-hidden="true"></i> 56</li>
-                        <li class="gallery-item-comments"><span class="visually-hidden">Comments:</span><i class="fas fa-comment" aria-hidden="true"></i> 2</li>
-                    </ul>
-
+                                <img th:src="@{/user/display(id = ${user.id})}" alt="" style="width: 150px; height: 150px;">
+                            </button>
+                        </div>
+                    </div>
                 </div>
 
+                <section class="s_1">
+                    <div class="b_1">
+                        <h2><td th:text="${user.id}"></h2>
+                        <div class="b_2">
+                            <div class="b_3">
+                                <a href='/user/edit' th:hidden="${hiddenProfileEditBtn}"> 프로필 편집</a>
+                                <button class="follow-btn" th:hidden="${hiddenFollowBtn}">Follow</button>
+
+                            </div>
+                        </div>
+                        <div class="c_1">
+                            <button class="profile-settings-btn" id="btn-modal2" th:hidden="${hiddenProfileEditBtn}" aria-label="profile settings"><i class="fas fa-cog" aria-hidden="true"></i></button>
+                        </div>
+                    </div>
+
+                    <div class="space">
+                        <div></div>
+                    </div>
+
+                    <ul>
+                        <li>
+                            <div class="d_1">
+                                게시글
+                                <span>
+                                    <span><td th:text="${postCount}"></span>
+                                </span>
+                            </div>
+                        </li>
+                        <li>
+                            <a class="a_tag_1">
+                                <div class="d_1">
+                                    팔로워
+                                    <span>
+                                        <span>
+                                            130
+                                        </span>
+                                    </span>
+                                </div>
+                            </a>
+                        </li>
+                        <li>
+                            <a class="a_tag_1">
+                                <div class="d_1">
+                                    팔로우
+                                    <span>
+                                        <span>
+                                            10
+                                        </span>
+                                    </span>
+                                </div>
+                            </a>
+                        </li>
+
+                    </ul>
+
+                    <div class="e_1">
+                        <span><td th:text="${user.name}"></td></span>
+                        <h1><td th:text="${user.bio}"></h1>
+
+                    </div>
+
+                </section>
+            </header>
+
+            <div class="space2">
+                <div></div>
             </div>
 
+            <div class="gallery">
+                <article class="article_gallery">
+                    <div>
+                        <div class="f_1">
+<!--                            <div th:block th:each="userPost, userPostStat : ${userPosts}">-->
+
+<!--                                <div class="f_3" th:if="${(userPostStat.index+1) % 3 != 1}">-->
+                                    <div class="gallery-item" tabindex="0" th:each="userPost: ${userPosts}">
+
+                                        <img th:src="@{/post/display(postName = ${userPost.postImgName})}"
+                                             class="gallery-image" alt="">
+
+                                        <div class="gallery-item-info">
+
+                                            <ul>
+                                                <li class="gallery-item-likes"><span
+                                                        class="visually-hidden">Likes:</span><i class="fas fa-heart"
+                                                                                                aria-hidden="true"></i>
+                                                    56
+                                                </li>
+                                                <li class="gallery-item-comments"><span class="visually-hidden">Comments:</span><i
+                                                        class="fas fa-comment" aria-hidden="true"></i> 2
+                                                </li>
+                                            </ul>
+
+                                        </div>
+
+                                    </div>
+
+
+<!--                                </div>-->
+
+<!--                            </div>-->
+                        </div>
+                    </div>
+                </article>
+            </div>
         </div>
-        <!-- End of gallery -->
+    </main>
+</section>
 
-        <div class="loader"></div>
 
-    </div>
-    <!-- End of container -->
-</main>
 
 <!-- Modal Windows-->
 <div id="modal_for_profile_img" class="modal-overlay">

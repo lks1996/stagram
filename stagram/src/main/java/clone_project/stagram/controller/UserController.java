@@ -311,14 +311,20 @@ public class UserController {
         BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
         System.out.println(encoder.matches(password, loginMember.getPassword()));
 
-        /** 회원 탈퇴 서비스, jpa에서 처리시키기, css 중복 코드 제거하기 **/
         if (encoder.matches(password, loginMember.getPassword())) {
             postService.deletePost(loginMember.getUser_no());
             userService.deleteProfileImg(loginMember.getUser_no());
             userService.deleteUser(loginMember.getUser_no());
-        }
 
-        return null;
+            HttpSession session = request.getSession();
+
+            session.invalidate();
+
+            return "/";
+        }
+/** profile 페이지 html/css 수정 해야함.. 너무 큼. 그리고 게시글 수정, 삭제 ㄱㄱ **/
+        System.out.println("비밀번호 틀림!!!!");
+        return "userSecession";
     }
 
 

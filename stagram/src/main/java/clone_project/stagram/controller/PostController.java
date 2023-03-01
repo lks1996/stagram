@@ -79,6 +79,8 @@ public class PostController {
 
         PostDTO postDTO = postService.isValidPost(postName);
 
+        System.out.println("프로필 페이지에서 넘어온 포스트 아이디 : " + postName);
+
         //등록된 프로필 사진이 없다면, default 이미지 경로 설정.
         if (postDTO == null) {
             profileImg = SavePath.USER_PROFILE_IMG_DEFAULT;

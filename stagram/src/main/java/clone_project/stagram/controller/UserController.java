@@ -426,6 +426,20 @@ public class UserController {
     }
 
 
+    @GetMapping("/user/info")
+    @ResponseBody
+    public UserDTO userInfo(Long userNo) {
+        System.out.println("넘어온 userNo : " + userNo);
+
+        UserDTO userDTO = userService.findUserByUserNo(userNo);
+
+        //필요없는 정보는 빈 문자열로 바꿔서 뷰 단으로 전송.
+        userDTO.setPassword("");
+        userDTO.setEmail("");
+
+        return userDTO;
+    }
+
 
 /** 현재 시간 구하기 **/
     public String whatTimeIsItNow() {

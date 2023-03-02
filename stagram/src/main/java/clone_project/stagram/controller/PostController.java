@@ -96,6 +96,16 @@ public class PostController {
         return new ResponseEntity<byte[]>(imageByteArray, HttpStatus.OK);
     }
 
+    @GetMapping("/post/info")
+    @ResponseBody
+    public PostDTO postInfo(Long postNo) {
+        System.out.println("넘어온 post_no : " + postNo);
+
+        PostDTO postDTO = postService.findPostByPostNo(postNo);
+
+        return postDTO;
+    }
+
     public String whatTimeIsItNow() {
         Date timestamp = new Timestamp(System.currentTimeMillis());
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");

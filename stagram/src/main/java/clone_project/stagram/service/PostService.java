@@ -67,4 +67,15 @@ public class PostService {
 
         System.out.println("1. 사용자의 게시글 모두 삭제 완료.");
     }
+
+    public PostDTO findPostByPostNo(Long postNo) {
+        Optional<PostEntity> postEntity = jpaPostRepository.findById(postNo);
+
+        if (postEntity.isPresent()) {
+            PostDTO postDTO = Mapper.mapToPostDTO(postEntity);
+            return postDTO;
+        }
+
+        return null;
+    }
 }

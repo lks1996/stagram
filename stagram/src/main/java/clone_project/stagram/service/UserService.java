@@ -140,4 +140,14 @@ public class UserService {
         jpaUserRepository.deleteById(user_no);
         System.out.println("2. 사용자 회원 탈퇴 완료");
     }
+
+    public UserDTO findUserByUserNo(Long user_no) {
+        Optional<UserEntity> userEntity = jpaUserRepository.findById(user_no);
+
+        if (userEntity.isPresent()) {
+            UserDTO userDTO = Mapper.OptionalMapToDTO(userEntity);
+            return userDTO;
+        }
+        return null;
+    }
 }

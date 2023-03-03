@@ -78,4 +78,9 @@ public class PostService {
 
         return null;
     }
+
+    public void deleteOnePost(Long post_no) {
+        jpaPostRepository.deleteById(post_no);
+
+    }
 }

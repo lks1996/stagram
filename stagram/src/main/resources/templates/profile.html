@@ -276,7 +276,7 @@
 
                     </div>
                     <div class="user_contents_space">
-                        
+
                         <section class="section_for_btn">
                             <span>
                                 <img class="icon-react" src="https://s3.ap-northeast-2.amazonaws.com/cdn.wecode.co.kr/bearu/heart.png" alt="하트">
@@ -297,6 +297,7 @@
                         <div class="div_for_contents_and_tags">
                             <ul>
                                 <div class="div_14">
+
                                     <label id="postDetailContents">
                                     </label>
                                 </div>
@@ -318,6 +319,12 @@
                         <section class="section_for_comments_register">
                             <div>
                                 <form>
+                                    <input type="hidden" id="postNo" value="">
+                                    <textarea id="comments" placeholder="댓글 달기..."></textarea>
+                                    <div>
+                                        <button>게시
+                                        </button>
+                                    </div>
 
                                 </form>
                             </div>
@@ -331,6 +338,23 @@
 
         </div>
 
+    </div>
+</div>
+
+<!-- 게시글 3점 버튼 모달 -->
+<div id="modal_for_post_edit" class="modal-overlay">
+    <div class="modal-window">
+        <div class="content">
+            <button id="delete_post-btn">
+                삭제
+            </button>
+            <button id="modify_post-btn">
+                수정
+            </button>
+            <button id="cancel-btn3">
+                취소
+            </button>
+        </div>
     </div>
 </div>
 
@@ -513,6 +537,13 @@ function form_submit(){
 const modal4 = document.getElementById("modal_for_post_detail");
 const cancelBtn3 = document.getElementById("x_btn");
 
+const postDetailUserProfilePic = document.getElementById("postDetailUserProfilePic")
+const postDetailUserId = document.getElementById("postDetailUserId")
+const postDetailRegdate = document.getElementById("postDetailRegdate")
+const postDetailContents = document.getElementById("postDetailContents")
+const postNumber = document.getElementById("postNo")
+
+
 function modal4On() {
     modal4.style.display = "flex"
 }
@@ -553,32 +584,68 @@ function postDetailModal(postNo, postName){
 
             console.log(post);
 
-<!--            $.ajax({-->
-<!--                    url:'/user/info',-->
-<!--                    type:'get',-->
-<!--                    data:{userNo:post.user_no},-->
-<!--                    success:function(user){-->
-<!--                    console.log(user);-->
-
-
-
-<!--                    }-->
-<!--            });-->
-
-            document.getElementById("postDetailUserProfilePic").src = "/user/display?id=" + post.user_id;
-            document.getElementById("postDetailUserId").innerText = post.user_id;
-            document.getElementById("postDetailRegdate").innerText = post.post_regDate;
-            document.getElementById("postDetailContents").innerText = post.contents;
-
-
-
-
-
+            postDetailUserProfilePic.src = "/user/display?id=" + post.user_id;
+            postDetailUserId.innerText = post.user_id;
+            postDetailRegdate.innerText = post.post_regDate;
+            postDetailContents.innerText = post.contents;
+            postNumber.value = post.post_no;
             }
     });
 
     modal4On();
 }
+
+
+<!-- 게시글 3점 모달 -->
+const modal5 = document.getElementById("modal_for_post_edit");
+const three_dot_btn = document.getElementById("postEdit_btn");
+
+const deleteBtn = document.getElementById("delete_post-btn");
+const modifyBtn = document.getElementById("modify_post-btn");
+const closeBtn3 = document.getElementById("cancel-btn3");
+
+function modal5On() {
+    modal5.style.display = "flex"
+    document.body.style.overflow = 'hidden';
+}
+
+function isModal5On() {
+    return modal5.style.display === "flex"
+}
+
+function modal5Off() {
+    modal5.style.display = "none"
+    document.body.style.overflow = 'unset';
+
+}
+
+three_dot_btn.addEventListener("click", e => {
+    modal5On()
+})
+
+closeBtn3.addEventListener("click", e => {
+    modal5Off()
+})
+
+modal5.addEventListener("click", e => {
+    const evTarget = e.target
+    if(evTarget.classList.contains("modal-overlay")) {
+        modal5Off()
+    }
+})
+
+deleteBtn.addEventListener("click", e => {
+    $.ajax({
+        url:'/post/delete',
+        type:'post',
+        data: {postNo:postNumber.value},
+        success:function(result){
+            console.log(result);
+            window.location.href="/profile?id=" + postDetailUserId.innerText;
+        }
+    });
+})
+
 
 </script>
 </body>

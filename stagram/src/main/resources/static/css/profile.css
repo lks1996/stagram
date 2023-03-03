@@ -484,7 +484,8 @@ header{
 }
 
 
-#modal_for_profile_img .content {
+#modal_for_profile_img .content,
+#modal_for_post_edit .content {
     position: relative;
     margin-top: 10px;
     padding: 0;
@@ -533,7 +534,8 @@ header{
      vertical-align: middle;
  }
 
-.cancel-btn, .cancel-btn2, .logout-btn{
+.cancel-btn, .cancel-btn2, .logout-btn,
+#delete_post-btn, #modify_post-btn, #cancel-btn3{
     background-color: transparent;
     border-bottom: 0;
     border-left: 0;
@@ -868,6 +870,7 @@ width: 100%;
     width: 450px;
     height: 500px;
     background-color: white;
+    border-radius: 8px;
 }
 
 
@@ -1196,4 +1199,67 @@ display: flex;
     font-size: 100%;
     margin: 0;
     padding: 0;
+    height: 30px;
+    align-items: center;
+}
+
+
+
+
+#modal_for_post_edit .modal-window {
+    align-items: stretch;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    background: #fafafa;
+    border-radius: 10px;
+    border: 0;
+    width: 400px;
+    height: fit-content;
+    position: relative;
+    justify-content: center;
+    margin: 0;
+    padding: 0;
+    vertical-align: baseline;
+}
+
+#modal_for_post_edit .content{
+    margin: 0;
+}
+
+#delete_post-btn{
+    color: red;
+}
+
+#comments{
+    height: 18px !important;
+    border: none;
+    background-color: white;
+    resize: none;
+    width: 0;
+    max-height: 80px;
+    padding: 0;
+    display: flex;
+    flex-grow: 1;
+    outline: none;
+    max-width: 100%;
+    font-size: 16px;
+}
+
+.section_for_comments_register button{
+    font-weight: 600;
+    display: inline;
+    border: none;
+    text-overflow: ellipsis;
+    padding: 0;
+    appearance: none;
+    background-color: transparent;
+    cursor: pointer;
+    touch-action: manipulation;
+    min-width: 0;
+    margin: 0;
+    color: #4d90fe;
+    user-select: none;
+    text-align: center;
+    font-size: .875rem;
 }

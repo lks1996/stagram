@@ -35,6 +35,8 @@ public class PostController {
     }
 
 
+
+    /** 게시글 업로드 **/
     @PostMapping("/upload/post")
     public String upload_profile_pic(@SessionAttribute(name =SessionConst.LOGIN_MEMBER) UserDTO loginMember, @RequestParam MultipartFile postImg,
                                      @RequestParam String postContentsInForm) throws Exception{
@@ -73,6 +75,30 @@ public class PostController {
         return "redirect:/";
     }
 
+
+
+/** 게시글 삭제. **/
+    @PostMapping("/post/delete")
+    @ResponseBody
+    public String deletePost(@RequestParam String postNo) {
+        System.out.println("삭제할 게시글 postNo : " + postNo);
+
+        postService.deleteOnePost(Long.valueOf(postNo));
+
+        //postNo 게시글이 삭제되었는지 확인
+        PostDTO postDTO = postService.findPostByPostNo(Long.valueOf(postNo));
+        if (postDTO == null) {
+            return "delete_success";
+
+        }
+
+
+        return null;
+    }
+
+
+
+/** 게시글 사진 가져오기 **/
     @GetMapping(value = "/post/display", produces = MediaType.IMAGE_JPEG_VALUE)
     public ResponseEntity<byte[]> postDisplay(@SessionAttribute(name =SessionConst.LOGIN_MEMBER) UserDTO loginMember, String postName) throws IOException {
         String profileImg;
@@ -96,6 +122,7 @@ public class PostController {
         return new ResponseEntity<byte[]>(imageByteArray, HttpStatus.OK);
     }
 
+/** 게시글 정보 넘겨주기. **/
     @GetMapping("/post/info")
     @ResponseBody
     public PostDTO postInfo(Long postNo) {

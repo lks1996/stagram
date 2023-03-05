@@ -52,4 +52,17 @@ public class JpaPostRepositoryCustomImpl implements JpaPostRepositoryCustom {
         em.clear();
     }
 
+    @Override
+    public void updatePostContents(Long post_no, String contents) {
+        System.out.println("post_no " + post_no + "인 게시글의 내용을 " + contents + "로 수정시작.");
+
+        em.createQuery("update PostEntity m set m.contents =:contents where m.post_no = :post_no")
+                .setParameter("contents", contents)
+                .setParameter("post_no", post_no)
+                .executeUpdate();
+        em.clear();
+
+        System.out.println("수정 완료");
+    }
+
 }

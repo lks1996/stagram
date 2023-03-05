@@ -20,8 +20,6 @@ public class PostEntity implements Serializable {
     @Column(name = "post_regDate")
     private String post_regDate;
 
-//    @Column(name = "user_no")
-//    private Long user_no;
     @Column(name = "user_id")
     private String user_id;
 
@@ -42,7 +40,6 @@ public class PostEntity implements Serializable {
         this.post_no = post_no;
         this.contents = contents;
         this.post_regDate = post_regDate;
-//        this.user_no = user_no;
         this.user_id = user_id;
         this.postImgOriginName = postImgOriginName;
         this.postImgName = postImgName;

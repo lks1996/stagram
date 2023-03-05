@@ -18,10 +18,9 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.sql.Timestamp;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.UUID;
+
+import static clone_project.stagram.WhatTime.whatTimeIsItNow;
 
 @Controller
 public class PostController {
@@ -36,7 +35,7 @@ public class PostController {
 
 
 
-    /** 게시글 업로드 **/
+/** 게시글 업로드 **/
     @PostMapping("/upload/post")
     public String upload_profile_pic(@SessionAttribute(name =SessionConst.LOGIN_MEMBER) UserDTO loginMember, @RequestParam MultipartFile postImg,
                                      @RequestParam String postContentsInForm) throws Exception{
@@ -77,6 +76,22 @@ public class PostController {
 
 
 
+
+
+/** 게시글 수정. **/
+    @PostMapping("/post/update")
+    @ResponseBody
+    public String updatePost(@RequestParam Long postNo, @RequestParam String postContents) {
+        System.out.println(postNo + "|||||||||" + postContents);
+
+        postService.updatePostContents(postNo, postContents);
+
+        return null;
+    }
+
+
+
+
 /** 게시글 삭제. **/
     @PostMapping("/post/delete")
     @ResponseBody
@@ -105,7 +120,7 @@ public class PostController {
 
         PostDTO postDTO = postService.isValidPost(postName);
 
-        System.out.println("프로필 페이지에서 넘어온 포스트 아이디 : " + postName);
+        System.out.println("프로필 페이지에서 넘어온 포스트 네임 : " + postName);
 
         //등록된 프로필 사진이 없다면, default 이미지 경로 설정.
         if (postDTO == null) {
@@ -133,13 +148,4 @@ public class PostController {
         return postDTO;
     }
 
-    public String whatTimeIsItNow() {
-        Date timestamp = new Timestamp(System.currentTimeMillis());
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-        String now_dt = sdf.format(timestamp);
-
-        System.out.println(now_dt);
-
-        return now_dt;
-    }
 }

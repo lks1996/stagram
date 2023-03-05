@@ -1138,6 +1138,18 @@ display: flex;
     vertical-align: baseline;
 }
 
+.div_14 textarea{
+    width: 100%;
+    font-size: 14px;
+    background: transparent;
+    border: none;
+    appearance: none;
+    height: 100%;
+    padding: 0px;
+    resize: none;
+    outline: none;
+}
+
 .div_for_regDate{
     padding-left: 16px;
     order: 5;
@@ -1246,7 +1258,7 @@ display: flex;
     font-size: 16px;
 }
 
-.section_for_comments_register button{
+.section_for_comments_register button, #postModify_btn {
     font-weight: 600;
     display: inline;
     border: none;

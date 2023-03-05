@@ -1,8 +1,10 @@
 package clone_project.stagram;
 
+import clone_project.stagram.DTO.CommentsDTO;
 import clone_project.stagram.DTO.PostDTO;
 import clone_project.stagram.DTO.UserDTO;
 import clone_project.stagram.DTO.UserProfileImgDTO;
+import clone_project.stagram.Entity.CommentsEntity;
 import clone_project.stagram.Entity.PostEntity;
 import clone_project.stagram.Entity.UserEntity;
 import clone_project.stagram.Entity.UserProfileImgEntity;
@@ -119,5 +121,12 @@ public class Mapper {
                 .map(post -> modelMapper.map(post, PostDTO.class))
                 .collect(Collectors.toList());
         return postDTO;
+    }
+
+    public static CommentsEntity mapToCommentsEntity(CommentsDTO commentsDTO, UserEntity userEntity, PostEntity postEntity) {
+        CommentsEntity commentsEntity = new CommentsEntity(commentsDTO.getComments_no(), commentsDTO.getComments_regDate(),
+                commentsDTO.getComments_contents(), userEntity, postEntity);
+
+        return commentsEntity;
     }
 }

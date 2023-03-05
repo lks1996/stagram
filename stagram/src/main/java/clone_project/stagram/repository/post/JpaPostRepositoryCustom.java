@@ -16,4 +16,5 @@ public interface JpaPostRepositoryCustom {
 
     void deleteByUserNo(Long user_no);
 
+    void updatePostContents(Long post_no, String contents);
 }

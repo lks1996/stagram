@@ -32,6 +32,11 @@ public class config {
 //    }
 
     @Bean
+    public WhatTime whatTime() {
+        return new WhatTime();
+    }
+
+    @Bean
     public Mapper mapper() {
         ModelMapper modelMapper = new ModelMapper();
         return new Mapper(modelMapper);

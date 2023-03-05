@@ -28,11 +28,10 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.sql.Timestamp;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.List;
 import java.util.UUID;
+
+import static clone_project.stagram.WhatTime.whatTimeIsItNow;
 
 @Controller
 public class UserController {
@@ -322,7 +321,7 @@ public class UserController {
 
             return "/";
         }
-/** profile 페이지 html/css 수정 해야함.. 너무 큼. 그리고 게시글 수정, 삭제 ㄱㄱ **/
+
         System.out.println("비밀번호 틀림!!!!");
         return "userSecession";
     }
@@ -425,7 +424,7 @@ public class UserController {
         return new ResponseEntity<byte[]>(imageByteArray, HttpStatus.OK);
     }
 
-
+/** 유저 정보 가져오기 **/
     @GetMapping("/user/info")
     @ResponseBody
     public UserDTO userInfo(Long userNo) {
@@ -440,15 +439,4 @@ public class UserController {
         return userDTO;
     }
 
-
-/** 현재 시간 구하기 **/
-    public String whatTimeIsItNow() {
-        Date timestamp = new Timestamp(System.currentTimeMillis());
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-        String now_dt = sdf.format(timestamp);
-
-        System.out.println(now_dt);
-
-        return now_dt;
-    }
 }

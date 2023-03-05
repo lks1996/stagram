@@ -220,6 +220,7 @@
 
 <!-- 게시글 자세히 보기 모달 -->
 <div id="modal_for_post_detail" class="modal-overlay">
+<!--    <iframe src="http://tcpschool.com" id="chat_iframe">대체 내용</iframe>-->
 
     <div class="div_for_x_btn_outer">
         <div class="div_for_x_btn_inner">
@@ -270,6 +271,9 @@
                                     <img class="icon-react icon-more" src="https://s3.ap-northeast-2.amazonaws.com/cdn.wecode.co.kr/bearu/more.png" alt="more">
                                 </button>
 
+                                <button id="postModify_btn" style="display='none;">
+                                    수정
+                                </button>
                             </div>
 
                         </div>
@@ -298,8 +302,12 @@
                             <ul>
                                 <div class="div_14">
 
-                                    <label id="postDetailContents">
-                                    </label>
+                                    <form id="update_contents_form" action="/post/update" method="post">
+                                        <input type="hidden" id="postNo" name="postNo" value="">
+                                        <textarea id="postDetailContents" name="postContents" readonly></textarea>
+                                    </form>
+
+
                                 </div>
                             </ul>
                         </div>
@@ -318,12 +326,11 @@
 
                         <section class="section_for_comments_register">
                             <div>
-                                <form>
-                                    <input type="hidden" id="postNo" value="">
-                                    <textarea id="comments" placeholder="댓글 달기..."></textarea>
+                                <form action="/comments/register" method="post">
+                                    <input type="hidden" id="postNoForComments" name="post_no" value="">
+                                    <textarea id="comments" name="comments_contents" placeholder="댓글 달기..."></textarea>
                                     <div>
-                                        <button>게시
-                                        </button>
+                                        <button>게시</button>
                                     </div>
 
                                 </form>
@@ -410,6 +417,7 @@ const closeBtn2 = modal2.querySelector(".cancel-btn2")
 
 function modalOn2() {
     modal2.style.display = "flex"
+    document.body.style.overflow = 'hidden';
 }
 
 function isModalOn2() {
@@ -418,6 +426,7 @@ function isModalOn2() {
 
 function modalOff2() {
     modal2.style.display = "none"
+    document.body.style.overflow = 'unset';
 }
 
 btnModal2.addEventListener("click", e => {
@@ -459,11 +468,13 @@ const postContentsInForm = document.getElementById('postContentsInForm')
 
 function modal3On() {
     modal3.style.display = "flex"
+    document.body.style.overflow = 'hidden';
     btnSelectImg.style.display = "flex"
 }
 
 function modal3Off() {
     modal3.style.display = "none"
+    document.body.style.overflow = 'unset';
     preview.src = "";
     preview.style.display = "none"
     nextBtn.style.display = "none"
@@ -537,40 +548,53 @@ function form_submit(){
 const modal4 = document.getElementById("modal_for_post_detail");
 const cancelBtn3 = document.getElementById("x_btn");
 
-const postDetailUserProfilePic = document.getElementById("postDetailUserProfilePic")
-const postDetailUserId = document.getElementById("postDetailUserId")
-const postDetailRegdate = document.getElementById("postDetailRegdate")
-const postDetailContents = document.getElementById("postDetailContents")
-const postNumber = document.getElementById("postNo")
+const postDetailUserProfilePic = document.getElementById("postDetailUserProfilePic");
+const postDetailUserId = document.getElementById("postDetailUserId");
+const postDetailRegdate = document.getElementById("postDetailRegdate");
+const postDetailContents = document.getElementById("postDetailContents");
+const postNumberForComments = document.getElementById("postNoForComments");
+const comments_submit_btn = document.getElementById("comments_submit_btn");
 
+const modal5 = document.getElementById("modal_for_post_edit");
+const three_dot_btn = document.getElementById("postEdit_btn");
+const postModify_btn = document.getElementById("postModify_btn");
+
+const deleteBtn = document.getElementById("delete_post-btn");
+const modifyBtn = document.getElementById("modify_post-btn");
+const closeBtn3 = document.getElementById("cancel-btn3");
 
 function modal4On() {
-    modal4.style.display = "flex"
+    modal4.style.display = "flex";
+    document.body.style.overflow = 'hidden';
+    three_dot_btn.style.display = "flex";
+    postModify_btn.style.display = "none";
+    postDetailContents.readOnly = true;
 }
 
 function modal4Off() {
-    modal4.style.display = "none"
+    modal4.style.display = "none";
+    document.body.style.overflow = 'unset';
 }
 
 function isModal4On() {
-    return modal4.style.display === "flex"
+    return modal4.style.display === "flex";
 }
 
 cancelBtn3.addEventListener("click", e => {
-    modal4Off()
+    modal4Off();
 })
 
 modal4.addEventListener("click", e => {
-    const evTarget = e.target
+    const evTarget = e.target;
     if(evTarget.classList.contains("modal-overlay")) {
-        modal4Off()
+        modal4Off();
     }
 })
 
 function postDetailModal(postNo, postName){
 
     const address = "/post/display?postName=" + postName;
-    console.log("/post/display" + postName)
+    console.log("/post/display" + postName);
 
     const imgSrc = document.getElementById("img_for_modal");
 
@@ -579,6 +603,7 @@ function postDetailModal(postNo, postName){
     $.ajax({
             url:'/post/info',
             type:'get',
+            cache : false,
             data:{postNo:postNo},
             success:function(post){
 
@@ -588,7 +613,8 @@ function postDetailModal(postNo, postName){
             postDetailUserId.innerText = post.user_id;
             postDetailRegdate.innerText = post.post_regDate;
             postDetailContents.innerText = post.contents;
-            postNumber.value = post.post_no;
+            postNumberForComments.value = post.post_no;
+            document.getElementById("postNo").value = post.post_no;
             }
     });
 
@@ -597,12 +623,7 @@ function postDetailModal(postNo, postName){
 
 
 <!-- 게시글 3점 모달 -->
-const modal5 = document.getElementById("modal_for_post_edit");
-const three_dot_btn = document.getElementById("postEdit_btn");
 
-const deleteBtn = document.getElementById("delete_post-btn");
-const modifyBtn = document.getElementById("modify_post-btn");
-const closeBtn3 = document.getElementById("cancel-btn3");
 
 function modal5On() {
     modal5.style.display = "flex"
@@ -610,27 +631,27 @@ function modal5On() {
 }
 
 function isModal5On() {
-    return modal5.style.display === "flex"
+    return modal5.style.display === "flex";
 }
 
 function modal5Off() {
-    modal5.style.display = "none"
+    modal5.style.display = "none";
     document.body.style.overflow = 'unset';
 
 }
 
 three_dot_btn.addEventListener("click", e => {
-    modal5On()
+    modal5On();
 })
 
 closeBtn3.addEventListener("click", e => {
-    modal5Off()
+    modal5Off();
 })
 
 modal5.addEventListener("click", e => {
-    const evTarget = e.target
+    const evTarget = e.target;
     if(evTarget.classList.contains("modal-overlay")) {
-        modal5Off()
+        modal5Off();
     }
 })
 
@@ -638,13 +659,32 @@ deleteBtn.addEventListener("click", e => {
     $.ajax({
         url:'/post/delete',
         type:'post',
-        data: {postNo:postNumber.value},
+        data: {postNo:postNumberForComments.value},
         success:function(result){
             console.log(result);
             window.location.href="/profile?id=" + postDetailUserId.innerText;
         }
     });
 })
+
+modifyBtn.addEventListener("click", e => {
+    three_dot_btn.style.display = "none";
+    postModify_btn.style.display = "flex";
+    postDetailContents.readOnly = false;
+    postDetailContents.focus();
+
+    modal5Off();
+})
+
+postModify_btn.addEventListener("click", e => {
+    document.getElementById("update_contents_form").submit();
+})
+
+
+
+
+
+
 
 
 </script>

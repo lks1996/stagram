@@ -36,6 +36,9 @@ public class UserEntity implements Serializable {
     @OneToMany(cascade = CascadeType.PERSIST, orphanRemoval = true)
     private List<UserProfileImgEntity> userProfileImgEntityList = new ArrayList<>();
 
+    @OneToMany(cascade = CascadeType.PERSIST, orphanRemoval = true)
+    private List<CommentsEntity> commentsEntityList = new ArrayList<>();
+
     @Builder
     public UserEntity(Long user_no, String email, String user_id,
                       String password, String name, String bio,

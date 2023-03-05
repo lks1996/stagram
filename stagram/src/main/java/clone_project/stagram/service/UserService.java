@@ -33,7 +33,7 @@ public class UserService {
     }
 
 
-    /** 전체 회원 조회 **/
+/** 전체 회원 조회 **/
     @Transactional
     public List<UserDTO> findAllMembers() {
         List<UserEntity> userEntity = jpaUserRepository.findAll();
@@ -42,6 +42,7 @@ public class UserService {
         return userDto;
     }
 
+/** 이메일이 유효한지 판별 및 해당 이메일 유저 DTO 리턴 **/
     public UserDTO isDuplicateEmail(String email) {
         Optional<UserEntity> userEntity = jpaUserRepositoryCustom.findByEmail(email);
 
@@ -54,6 +55,7 @@ public class UserService {
         return null;
     }
 
+/** 아이디가 유효한지 판별 및 해당 아이디 유저 DTO 리턴 **/
     public UserDTO isDuplicateId(String id) {
         Optional<UserEntity> userEntity = jpaUserRepositoryCustom.findById(id);
         if (userEntity.isPresent()) {
@@ -64,6 +66,7 @@ public class UserService {
         return null;
     }
 
+/** 회원 등록(가입) **/
     public void register(UserDTO userDTO) {
         BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
         System.out.println("암호화 전 pw : " + userDTO.getPassword());
@@ -77,12 +80,13 @@ public class UserService {
         jpaUserRepository.save(userEntity);
     }
 
+/** 회원 정보 수정 **/
     public void updateProfile(UserDTO updatedUserDTO) {
         UserEntity updatedUserEntity = Mapper.mapToEntity(updatedUserDTO);
         jpaUserRepository.save(updatedUserEntity);
     }
 
-
+/** 로그인 **/
     public UserDTO login(String idOrEmail) {
         //전달 받은 데이터가 이메일이면,
         if (idOrEmail.contains("@") && idOrEmail.contains(".")) {
@@ -108,6 +112,7 @@ public class UserService {
         return null;
     }
 
+/** 회원 프로필 사진 업로드 **/
     public void saveProfileImg(UserProfileImgDTO userProfileImgDTO, UserDTO userDTO) {
         UserEntity userEntity = Mapper.mapToEntity(userDTO);
         UserProfileImgEntity userProfileImgEntity = Mapper.mapToUserProfileImgEntity(userProfileImgDTO, userEntity);
@@ -116,7 +121,7 @@ public class UserService {
     }
 
 
-/** 사용자가 프로필 사진을 등록했었는지 판별 **/
+/** 사용자가 프로필 사진을 등록했었는지 판별 및 프로필 사진 DTO 리턴 **/
     public UserProfileImgDTO hasProfileImg(UserDTO userDTO) {
         Optional<UserProfileImgEntity> userProfileImgEntity = jpaUserProfileImgRepositoryCustom.findByUserNo(userDTO.getUser_no());
 
@@ -128,6 +133,7 @@ public class UserService {
         return null;
     }
 
+/** 프로필 사진 삭제 **/
     @Transactional
     public void deleteProfileImg(Long user_no) {
         jpaUserProfileImgRepositoryCustom.deleteByUserNo(user_no);
@@ -136,11 +142,13 @@ public class UserService {
 
     }
 
+/** 회원 탈퇴 **/
     public void deleteUser(Long user_no) {
         jpaUserRepository.deleteById(user_no);
         System.out.println("2. 사용자 회원 탈퇴 완료");
     }
 
+/** 회원 번호에 해당하는 회원이 있는지 확인(회원 탈퇴 후 검증용) **/
     public UserDTO findUserByUserNo(Long user_no) {
         Optional<UserEntity> userEntity = jpaUserRepository.findById(user_no);
 

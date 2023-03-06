@@ -4,5 +4,5 @@ import clone_project.stagram.Entity.CommentsEntity;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 
-public interface JpaCommentsRepository extends JpaRepository<CommentsEntity, Long> {
+public interface JpaCommentsRepository extends JpaRepository<CommentsEntity, Long>, JpaCommentsRepositoryCustom {
 }

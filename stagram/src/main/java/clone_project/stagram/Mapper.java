@@ -41,6 +41,8 @@ public class Mapper {
         return userEntity;
     }
 
+
+
     public UserDTO mapToDTO(UserEntity userEntity) {
         UserDTO userDTO = modelMapper.map(userEntity, UserDTO.class);
         return userDTO;
@@ -128,5 +130,13 @@ public class Mapper {
                 commentsDTO.getComments_contents(), userEntity, postEntity);
 
         return commentsEntity;
+    }
+
+    public static List<CommentsDTO> ListMapToCommentsDTO(List<CommentsEntity> commentsEntities) {
+        List<CommentsDTO> commentsDTOS = commentsEntities
+                .stream()
+                .map(comments -> modelMapper.map(comments, CommentsDTO.class))
+                .collect(Collectors.toList());
+        return commentsDTOS;
     }
 }

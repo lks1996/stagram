@@ -1,9 +1,11 @@
 package clone_project.stagram.controller;
 
+import clone_project.stagram.DTO.CommentsDTO;
 import clone_project.stagram.DTO.PostDTO;
 import clone_project.stagram.DTO.UserDTO;
 import clone_project.stagram.SavePath;
 import clone_project.stagram.SessionConst;
+import clone_project.stagram.service.CommentsService;
 import clone_project.stagram.service.PostService;
 import clone_project.stagram.service.UserService;
 import org.apache.commons.io.IOUtils;
@@ -11,6 +13,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -18,6 +21,7 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.List;
 import java.util.UUID;
 
 import static clone_project.stagram.WhatTime.whatTimeIsItNow;
@@ -27,10 +31,12 @@ public class PostController {
 
     private final PostService postService;
     private final UserService userService;
+    private final CommentsService commentsService;
 
-    public PostController(PostService postService, UserService userService) {
+    public PostController(PostService postService, UserService userService, CommentsService commentsService) {
         this.postService = postService;
         this.userService = userService;
+        this.commentsService = commentsService;
     }
 
 
@@ -95,13 +101,14 @@ public class PostController {
 /** 게시글 삭제. **/
     @PostMapping("/post/delete")
     @ResponseBody
-    public String deletePost(@RequestParam String postNo) {
+    public String deletePost(@RequestParam Long postNo) {
         System.out.println("삭제할 게시글 postNo : " + postNo);
 
-        postService.deleteOnePost(Long.valueOf(postNo));
+        commentsService.deleteAllComments(postNo);
+        postService.deleteOnePost(postNo);
 
         //postNo 게시글이 삭제되었는지 확인
-        PostDTO postDTO = postService.findPostByPostNo(Long.valueOf(postNo));
+        PostDTO postDTO = postService.findPostByPostNo(postNo);
         if (postDTO == null) {
             return "delete_success";
 
@@ -146,6 +153,33 @@ public class PostController {
         PostDTO postDTO = postService.findPostByPostNo(postNo);
 
         return postDTO;
+    }
+
+    @GetMapping("/post/page")
+    public String postDetail(@SessionAttribute(name =SessionConst.LOGIN_MEMBER) UserDTO loginMember, String postName, Model model) {
+        System.out.println("EKEKEKEKEKEKEK!! = " + postName);
+
+        PostDTO postDTO = postService.isValidPost(postName);
+
+        if (postDTO == null) {
+            return null;
+        }
+
+        System.out.println("postDTO.getUser_no() == " + postDTO.getUser_no());
+        System.out.println("loginMember.getUser_no() == " + loginMember.getUser_no());
+        System.out.println("postDTO.getUser_no().equals(loginMember.getUser_no() == " + postDTO.getUser_no().equals(loginMember.getUser_no()));
+
+        if (postDTO.getUser_no().equals(loginMember.getUser_no())) {
+            model.addAttribute("hiddenThreeDotBtn", false);
+        } else {
+            model.addAttribute("hiddenThreeDotBtn", true);
+        }
+
+        List<CommentsDTO> comments = commentsService.findCommentsByPostNo(postDTO.getPost_no());
+
+        model.addAttribute("comments", comments);
+        model.addAttribute("post", postDTO);
+        return "postDetail";
     }
 
 }

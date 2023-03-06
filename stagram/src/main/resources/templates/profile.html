@@ -220,7 +220,7 @@
 
 <!-- 게시글 자세히 보기 모달 -->
 <div id="modal_for_post_detail" class="modal-overlay">
-<!--    <iframe src="http://tcpschool.com" id="chat_iframe">대체 내용</iframe>-->
+    <iframe src="" id="post_detail_iframe" scrolling="no">대체 내용</iframe>
 
     <div class="div_for_x_btn_outer">
         <div class="div_for_x_btn_inner">
@@ -229,141 +229,8 @@
             </button>
         </div>
     </div>
-
-    <div class="modal-window">
-        <div class="div_for_pic_and_detail">
-            <div class="div_for_pic">
-                <div class="img_outer">
-                    <img src="" id="img_for_modal"/>
-                </div>
-            </div>
-            <div class="div_for_detail">
-                <div class="detail_outer">
-                    <div class="user_name_bar">
-                        <div class="divide_bar">
-                            <header class="header_11">
-                                <div class="div_for_user_profile_picture">
-                                    <div>
-                                        <div>
-                                            <div class="img_outer_div">
-                                                <img id="postDetailUserProfilePic" src=""/>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="div_for_user_name">
-                                    <div class="div_11">
-                                        <div class="div_12">
-                                            <div class="div_13">
-                                                <a>
-                                                    <label id="postDetailUserId">
-                                                    </label>
-                                                </a>
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                </div>
-
-                            </header>
-                            <div class="div_for_three_dot_btn">
-                                <button id="postEdit_btn">
-                                    <img class="icon-react icon-more" src="https://s3.ap-northeast-2.amazonaws.com/cdn.wecode.co.kr/bearu/more.png" alt="more">
-                                </button>
-
-                                <button id="postModify_btn" style="display='none;">
-                                    수정
-                                </button>
-                            </div>
-
-                        </div>
-
-                    </div>
-                    <div class="user_contents_space">
-
-                        <section class="section_for_btn">
-                            <span>
-                                <img class="icon-react" src="https://s3.ap-northeast-2.amazonaws.com/cdn.wecode.co.kr/bearu/heart.png" alt="하트">
-                            </span>
-                            <span>
-                                <img class="icon-react" src="https://s3.ap-northeast-2.amazonaws.com/cdn.wecode.co.kr/bearu/comment.png" alt="말풍선">
-                            </span>
-                            <span>
-                                <img class="icon-react" src="images/dm.png" alt="DM">
-                            </span>
-
-                        </section>
-                        <section class="section_for_liked_people">
-                            <div>
-                            </div>
-                        </section>
-
-                        <div class="div_for_contents_and_tags">
-                            <ul>
-                                <div class="div_14">
-
-                                    <form id="update_contents_form" action="/post/update" method="post">
-                                        <input type="hidden" id="postNo" name="postNo" value="">
-                                        <textarea id="postDetailContents" name="postContents" readonly></textarea>
-                                    </form>
-
-
-                                </div>
-                            </ul>
-                        </div>
-
-                        <div class="div_for_regDate">
-                            <div class="div_15">
-                                <div class="div_16">
-                                    <a>
-                                        <label id="postDetailRegdate">
-                                        </label>
-
-                                    </a>
-                                </div>
-                            </div>
-                        </div>
-
-                        <section class="section_for_comments_register">
-                            <div>
-                                <form action="/comments/register" method="post">
-                                    <input type="hidden" id="postNoForComments" name="post_no" value="">
-                                    <textarea id="comments" name="comments_contents" placeholder="댓글 달기..."></textarea>
-                                    <div>
-                                        <button>게시</button>
-                                    </div>
-
-                                </form>
-                            </div>
-                        </section>
-
-                    </div>
-
-                </div>
-
-            </div>
-
-        </div>
-
-    </div>
 </div>
 
-<!-- 게시글 3점 버튼 모달 -->
-<div id="modal_for_post_edit" class="modal-overlay">
-    <div class="modal-window">
-        <div class="content">
-            <button id="delete_post-btn">
-                삭제
-            </button>
-            <button id="modify_post-btn">
-                수정
-            </button>
-            <button id="cancel-btn3">
-                취소
-            </button>
-        </div>
-    </div>
-</div>
 
 
 <script>
@@ -548,27 +415,9 @@ function form_submit(){
 const modal4 = document.getElementById("modal_for_post_detail");
 const cancelBtn3 = document.getElementById("x_btn");
 
-const postDetailUserProfilePic = document.getElementById("postDetailUserProfilePic");
-const postDetailUserId = document.getElementById("postDetailUserId");
-const postDetailRegdate = document.getElementById("postDetailRegdate");
-const postDetailContents = document.getElementById("postDetailContents");
-const postNumberForComments = document.getElementById("postNoForComments");
-const comments_submit_btn = document.getElementById("comments_submit_btn");
-
-const modal5 = document.getElementById("modal_for_post_edit");
-const three_dot_btn = document.getElementById("postEdit_btn");
-const postModify_btn = document.getElementById("postModify_btn");
-
-const deleteBtn = document.getElementById("delete_post-btn");
-const modifyBtn = document.getElementById("modify_post-btn");
-const closeBtn3 = document.getElementById("cancel-btn3");
-
 function modal4On() {
     modal4.style.display = "flex";
     document.body.style.overflow = 'hidden';
-    three_dot_btn.style.display = "flex";
-    postModify_btn.style.display = "none";
-    postDetailContents.readOnly = true;
 }
 
 function modal4Off() {
@@ -593,92 +442,29 @@ modal4.addEventListener("click", e => {
 
 function postDetailModal(postNo, postName){
 
-    const address = "/post/display?postName=" + postName;
-    console.log("/post/display" + postName);
+    document.getElementById("post_detail_iframe").src = "/post/page?postName=" + postName;
 
-    const imgSrc = document.getElementById("img_for_modal");
+<!--    $.ajax({-->
+<!--            url:'/post/info',-->
+<!--            type:'get',-->
+<!--            cache : false,-->
+<!--            data:{postNo:postNo},-->
+<!--            success:function(post){-->
 
-    imgSrc.src = address;
+<!--            console.log(post);-->
 
-    $.ajax({
-            url:'/post/info',
-            type:'get',
-            cache : false,
-            data:{postNo:postNo},
-            success:function(post){
-
-            console.log(post);
-
-            postDetailUserProfilePic.src = "/user/display?id=" + post.user_id;
-            postDetailUserId.innerText = post.user_id;
-            postDetailRegdate.innerText = post.post_regDate;
-            postDetailContents.innerText = post.contents;
-            postNumberForComments.value = post.post_no;
-            document.getElementById("postNo").value = post.post_no;
-            }
-    });
+<!--            postDetailUserProfilePic.src = "/user/display?id=" + post.user_id;-->
+<!--            postDetailUserId.innerText = post.user_id;-->
+<!--            postDetailRegdate.innerText = post.post_regDate;-->
+<!--            postDetailContents.innerText = post.contents;-->
+<!--            postNumberForComments.value = post.post_no;-->
+<!--            document.getElementById("postNo").value = post.post_no;-->
+<!--            }-->
+<!--    });-->
 
     modal4On();
 }
 
-
-<!-- 게시글 3점 모달 -->
-
-
-function modal5On() {
-    modal5.style.display = "flex"
-    document.body.style.overflow = 'hidden';
-}
-
-function isModal5On() {
-    return modal5.style.display === "flex";
-}
-
-function modal5Off() {
-    modal5.style.display = "none";
-    document.body.style.overflow = 'unset';
-
-}
-
-three_dot_btn.addEventListener("click", e => {
-    modal5On();
-})
-
-closeBtn3.addEventListener("click", e => {
-    modal5Off();
-})
-
-modal5.addEventListener("click", e => {
-    const evTarget = e.target;
-    if(evTarget.classList.contains("modal-overlay")) {
-        modal5Off();
-    }
-})
-
-deleteBtn.addEventListener("click", e => {
-    $.ajax({
-        url:'/post/delete',
-        type:'post',
-        data: {postNo:postNumberForComments.value},
-        success:function(result){
-            console.log(result);
-            window.location.href="/profile?id=" + postDetailUserId.innerText;
-        }
-    });
-})
-
-modifyBtn.addEventListener("click", e => {
-    three_dot_btn.style.display = "none";
-    postModify_btn.style.display = "flex";
-    postDetailContents.readOnly = false;
-    postDetailContents.focus();
-
-    modal5Off();
-})
-
-postModify_btn.addEventListener("click", e => {
-    document.getElementById("update_contents_form").submit();
-})
 
 
 

@@ -89,21 +89,75 @@
                         <div class="div_for_contents_and_tags">
                             <ul>
                                 <div class="div_14">
+                                    <div class="contents_div">
+                                        <div class="contents_div_inner">
+                                            <div class="contents_profile_pic_div">
+                                                <a href="javascript:void(0);" onclick="parentMoveTo(this.name);" th:name="${post.user_id}">
+                                                    <img th:src="@{/user/display(id=${post.user_id})}"/>
+                                                </a>
+                                            </div>
+                                        </div>
 
-                                    <form id="update_contents_form" action="/post/update" method="post">
-                                        <input type="hidden" id="postNo" name="postNo" th:value="${post.post_no}">
-                                        <textarea id="postDetailContents" name="postContents" readonly>[[${post.contents}]]</textarea>
-                                    </form>
+                                        <div class="div_for_writer_name">
+                                            <h2>
+                                                <div class="div_for_writer_name_inner">
+                                                    <a href="javascript:void(0);" onclick="parentMoveTo(this.name);" th:name="${post.user_id}">
+                                                        <label>[[${post.user_id}]]</label>
+                                                    </a>
+                                                </div>
+                                            </h2>
+                                            <div class="div_for_contents">
+                                                <h1>
+                                                    <form id="update_contents_form" action="/post/update" method="post">
+                                                        <input type="hidden" id="postNo" name="postNo" th:value="${post.post_no}">
+                                                        <textarea id="postDetailContents" name="postContents" readonly>[[${post.contents}]]</textarea>
+                                                    </form>
+                                                </h1>
 
+                                            </div>
+
+                                        </div>
+
+                                    </div>
 
                                 </div>
-                                <li th:each="comment: ${comments}">
-                                    <h1>
-                                        <td th:text="${comment.user_no}"></td>
-                                    </h1>
+<!--                                댓글 리스트 볼만하게 수정, 댓글 작성한 회원 아이디를 어떻게 보여줄 것이지? 지금은 회원 번호로 보임-->
+                                <div class="div_for_all_comments" th:each="comment: ${comments}">
+                                    <li class="li_for_all_comments">
+                                        <div class="div_for_comments_outer">
+                                            <div class="div_for_comments_middle">
+                                                <div class="div_for_comments_inner">
+                                                    <div>
+                                                        <span>
+                                                            <a href="javascript:void(0);" onclick="parentMoveTo(this.name);" th:name="${comment.user_id}">
+                                                                <img th:src="@{/user/display(id=${comment.user_id})}"/>
+                                                            </a>
+                                                        </span>
+                                                    </div>
+                                                </div>
+                                                <div class="other_user_comments_writer_and_contents">
+                                                    <h3>
+                                                        <div class="div_for_user_comments_writer_outer">
+                                                            <div>
+                                                                <div>
+                                                                    <a href="javascript:void(0);" onclick="parentMoveTo(this.name);" th:name="${comment.user_id}">
+                                                                        <td th:text="${comment.user_id}"></td>
+                                                                    </a>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </h3>
+                                                    <div class="other_user_comments_contents">
+                                                        <span>
+                                                            <td th:text="${comment.comments_contents}"></td>
+                                                        </span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </li>
+                                </div>
 
-                                    <td th:text="${comment.comments_contents}"></td>
-                                </li>
                             </ul>
                         </div>
 
@@ -114,7 +168,6 @@
                                         <label id="postDetailRegdate">
                                             [[${post.post_regDate}]]
                                         </label>
-
                                     </a>
                                 </div>
                             </div>
@@ -259,6 +312,10 @@ function registerComments(){
     }).fail(function(error){
         alert(JSON.stringify(error));
     });
+}
+
+function parentMoveTo(user_id){
+    window.parent.location = "/profile?id="+user_id;
 }
 
 

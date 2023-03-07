@@ -9,4 +9,7 @@ public interface JpaCommentsRepositoryCustom {
     void deleteAllByPostNo(Long postNo);
 
     List<CommentsEntity> findCommentsByPostNo(Long post_no);
+
+    void updateCommentsUser(Long user_no, String id);
+
 }

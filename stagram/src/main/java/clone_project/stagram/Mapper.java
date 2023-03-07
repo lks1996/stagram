@@ -127,7 +127,7 @@ public class Mapper {
 
     public static CommentsEntity mapToCommentsEntity(CommentsDTO commentsDTO, UserEntity userEntity, PostEntity postEntity) {
         CommentsEntity commentsEntity = new CommentsEntity(commentsDTO.getComments_no(), commentsDTO.getComments_regDate(),
-                commentsDTO.getComments_contents(), userEntity, postEntity);
+                commentsDTO.getComments_contents(), commentsDTO.getUser_id(), userEntity, postEntity);
 
         return commentsEntity;
     }

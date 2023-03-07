@@ -22,6 +22,9 @@ public class CommentsEntity {
     @Column(name = "comments_contents")
     private String comments_contents;
 
+    @Column(name = "user_id")
+    private String user_id;
+
     @ManyToOne
     @JoinColumn(name = "user_no")
     private UserEntity userEntity;
@@ -30,11 +33,12 @@ public class CommentsEntity {
     @JoinColumn(name = "post_no")
     private PostEntity postEntity;
 
-    public CommentsEntity(Long comments_no, String comments_regDate, String comments_contents,
+    public CommentsEntity(Long comments_no, String comments_regDate, String comments_contents, String user_id,
                           UserEntity userEntity, PostEntity postEntity) {
         this.comments_no = comments_no;
         this.comments_regDate = comments_regDate;
         this.comments_contents = comments_contents;
+        this.user_id = user_id;
         this.userEntity = userEntity;
         this.postEntity = postEntity;
     }

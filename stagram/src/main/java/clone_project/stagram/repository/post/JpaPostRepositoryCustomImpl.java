@@ -33,7 +33,7 @@ public class JpaPostRepositoryCustomImpl implements JpaPostRepositoryCustom {
 
     @Override
     public void updatePostUser(Long user_no, String id) {
-        System.out.println("user_no가 " + user_no + "인 사용자의 사용자 이름을 " + id + "수정시작.");
+        System.out.println("[Post] user_no가 " + user_no + "인 사용자의 사용자 이름을 " + id + "수정시작.");
 
         em.createQuery("update PostEntity m set m.user_id =:user_id where m.userEntity.user_no = :user_no")
                 .setParameter("user_id", id)
@@ -41,7 +41,7 @@ public class JpaPostRepositoryCustomImpl implements JpaPostRepositoryCustom {
                 .executeUpdate();
         em.clear();
 
-        System.out.println("수정 완료");
+        System.out.println("[Post] 수정 완료");
     }
 
     @Override

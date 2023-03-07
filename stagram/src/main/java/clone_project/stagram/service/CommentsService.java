@@ -46,4 +46,9 @@ public class CommentsService {
         List<CommentsDTO> commentsDTOS = Mapper.ListMapToCommentsDTO(commentsEntities);
         return commentsDTOS;
     }
+
+    @Transactional
+    public void updateCommentsUserId(Long user_no, String id) {
+        jpaCommentsRepositoryCustom.updateCommentsUser(user_no, id);
+    }
 }

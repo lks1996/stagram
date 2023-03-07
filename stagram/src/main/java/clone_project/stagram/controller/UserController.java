@@ -6,6 +6,7 @@ import clone_project.stagram.DTO.UserDTO;
 import clone_project.stagram.DTO.UserProfileImgDTO;
 import clone_project.stagram.SavePath;
 import clone_project.stagram.SessionConst;
+import clone_project.stagram.service.CommentsService;
 import clone_project.stagram.service.PostService;
 import clone_project.stagram.service.UserService;
 import org.apache.commons.io.IOUtils;
@@ -37,11 +38,13 @@ import static clone_project.stagram.WhatTime.whatTimeIsItNow;
 public class UserController {
     private final UserService userService;
     private final PostService postService;
+    private final CommentsService commentsService;
 
 
-    public UserController(UserService userService, PostService postService) {
+    public UserController(UserService userService, PostService postService, CommentsService commentsService) {
         this.userService = userService;
         this.postService = postService;
+        this.commentsService = commentsService;
     }
 
     @GetMapping("/list")
@@ -281,6 +284,7 @@ public class UserController {
         //user 테이블과 post 테이블에 업데이트 정보 반영.
         userService.updateProfile(updatedUserDTO);
         postService.updatePostUserId(updatedUserDTO.getUser_no(), updatedUserDTO.getId());
+        commentsService.updateCommentsUserId(updatedUserDTO.getUser_no(), updatedUserDTO.getId());
 
         //업데이트된 session으로 재부여.
         session.setAttribute(SessionConst.LOGIN_MEMBER, updatedUserDTO);

@@ -35,6 +35,7 @@ public class CommentController {
         }
 
         commentsDTO.setUser_no(loginMember.getUser_no());
+        commentsDTO.setUser_id(loginMember.getId());
         commentsDTO.setComments_regDate(WhatTime.whatTimeIsItNow());
 
         commentsService.commentsRegister(commentsDTO, loginMember, postDTO);

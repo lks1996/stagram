@@ -5,6 +5,8 @@ import org.apache.catalina.User;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @NoArgsConstructor(access = AccessLevel.PROTECTED) //기본 생성자를 만들어줌
@@ -33,6 +35,10 @@ public class PostEntity implements Serializable {
     @ManyToOne
     @JoinColumn(name = "user_no")
     private UserEntity userEntity;
+
+    @OneToMany(mappedBy = "postEntity")
+    private List<CommentsEntity> commentsEntityList = new ArrayList<>();
+
 
     public PostEntity(Long post_no, String contents, String post_regDate,
                       String user_id, String postImgOriginName, String postImgName,

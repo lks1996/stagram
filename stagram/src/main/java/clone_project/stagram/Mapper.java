@@ -22,7 +22,8 @@ public class Mapper {
         this.modelMapper = modelMapper;
     }
 
-    public static List<UserDTO> ListMaptoDTO(List<UserEntity> userEntities) {
+/** User **/
+    public static List<UserDTO> ListMapToUserDTO(List<UserEntity> userEntities) {
         List<UserDTO> userDto = userEntities
                 .stream()
                 .map(user -> modelMapper.map(user, UserDTO.class))
@@ -34,7 +35,7 @@ public class Mapper {
 //    public UserEntity mapToEntity1(UserDTO userDTO) {
 //        UserEntity userEntity = modelMapper.map(userDTO, UserEntity.class);
 //    }
-    public static UserEntity mapToEntity(UserDTO userDTO) {
+    public static UserEntity mapToUserEntity(UserDTO userDTO) {
         UserEntity userEntity = new UserEntity(userDTO.getUser_no(), userDTO.getEmail(),
                 userDTO.getId(), userDTO.getPassword(), userDTO.getName(), userDTO.getBio(),
                 userDTO.getRegDate());
@@ -43,7 +44,8 @@ public class Mapper {
 
 
 
-    public UserDTO mapToDTO(UserEntity userEntity) {
+
+    public UserDTO mapToUserDTO(UserEntity userEntity) {
         UserDTO userDTO = modelMapper.map(userEntity, UserDTO.class);
         return userDTO;
     }
@@ -60,7 +62,7 @@ public class Mapper {
 //        return userDTO;
 //    }
 
-    public static UserDTO OptionalMapToDTO(Optional<UserEntity> userEntity) {
+    public static UserDTO OptionalMapToUserDTO(Optional<UserEntity> userEntity) {
         UserDTO userDTO = new UserDTO();
         userDTO.setUser_no(userEntity.get().getUser_no());
         userDTO.setEmail(userEntity.get().getEmail());
@@ -74,6 +76,7 @@ public class Mapper {
     }
 
 
+/** UserProfileImg **/
     public static UserProfileImgEntity mapToUserProfileImgEntity(UserProfileImgDTO userProfileImgDTO, UserEntity userEntity) {
         UserProfileImgEntity userProfileImgEntity = new UserProfileImgEntity(userProfileImgDTO.getUserImgNo(),
                 userProfileImgDTO.getProfileImgOriginName(), userProfileImgDTO.getProfileImgName(),
@@ -89,12 +92,13 @@ public class Mapper {
         upiDTO.setProfileImgName(upiEntity.get().getProfileImgName());
         upiDTO.setProfileImgSize(upiEntity.get().getProfileImgSize());
         upiDTO.setRegDate(upiEntity.get().getRegDate());
-//        upiDTO.setUserNo(upiEntity.get().getUser_no());
         upiDTO.setUserNo(upiEntity.get().getUserEntity().getUser_no());
 
         return upiDTO;
     }
 
+
+/** Post **/
     public static PostEntity mapToPostEntity(PostDTO postDTO, UserEntity userEntity) {
         PostEntity postEntity = new PostEntity(postDTO.getPost_no(), postDTO.getContents(), postDTO.getPost_regDate(),
                 postDTO.getUser_id(), postDTO.getPostImgOriginName(), postDTO.getPostImgName(), postDTO.getPostImgSize(),
@@ -125,11 +129,24 @@ public class Mapper {
         return postDTO;
     }
 
+/** Comments **/
     public static CommentsEntity mapToCommentsEntity(CommentsDTO commentsDTO, UserEntity userEntity, PostEntity postEntity) {
         CommentsEntity commentsEntity = new CommentsEntity(commentsDTO.getComments_no(), commentsDTO.getComments_regDate(),
                 commentsDTO.getComments_contents(), commentsDTO.getUser_id(), userEntity, postEntity);
 
         return commentsEntity;
+    }
+
+    public static CommentsDTO mapToCommentsDTO(Optional<CommentsEntity> commentsEntity) {
+        CommentsDTO commentsDTO = new CommentsDTO();
+        commentsDTO.setComments_no(commentsEntity.get().getComments_no());
+        commentsDTO.setComments_regDate(commentsEntity.get().getComments_regDate());
+        commentsDTO.setComments_contents(commentsEntity.get().getComments_contents());
+        commentsDTO.setUser_id(commentsEntity.get().getUser_id());
+        commentsDTO.setUser_no(commentsEntity.get().getUserEntity().getUser_no());
+        commentsDTO.setPost_no(commentsEntity.get().getPostEntity().getPost_no());
+
+        return commentsDTO;
     }
 
     public static List<CommentsDTO> ListMapToCommentsDTO(List<CommentsEntity> commentsEntities) {
@@ -139,4 +156,6 @@ public class Mapper {
                 .collect(Collectors.toList());
         return commentsDTOS;
     }
+
+
 }

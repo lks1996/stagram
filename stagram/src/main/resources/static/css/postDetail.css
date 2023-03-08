@@ -614,11 +614,53 @@ display: flex;
 }
 
 
+.comments_regDate_and_delete_comments_btn{
+    margin-top: 4px;
+    margin-bottom: 4px;
+    justify-content: flex-start;
+    flex-direction: column;
+    align-items: stretch;
+    align-content: stretch;
+    display: flex;
+    box-sizing: border-box;
+    position: relative;
+}
 
+.div_for_comments_regDate{
+    display: block;
+    font-weight: 400;
+    font-size: 12px;
+    line-height: 16px;
+    margin: -2px 0 -3px;
+}
 
+.div_for_comments_regDate label{
+    text-decoration: none;
+    display: inline;
+    padding: 0;
+    background-color: transparent;
+    box-sizing: border-box;
+    outline: none;
+    color: rgb(142, 142, 142);
+}
 
+.comments_regDate_and_delete_comments_btn button{
+    color: rgb(142, 142, 142);
+    background: no-repeat;
+    border: none;
+    cursor: pointer;
+    display: inline;
+    margin-left: 12px!important;
+    padding: 0;
+    position: relative;
+    line-height: 18px;
+}
 
-
+.div_for_delete_comments_btn{
+    margin: 0;
+    font-weight: 600;
+    font-size: 12px;
+}
 
 
 

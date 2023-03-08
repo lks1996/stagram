@@ -37,7 +37,7 @@ public class UserService {
     @Transactional
     public List<UserDTO> findAllMembers() {
         List<UserEntity> userEntity = jpaUserRepository.findAll();
-        List<UserDTO> userDto = Mapper.ListMaptoDTO(userEntity);
+        List<UserDTO> userDto = Mapper.ListMapToUserDTO(userEntity);
 
         return userDto;
     }
@@ -47,7 +47,7 @@ public class UserService {
         Optional<UserEntity> userEntity = jpaUserRepositoryCustom.findByEmail(email);
 
         if (userEntity.isPresent()) {
-            UserDTO userDTO = Mapper.OptionalMapToDTO(userEntity);
+            UserDTO userDTO = Mapper.OptionalMapToUserDTO(userEntity);
             System.out.println("isDuplicateEmail에서 출력 ..... "+ userDTO.getUser_no() + "@@" + userDTO.getPassword() + "||" + userDTO.getName() + "||" + userDTO.getName());
 
             return userDTO;
@@ -59,7 +59,7 @@ public class UserService {
     public UserDTO isDuplicateId(String id) {
         Optional<UserEntity> userEntity = jpaUserRepositoryCustom.findById(id);
         if (userEntity.isPresent()) {
-            UserDTO userDTO = Mapper.OptionalMapToDTO(userEntity);
+            UserDTO userDTO = Mapper.OptionalMapToUserDTO(userEntity);
 
             return userDTO;
         }
@@ -74,7 +74,7 @@ public class UserService {
         userDTO.setPassword(securedPw);
         System.out.println("암호화 후 pw : " + userDTO.getPassword());
 
-        UserEntity userEntity = Mapper.mapToEntity(userDTO);
+        UserEntity userEntity = Mapper.mapToUserEntity(userDTO);
         System.out.println("userEntity" + userEntity.getEmail());
 
         jpaUserRepository.save(userEntity);
@@ -82,7 +82,7 @@ public class UserService {
 
 /** 회원 정보 수정 **/
     public void updateProfile(UserDTO updatedUserDTO) {
-        UserEntity updatedUserEntity = Mapper.mapToEntity(updatedUserDTO);
+        UserEntity updatedUserEntity = Mapper.mapToUserEntity(updatedUserDTO);
         jpaUserRepository.save(updatedUserEntity);
     }
 
@@ -95,7 +95,7 @@ public class UserService {
 
             if (userEntity.isPresent()) {
                 //UserDTO userDTO = modelMapper.map(userEntity, UserDTO.class);
-                UserDTO userDTO = Mapper.OptionalMapToDTO(userEntity);
+                UserDTO userDTO = Mapper.OptionalMapToUserDTO(userEntity);
                 System.out.println("findByEmail 한 결과가 있을 경우 UserDTO.getName : " + userDTO.getName());
 
                 return userDTO;
@@ -103,7 +103,7 @@ public class UserService {
         } else {//전달 받은 데이터가 ID 라면,
             Optional<UserEntity> userEntity = jpaUserRepositoryCustom.findById(idOrEmail);
             if (userEntity.isPresent()) {
-                UserDTO userDTO = Mapper.OptionalMapToDTO(userEntity);
+                UserDTO userDTO = Mapper.OptionalMapToUserDTO(userEntity);
 
                 return userDTO;
             }
@@ -114,7 +114,7 @@ public class UserService {
 
 /** 회원 프로필 사진 업로드 **/
     public void saveProfileImg(UserProfileImgDTO userProfileImgDTO, UserDTO userDTO) {
-        UserEntity userEntity = Mapper.mapToEntity(userDTO);
+        UserEntity userEntity = Mapper.mapToUserEntity(userDTO);
         UserProfileImgEntity userProfileImgEntity = Mapper.mapToUserProfileImgEntity(userProfileImgDTO, userEntity);
 
         jpaUserProfileImgRepository.save(userProfileImgEntity);
@@ -153,7 +153,7 @@ public class UserService {
         Optional<UserEntity> userEntity = jpaUserRepository.findById(user_no);
 
         if (userEntity.isPresent()) {
-            UserDTO userDTO = Mapper.OptionalMapToDTO(userEntity);
+            UserDTO userDTO = Mapper.OptionalMapToUserDTO(userEntity);
             return userDTO;
         }
         return null;

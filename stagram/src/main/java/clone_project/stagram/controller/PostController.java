@@ -3,6 +3,7 @@ package clone_project.stagram.controller;
 import clone_project.stagram.DTO.CommentsDTO;
 import clone_project.stagram.DTO.PostDTO;
 import clone_project.stagram.DTO.UserDTO;
+import clone_project.stagram.Entity.PostEntity;
 import clone_project.stagram.SavePath;
 import clone_project.stagram.SessionConst;
 import clone_project.stagram.service.CommentsService;
@@ -92,6 +93,9 @@ public class PostController {
 
         postService.updatePostContents(postNo, postContents);
 
+//        PostEntity postEntity = new PostEntity();
+//        postEntity.getCommentsEntityList().get().getComments_contents();
+
         return null;
     }
 
@@ -110,7 +114,7 @@ public class PostController {
         //postNo 게시글이 삭제되었는지 확인
         PostDTO postDTO = postService.findPostByPostNo(postNo);
         if (postDTO == null) {
-            return "delete_success";
+            return "[post] delete_success";
 
         }
 

@@ -14,6 +14,7 @@ import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class CommentsService {
@@ -26,12 +27,21 @@ public class CommentsService {
     }
 
     public void commentsRegister(CommentsDTO commentsDTO, UserDTO userDTO, PostDTO postDTO) {
-        UserEntity userEntity = Mapper.mapToEntity(userDTO);
+        UserEntity userEntity = Mapper.mapToUserEntity(userDTO);
         PostEntity postEntity = Mapper.mapToPostEntity(postDTO, userEntity);
 
         CommentsEntity commentsEntity = Mapper.mapToCommentsEntity(commentsDTO, userEntity, postEntity);
 
         jpaCommentsRepository.save(commentsEntity);
+    }
+
+    @Transactional
+    public void updateCommentsUserId(Long user_no, String id) {
+        jpaCommentsRepositoryCustom.updateCommentsUser(user_no, id);
+    }
+
+    public void deleteComments(Long comments_no) {
+        jpaCommentsRepository.deleteById(comments_no);
     }
 
     @Transactional
@@ -47,8 +57,14 @@ public class CommentsService {
         return commentsDTOS;
     }
 
-    @Transactional
-    public void updateCommentsUserId(Long user_no, String id) {
-        jpaCommentsRepositoryCustom.updateCommentsUser(user_no, id);
+    public CommentsDTO findCommentsByCommentsNo(Long comments_no) {
+        Optional<CommentsEntity> commentsEntity = jpaCommentsRepository.findById(comments_no);
+
+        if (commentsEntity.isPresent()) {
+            CommentsDTO commentsDTO = Mapper.mapToCommentsDTO(commentsEntity);
+            return commentsDTO;
+        }
+
+        return null;
     }
 }

@@ -108,7 +108,7 @@
                         <div class="f_1">
 
                             <div class="gallery-item" tabindex="0" th:each="userPost: ${userPosts}">
-                                <a href="javascript:void(0);" onclick="postDetailModal(this.id, this.name);" th:id="${userPost.post_no}" th:name="${userPost.postImgName}">
+                                <a href="javascript:void(0);" th:onload="getCommentsCount(this.id);" onclick="postDetailModal(this.id, this.name);" th:id="${userPost.post_no}" th:name="${userPost.postImgName}">
 
                                     <img th:src="@{/post/display(postName = ${userPost.postImgName})}"
                                          class="gallery-image" alt="">
@@ -124,15 +124,12 @@
                                             <li class="gallery-item-comments">
                                                 <span class="visually-hidden">Comments:</span>
                                                 <i class="fas fa-comment" aria-hidden="true"></i>
-                                                2
+                                                <label th:id="'comments_count' + ${userPost.post_no}"></label>
+<!--                                                    2-->
                                             </li>
                                         </ul>
-
                                     </div>
-
                                 </a>
-
-
                             </div>
                         </div>
                     </div>
@@ -466,7 +463,13 @@ function postDetailModal(postNo, postName){
 }
 
 
+function getCommentsCount(post_no){
 
+const targetPost = "comments_count"+post_no;
+    console.log("어떤 게시글의 댓글 수를 구할 거냐면 : "+post_no);
+    document.getElementById("targetPost").innerText = "알빠노?";
+
+}
 
 
 

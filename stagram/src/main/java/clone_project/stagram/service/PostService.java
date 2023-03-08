@@ -25,7 +25,7 @@ public class PostService {
 
 /** 게시글 저장 **/
     public void savePost(PostDTO postDTO, UserDTO userDTO) {
-        UserEntity userEntity = Mapper.mapToEntity(userDTO);
+        UserEntity userEntity = Mapper.mapToUserEntity(userDTO);
         PostEntity postEntity = Mapper.mapToPostEntity(postDTO, userEntity);
 
         jpaPostRepository.save(postEntity);

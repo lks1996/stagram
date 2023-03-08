@@ -152,6 +152,18 @@
                                                             <td th:text="${comment.comments_contents}"></td>
                                                         </span>
                                                     </div>
+                                                    <div class="comments_regDate_and_delete_comments_btn">
+                                                        <div class="div_for_comments_regDate">
+                                                            <label>
+                                                                <td th:text="${comment.comments_regDate}"></td>
+                                                            </label>
+                                                            <button th:onclick="deleteComments(this.name)" th:name="${comment.comments_no}">
+                                                                <div class="div_for_delete_comments_btn">
+                                                                    댓글 삭제
+                                                                </div>
+                                                            </button>
+                                                        </div>
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
@@ -319,7 +331,25 @@ function parentMoveTo(user_id){
 }
 
 
+function deleteComments(comments_no){
+    $.ajax({
+        type: 'POST',
+        url: '/comments/delete',
+        data: {comments_no: comments_no}
+    }).done(function(result){
+        if(result){
+            alert("댓글 삭제가 완료되었습니다.");
+            console.log(result);
 
+            $(".div_for_contents_and_tags").load(location.href + " .div_for_contents_and_tags");
+        } else{
+            alert("오류 발생. 다시 입력해주세요.");
+            $('#comments').focus();
+        }
+    }).fail(function(error){
+        alert(JSON.stringify(error));
+    });
+}
 </script>
 
 </body>

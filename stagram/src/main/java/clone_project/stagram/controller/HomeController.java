@@ -14,7 +14,6 @@ import org.springframework.web.bind.annotation.SessionAttribute;
 
 import java.io.IOException;
 import java.util.List;
-import java.util.Optional;
 
 @Slf4j
 @Controller
@@ -47,6 +46,11 @@ public class HomeController {
         }
 
         List<PostDTO> posts = postService.selectPost();
+
+//        System.out.println("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ㅎㅎ::" + posts.stream().findAny().get().getCommentsDTOS().stream().collect(Collectors.toList()));
+
+//        System.out.println(posts.get(1).getCommentsDTOS().stream().);
+
 
         //정상 로그인
 //        UserDTO loginUser = (UserDTO) session.getAttribute("user");

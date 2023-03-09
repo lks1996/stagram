@@ -36,7 +36,7 @@ span.sub-span {
     color: #8e8e8e;
 }
 span.point-span {
-    font-weight: 500;
+    font-weight: 600;
     font-size: 14px;
     color: #262626;
 }
@@ -231,6 +231,7 @@ header {
     font-size: 14px;
 }
 .description {
+    margin-bottom: 20px;
     display: flex;
     align-items: center;
     height: 18px;
@@ -242,12 +243,68 @@ ul.comments {
     margin-top: 5px;
 }
 ul.comments li {
-    height: 21px;
-    display: flex;
-    justify-content: space-between;
-    color: #262626;
     font-size: 14px;
 }
+
+.div_for_comments_a{
+    margin-bottom: 4px;
+    flex: 0 0 auto;
+    justify-content: flex-start;
+    flex-direction: column;
+    align-items: stretch;
+    display: flex;
+    box-sizing: border-box;
+    position: relative;
+}
+.div_for_comments_b{
+    justify-content: flex-start;
+    flex-direction: row;
+    align-items: center;
+    display: flex;
+}
+
+.div_for_comments_c{
+    flex: 1 1 auto;
+    min-height: 0;
+    min-width: 0;
+    display: block;
+    box-sizing: border-box;
+    position: relative;
+}
+.div_for_comments_d{
+    display: inline;
+}
+.div_for_comments_d a{
+    text-decoration: none;
+    display: inline;
+    padding: 0;
+    background-color: transparent;
+    touch-action: manipulation;
+    box-sizing: border-box;
+    cursor: pointer;
+    outline: none;
+    font-weight:600;
+}
+
+.span_for_space{
+    display: inline!important;
+    margin: 0!important;
+}
+
+.span_for_comments_contents{
+    display: inline;
+    margin: 0!important;
+    font-weight: 400;
+    line-height: 18px;
+}
+
+
+
+
+
+
+
+
 img.comment-heart {
     width: 12px;
     height: 12px;

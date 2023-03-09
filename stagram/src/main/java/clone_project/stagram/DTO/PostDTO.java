@@ -2,6 +2,9 @@ package clone_project.stagram.DTO;
 
 import lombok.Data;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Data
 public class PostDTO {
 
@@ -15,4 +18,6 @@ public class PostDTO {
     private String postImgOriginName;
     private String postImgName;
     private Long postImgSize;
+
+    private List<CommentsDTO> commentsDTOS = new ArrayList<>();
 }

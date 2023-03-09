@@ -79,14 +79,31 @@
                 </div>
                 <div class="comment-section">
                     <ul class="comments">
-                        <li>
-                            <span><span class="point-span userID">williamhammington</span>나도 호주 가고 싶다!</span>
-                            <img class="comment-heart" src="https://s3.ap-northeast-2.amazonaws.com/cdn.wecode.co.kr/bearu/heart.png" alt="하트">
+                        <li th:each="comments : ${post.commentsDTOS}">
+                            <div class="div_for_comments_a">
+                                <div class="div_for_comments_b">
+                                    <div class="div_for_comments_c">
+                                        <div class="div_for_comments_d">
+                                            <a>
+                                                <td th:text="${comments.user_id}"></td>
+                                            </a>
+                                        </div>
+                                        <span class="span_for_space">
+                                        </span>
+                                        <span class="span_for_comments_contents">
+                                            <td th:text="${comments.comments_contents}"></td>
+                                        </span>
+                                    </div>
+                                    <img class="comment-heart"
+                                         src="https://s3.ap-northeast-2.amazonaws.com/cdn.wecode.co.kr/bearu/heart.png"
+                                         alt="하트">
+                                </div>
+                            </div>
                         </li>
                         <!-- input 값 여기에 추가 -->
                     </ul>
                     <div class="time-log">
-                        <span>1시간 전</span>
+                        <span><td th:text="${post.post_regDate}"></td></span>
                     </div>
                 </div>
             </div>

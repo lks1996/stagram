@@ -93,9 +93,6 @@ public class PostController {
 
         postService.updatePostContents(postNo, postContents);
 
-//        PostEntity postEntity = new PostEntity();
-//        postEntity.getCommentsEntityList().get().getComments_contents();
-
         return null;
     }
 
@@ -155,6 +152,7 @@ public class PostController {
         System.out.println("넘어온 post_no : " + postNo);
 
         PostDTO postDTO = postService.findPostByPostNo(postNo);
+        System.out.println(postDTO.getCommentsDTOS().get(2).getComments_contents());
 
         return postDTO;
     }

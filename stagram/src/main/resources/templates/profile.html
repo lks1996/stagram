@@ -124,8 +124,7 @@
                                             <li class="gallery-item-comments">
                                                 <span class="visually-hidden">Comments:</span>
                                                 <i class="fas fa-comment" aria-hidden="true"></i>
-                                                <label th:id="'comments_count' + ${userPost.post_no}"></label>
-<!--                                                    2-->
+                                                    <label th:text="${#lists.size(userPost.commentsDTOS)}"></label>
                                             </li>
                                         </ul>
                                     </div>

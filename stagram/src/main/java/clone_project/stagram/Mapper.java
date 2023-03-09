@@ -11,6 +11,7 @@ import clone_project.stagram.Entity.UserProfileImgEntity;
 import org.modelmapper.ModelMapper;
 import org.springframework.context.annotation.Configuration;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -118,6 +119,8 @@ public class Mapper {
         postDTO.setPostImgName(postEntity.get().getPostImgName());
         postDTO.setPostImgSize(postEntity.get().getPostImgSize());
 
+        postDTO.setCommentsDTOS(Mapper.ListMapToCommentsDTO(postEntity.get().getCommentsEntityList()));
+
         return postDTO;
     }
 
@@ -126,6 +129,17 @@ public class Mapper {
                 .stream()
                 .map(post -> modelMapper.map(post, PostDTO.class))
                 .collect(Collectors.toList());
+
+        for (int i = 0; i < postEntities.size(); i++) {
+            List<CommentsDTO> commentsDTOS = postEntities.get(i).getCommentsEntityList()
+                    .stream()
+                    .map(comments -> modelMapper.map(comments, CommentsDTO.class))
+                    .collect(Collectors.toList());
+
+            postDTO.set(i, postDTO.get(i)).setCommentsDTOS(commentsDTOS);
+        }
+
+
         return postDTO;
     }
 

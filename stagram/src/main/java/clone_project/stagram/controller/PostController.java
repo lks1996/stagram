@@ -157,6 +157,8 @@ public class PostController {
         return postDTO;
     }
 
+
+/** 게시글 자세히 보기 페이지 및 iframe **/
     @GetMapping("/post/page")
     public String postDetail(@SessionAttribute(name =SessionConst.LOGIN_MEMBER) UserDTO loginMember, String postName, Model model) {
         System.out.println("EKEKEKEKEKEKEK!! = " + postName);
@@ -184,4 +186,13 @@ public class PostController {
         return "postDetail";
     }
 
+
+    @GetMapping("/post/infiniteScroll")
+    public ResponseEntity<List<PostDTO>> getArticlePages(@SessionAttribute(name =SessionConst.LOGIN_MEMBER) UserDTO loginMember, Long post_no) {
+
+        System.out.println("무한 스크롤 컨트롤러 도착. 전달 받은 게시글 번호 == " + post_no);
+        List<PostDTO> postDTO = postService.selectPost();
+
+        return new ResponseEntity<>(postDTO, HttpStatus.OK);
+    }
 }

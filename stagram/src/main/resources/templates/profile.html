@@ -117,14 +117,12 @@
 
                                         <ul>
                                             <li class="gallery-item-likes">
-                                                <span class="visually-hidden">Likes:</span>
                                                 <i class="fas fa-heart" aria-hidden="true"></i>
                                                 56
                                             </li>
                                             <li class="gallery-item-comments">
-                                                <span class="visually-hidden">Comments:</span>
                                                 <i class="fas fa-comment" aria-hidden="true"></i>
-                                                    <label th:text="${#lists.size(userPost.commentsDTOS)}"></label>
+                                                <label th:text="${#lists.size(userPost.commentsDTOS)}"></label>
                                             </li>
                                         </ul>
                                     </div>
@@ -439,24 +437,6 @@ modal4.addEventListener("click", e => {
 function postDetailModal(postNo, postName){
 
     document.getElementById("post_detail_iframe").src = "/post/page?postName=" + postName;
-
-<!--    $.ajax({-->
-<!--            url:'/post/info',-->
-<!--            type:'get',-->
-<!--            cache : false,-->
-<!--            data:{postNo:postNo},-->
-<!--            success:function(post){-->
-
-<!--            console.log(post);-->
-
-<!--            postDetailUserProfilePic.src = "/user/display?id=" + post.user_id;-->
-<!--            postDetailUserId.innerText = post.user_id;-->
-<!--            postDetailRegdate.innerText = post.post_regDate;-->
-<!--            postDetailContents.innerText = post.contents;-->
-<!--            postNumberForComments.value = post.post_no;-->
-<!--            document.getElementById("postNo").value = post.post_no;-->
-<!--            }-->
-<!--    });-->
 
     modal4On();
 }

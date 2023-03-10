@@ -47,7 +47,7 @@
 </div>
 <!-- main -->
 <main>
-    <div class="feeds">
+    <div class="feeds" id="postArticles">
         <!-- article -->
         <article th:each = "post: ${posts}">
             <header>
@@ -79,27 +79,30 @@
                 </div>
                 <div class="comment-section">
                     <ul class="comments">
-                        <li th:each="comments : ${post.commentsDTOS}">
-                            <div class="div_for_comments_a">
-                                <div class="div_for_comments_b">
-                                    <div class="div_for_comments_c">
-                                        <div class="div_for_comments_d">
-                                            <a>
-                                                <td th:text="${comments.user_id}"></td>
-                                            </a>
-                                        </div>
-                                        <span class="span_for_space">
+                        <div th:class="'comments_section_of_post_no'+${post.post_no}">
+                            <li th:each="comments : ${post.commentsDTOS}">
+                                <div class="div_for_comments_a">
+                                    <div class="div_for_comments_b">
+                                        <div class="div_for_comments_c">
+                                            <div class="div_for_comments_d">
+                                                <a>
+                                                    <td th:text="${comments.user_id}"></td>
+                                                </a>
+                                            </div>
+                                            <span class="span_for_space">
                                         </span>
-                                        <span class="span_for_comments_contents">
+                                            <span class="span_for_comments_contents">
                                             <td th:text="${comments.comments_contents}"></td>
                                         </span>
+                                        </div>
+                                        <img class="comment-heart"
+                                             src="https://s3.ap-northeast-2.amazonaws.com/cdn.wecode.co.kr/bearu/heart.png"
+                                             alt="하트">
                                     </div>
-                                    <img class="comment-heart"
-                                         src="https://s3.ap-northeast-2.amazonaws.com/cdn.wecode.co.kr/bearu/heart.png"
-                                         alt="하트">
                                 </div>
-                            </div>
-                        </li>
+                            </li>
+                        </div>
+
                         <!-- input 값 여기에 추가 -->
                     </ul>
                     <div class="time-log">
@@ -109,8 +112,9 @@
             </div>
             <div class="hl"></div>
             <div class="comment">
-                <input id="input-comment2" class="input-comment" type="text" placeholder="댓글 달기..." >
-                <button type="submit" class="submit-comment" disabled>게시</button>
+                <input th:id="'comments'+${post.post_no}" class="input-comment" type="text" placeholder="댓글 달기..." >
+                <button class="submit-comment" th:id="${post.post_no}" th:onclick="registerComments(this.id)">게시</button>
+<!--                타임라인 페이지에서도 댓글 달고 바로 업데이트되게 하기, 무한 스크롤 적용하기.-->
             </div>
         </article>
 
@@ -343,6 +347,98 @@ function form_submit(){
     document.getElementById('upload-post-pic-form').submit();
 
 }
+
+
+function registerComments(post_no){
+const contents_text_id = "comments"+post_no;
+    const data = {
+        comments_contents: $("#comments"+post_no).val(),
+        post_no: post_no
+    };
+
+    $.ajax({
+        type: 'POST',
+        url: '/comments/register',
+        contentType: 'application/json; charset=utf-8',
+        data: JSON.stringify(data)
+    }).done(function(result){
+        if(result){
+            alert("댓글 등록이 완료되었습니다.");
+
+            $(".comments_section_of_post_no"+post_no).load(location.href + " .comments_section_of_post_no"+post_no);
+        } else{
+            alert("오류 발생. 다시 입력해주세요.");
+            $('#comments').focus();
+        }
+    }).fail(function(error){
+        alert(JSON.stringify(error));
+    });
+}
+
+<!-- 무한 스크롤 관련 함수 -->
+const defaultArticlePaginationSize = 5;
+
+function getDocumentHeight() {
+	const body = document.body;
+	const html = document.documentElement;
+
+	return Math.max(
+		body.scrollHeight, body.offsetHeight,
+		html.clientHeight, html.scrollHeight, html.offsetHeight
+	);
+};
+
+function getScrollTop() {
+    return (window.pageYOffset !== undefined) ? window.pageYOffset : (document.documentElement || document.body.parentNode || document.body).scrollTop;
+};
+
+function onScroll() {
+    if(getScrollTop() == getDocumentHeight() - window.innerHeight){
+        console.log("getDocumentHeight() ---> " + getDocumentHeight());
+        console.log("getScrollTop() ---> " + getScrollTop());
+        console.log("스크롤 끝 도달.");
+
+        $.ajax({
+            type: 'get',
+            url: '/post/infiniteScroll',
+            data: {post_no : 2}
+        }).done(function(result){
+            if(result){
+                alert("무한 스크롤 컨트롤러에서 보냄.");
+                console.log(post);
+
+                let str = "<article th:each = '" + post + ": ${post}'>";
+                str += "<td th:text='${result.post_no}'></td>";
+                str += "</article>";
+                $('#postArticles').append(str);
+
+            } else{
+                alert("오류 발생. 다시 입력해주세요.");
+            }
+        }).fail(function(error){
+            alert(JSON.stringify(error));
+        });
+
+    } else{
+        console.log("getDocumentHeight() ---> " + getDocumentHeight());
+        console.log("getScrollTop() ---> " + getScrollTop());
+        console.log("스크롤 끝 부조크.");
+
+    }
+}
+
+
+$(window).scroll(function(){
+    onScroll();
+});
+
+
+
+
+
+
+
+
 
 
 </script>

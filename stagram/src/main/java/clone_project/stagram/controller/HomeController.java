@@ -47,14 +47,6 @@ public class HomeController {
 
         List<PostDTO> posts = postService.selectPost();
 
-//        System.out.println("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ㅎㅎ::" + posts.stream().findAny().get().getCommentsDTOS().stream().collect(Collectors.toList()));
-
-//        System.out.println(posts.get(1).getCommentsDTOS().stream().);
-
-
-        //정상 로그인
-//        UserDTO loginUser = (UserDTO) session.getAttribute("user");
-        //model.addAttribute("postName", "97b89484-c51e-4f4c-9350-dcd425ac5af9.jpg");
         model.addAttribute("posts", posts);
         model.addAttribute("loginUser", loginMember);
         return "timeline2";

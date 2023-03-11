@@ -22,7 +22,9 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.UUID;
 
 import static clone_project.stagram.WhatTime.whatTimeIsItNow;
@@ -187,12 +189,27 @@ public class PostController {
     }
 
 
+//    @GetMapping("/post/infiniteScroll")
+//    public ResponseEntity<List<PostDTO>> getArticlePages(@SessionAttribute(name =SessionConst.LOGIN_MEMBER) UserDTO loginMember, Long post_no) {
+//
+//
+//        List<PostDTO> postDTO = postService.selectPost();
+//
+//        return new ResponseEntity<>(postDTO, HttpStatus.OK);
+//    }
+
+/** 무한 스크롤로 보여줄 게시글보내주기. **/
     @GetMapping("/post/infiniteScroll")
-    public ResponseEntity<List<PostDTO>> getArticlePages(@SessionAttribute(name =SessionConst.LOGIN_MEMBER) UserDTO loginMember, Long post_no) {
+    public String getMembers(@SessionAttribute(name =SessionConst.LOGIN_MEMBER) UserDTO loginMember, Model model, Long post_no) throws Exception {
 
         System.out.println("무한 스크롤 컨트롤러 도착. 전달 받은 게시글 번호 == " + post_no);
-        List<PostDTO> postDTO = postService.selectPost();
 
-        return new ResponseEntity<>(postDTO, HttpStatus.OK);
+//        List<PostDTO> postDTO = postService.selectPost();
+        List<PostDTO> postDTO = postService.getOwnPost(post_no);
+
+        model.addAttribute("posts", postDTO);
+
+        return "timeline2 :: #moreList"; // template html 파일 이름 + '::' + fragment의 id
+
     }
 }

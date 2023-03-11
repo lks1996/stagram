@@ -47,76 +47,79 @@
 </div>
 <!-- main -->
 <main>
-    <div class="feeds" id="postArticles">
+    <div class="feeds" id="moreList">
         <!-- article -->
-        <article th:each = "post: ${posts}">
-            <header>
-                <div class="profile-of-article">
-                    <img class="img-profile pic" th:src="@{/user/display(id = ${post.user_id})}" alt="thisisyourhyung님의 프로필 사진">
-                    <span class="userID main-id point-span"><a th:href="@{/profile(id = ${post.user_id})}"><td th:text="${post.user_id}"></td></a></span>
+        <div th:each = "post: ${posts}">
+            <article>
+                <header>
+                    <div class="profile-of-article">
+                        <img class="img-profile pic" th:src="@{/user/display(id = ${post.user_id})}" alt="thisisyourhyung님의 프로필 사진">
+                        <span class="userID main-id point-span"><a th:href="@{/profile(id = ${post.user_id})}"><td th:text="${post.user_id}"></td></a></span>
+                    </div>
+                    <img class="icon-react icon-more" src="https://s3.ap-northeast-2.amazonaws.com/cdn.wecode.co.kr/bearu/more.png" alt="more">
+                </header>
+                <div class="main-image">
+                    <img th:src="@{/post/display(postName = ${post.postImgName})}" alt="" class="mainPic">
                 </div>
-                <img class="icon-react icon-more" src="https://s3.ap-northeast-2.amazonaws.com/cdn.wecode.co.kr/bearu/more.png" alt="more">
-            </header>
-            <div class="main-image">
-                <img th:src="@{/post/display(postName = ${post.postImgName})}" alt="" class="mainPic">
-            </div>
-            <div class="icons-react">
-                <div class="icons-left">
-                    <img class="icon-react" src="https://s3.ap-northeast-2.amazonaws.com/cdn.wecode.co.kr/bearu/heart.png" alt="하트">
-                    <img class="icon-react" src="https://s3.ap-northeast-2.amazonaws.com/cdn.wecode.co.kr/bearu/comment.png" alt="말풍선">
-                    <img class="icon-react" src="images/dm.png" alt="DM">
+                <div class="icons-react">
+                    <div class="icons-left">
+                        <img class="icon-react" src="https://s3.ap-northeast-2.amazonaws.com/cdn.wecode.co.kr/bearu/heart.png" alt="하트">
+                        <img class="icon-react" src="https://s3.ap-northeast-2.amazonaws.com/cdn.wecode.co.kr/bearu/comment.png" alt="말풍선">
+                        <img class="icon-react" src="images/dm.png" alt="DM">
+                    </div>
+                    <img class="icon-react" src="https://s3.ap-northeast-2.amazonaws.com/cdn.wecode.co.kr/bearu/bookmark.png" alt="북마크">
                 </div>
-                <img class="icon-react" src="https://s3.ap-northeast-2.amazonaws.com/cdn.wecode.co.kr/bearu/bookmark.png" alt="북마크">
-            </div>
-            <!-- article text data -->
-            <div class="reaction">
-                <div class="liked-people">
-                    <img class="pic" src="https://scontent-gmp1-1.cdninstagram.com/v/t51.2885-19/s320x320/88655311_532875984007590_3393720833305214976_n.jpg?_nc_ht=scontent-gmp1-1.cdninstagram.com&_nc_ohc=QsdbsVQx8IsAX9_Fftk&oh=a6515b76d63f7ca3609c211624c1cd60&oe=5F6A4263" alt="_jeongjaehyun님의 프로필 사진">
-                    <p><span class="point-span">_jeongjaehyun</span>님 <span class="point-span">외 4,612,203명</span>이 좋아합니다</p>
-                </div>
-                <div class="description">
-                    <p><span class="point-span userID"><td th:text="${post.user_id}"></td></span><td th:text="${post.contents}"></td></p>
-                </div>
-                <div class="comment-section">
-                    <ul class="comments">
-                        <div th:class="'comments_section_of_post_no'+${post.post_no}">
-                            <li th:each="comments : ${post.commentsDTOS}">
-                                <div class="div_for_comments_a">
-                                    <div class="div_for_comments_b">
-                                        <div class="div_for_comments_c">
-                                            <div class="div_for_comments_d">
-                                                <a>
-                                                    <td th:text="${comments.user_id}"></td>
-                                                </a>
-                                            </div>
-                                            <span class="span_for_space">
+                <!-- article text data -->
+                <div class="reaction">
+                    <div class="liked-people">
+                        <img class="pic" src="/images/profile_frame.jpg" alt="_jeongjaehyun님의 프로필 사진">
+                        <p><span class="point-span">_jeongjaehyun</span>님 <span class="point-span">외 4,612,203명</span>이 좋아합니다</p>
+                    </div>
+                    <div class="description">
+                        <p><span class="point-span userID"><td th:text="${post.user_id}"></td></span><td th:text="${post.contents}"></td></p>
+                    </div>
+                    <div class="comment-section">
+                        <ul class="comments">
+                            <div th:class="'comments_section_of_post_no'+${post.post_no}">
+                                <li th:each="comments : ${post.commentsDTOS}">
+                                    <div class="div_for_comments_a">
+                                        <div class="div_for_comments_b">
+                                            <div class="div_for_comments_c">
+                                                <div class="div_for_comments_d">
+                                                    <a>
+                                                        <td th:text="${comments.user_id}"></td>
+                                                    </a>
+                                                </div>
+                                                <span class="span_for_space">
                                         </span>
-                                            <span class="span_for_comments_contents">
+                                                <span class="span_for_comments_contents">
                                             <td th:text="${comments.comments_contents}"></td>
                                         </span>
+                                            </div>
+                                            <img class="comment-heart"
+                                                 src="https://s3.ap-northeast-2.amazonaws.com/cdn.wecode.co.kr/bearu/heart.png"
+                                                 alt="하트">
                                         </div>
-                                        <img class="comment-heart"
-                                             src="https://s3.ap-northeast-2.amazonaws.com/cdn.wecode.co.kr/bearu/heart.png"
-                                             alt="하트">
                                     </div>
-                                </div>
-                            </li>
-                        </div>
+                                </li>
+                            </div>
 
-                        <!-- input 값 여기에 추가 -->
-                    </ul>
-                    <div class="time-log">
-                        <span><td th:text="${post.post_regDate}"></td></span>
+                            <!-- input 값 여기에 추가 -->
+                        </ul>
+                        <div class="time-log">
+                            <span><td th:text="${post.post_regDate}"></td></span>
+                        </div>
                     </div>
                 </div>
-            </div>
-            <div class="hl"></div>
-            <div class="comment">
-                <input th:id="'comments'+${post.post_no}" class="input-comment" type="text" placeholder="댓글 달기..." >
-                <button class="submit-comment" th:id="${post.post_no}" th:onclick="registerComments(this.id)">게시</button>
-<!--                타임라인 페이지에서도 댓글 달고 바로 업데이트되게 하기, 무한 스크롤 적용하기.-->
-            </div>
-        </article>
+                <div class="hl"></div>
+                <div class="comment">
+                    <input th:id="'comments'+${post.post_no}" class="input-comment" type="text" placeholder="댓글 달기..." >
+                    <button class="submit-comment" th:id="${post.post_no}" th:onclick="registerComments(this.id)">게시</button>
+                    <!--                타임라인 페이지에서도 댓글 달고 바로 업데이트되게 하기, 무한 스크롤 적용하기.-->
+                </div>
+            </article>
+        </div>
+
 
     </div>
     <!-- main-right -->
@@ -148,7 +151,7 @@
             <ul class="story-list">
                 <li>
                     <div class="gradient-wrap">
-                        <img class="img-profile story" src="https://scontent-gmp1-1.cdninstagram.com/v/t51.2885-19/s320x320/64219646_866712363683753_7365878438877462528_n.jpg?_nc_ht=scontent-gmp1-1.cdninstagram.com&_nc_ohc=nBT2Cnh5x6kAX9FNW46&oh=63c4eae00baaeef86eedc8ca79499511&oe=5F6B31A0" alt="wecode_bootcamp님의 프로필 사진">
+                        <img class="img-profile story" src="/images/profile_frame.jpg" alt="wecode_bootcamp님의 프로필 사진">
                     </div>
                     <div class="profile-text">
                         <span class="userID point-span">wecode_bootcamp</span>
@@ -157,7 +160,7 @@
                 </li>
                 <li>
                     <div class="gradient-wrap">
-                        <img class="img-profile story" src="https://scontent-gmp1-1.cdninstagram.com/v/t51.2885-19/s320x320/47581322_331313240788424_7580673034705436672_n.jpg?_nc_ht=scontent-gmp1-1.cdninstagram.com&_nc_ohc=fkWaVb4rpLMAX_mkCR5&oh=822f6068b6e28481ccd3fd7820061df1&oe=5F6A82C6" alt="han_ye_seul님의 프로필 사진">
+                        <img class="img-profile story" src="/images/profile_frame.jpg" alt="han_ye_seul님의 프로필 사진">
                     </div>
                     <div class="profile-text">
                         <span class="userID point-span">han_ye_seul</span>
@@ -166,7 +169,7 @@
                 </li>
                 <li>
                     <div class="gradient-wrap">
-                        <img class="img-profile story" src="https://scontent-gmp1-1.cdninstagram.com/v/t51.2885-19/s320x320/83054317_174958120526515_9120446663184351232_n.jpg?_nc_ht=scontent-gmp1-1.cdninstagram.com&_nc_ohc=tYlvJUCoTKEAX_gZZa2&oh=a65657b48898f84fd25762a9a51a70d7&oe=5F6A8C65" alt="dntlrdl님의 프로필 사진">
+                        <img class="img-profile story" src="/images/profile_frame.jpg" alt="dntlrdl님의 프로필 사진">
                     </div>
                     <div class="profile-text">
                         <span class="userID point-span">dntlrdl</span>
@@ -175,7 +178,7 @@
                 </li>
                 <li>
                     <div class="gradient-wrap">
-                        <img class="img-profile story" src="https://scontent-gmp1-1.cdninstagram.com/v/t51.2885-19/s320x320/104003354_716384015830603_8920819290329712932_n.jpg?_nc_ht=scontent-gmp1-1.cdninstagram.com&_nc_ohc=98qm88VYcqoAX_OFQ6W&oh=0000cab3adec26de3231e7dcfd4022b2&oe=5F6BC859" alt="i_icaruswalks님의 프로필 사진">
+                        <img class="img-profile story" src="/images/profile_frame.jpg" alt="i_icaruswalks님의 프로필 사진">
                     </div>
                     <div class="profile-text">
                         <span class="userID point-span">i_icaruswalks</span>
@@ -193,7 +196,7 @@
             <ul class="recommend-list">
                 <li>
                     <div class="recommend-friend-profile">
-                        <img class="img-profile" src="https://scontent-gmp1-1.cdninstagram.com/v/t51.2885-19/s320x320/69067759_957976681207922_446652332218777600_n.jpg?_nc_ht=scontent-gmp1-1.cdninstagram.com&_nc_ohc=pFcXhsPcINYAX-G9HiY&oh=4c1ac17f73340c512ae70d383c468b5a&oe=5F6A4AF8" alt="renebaebae님의 프로필 사진">
+                        <img class="img-profile" src="/images/profile_frame.jpg" alt="renebaebae님의 프로필 사진">
                         <div class="profile-text">
                             <span class="userID point-span">renebaebae</span>
                             <span class="sub-span">hi_sseulgi님 외 2명이 팔로우합니다</span>
@@ -203,7 +206,7 @@
                 </li>
                 <li>
                     <div class="recommend-friend-profile">
-                        <img class="img-profile" src="https://scontent-gmp1-1.cdninstagram.com/v/t51.2885-19/s320x320/88655311_532875984007590_3393720833305214976_n.jpg?_nc_ht=scontent-gmp1-1.cdninstagram.com&_nc_ohc=QsdbsVQx8IsAX9_Fftk&oh=a6515b76d63f7ca3609c211624c1cd60&oe=5F6A4263" alt="_jeongjaehyun님의 프로필 사진">
+                        <img class="img-profile" src="/images/profile_frame.jpg" alt="_jeongjaehyun님의 프로필 사진">
                         <div class="profile-text">
                             <span class="userID point-span">_jeongjaehyun</span>
                             <span class="sub-span">johnnyjsuh님이 팔로우합니다</span>
@@ -213,7 +216,7 @@
                 </li>
                 <li>
                     <div class="recommend-friend-profile">
-                        <img class="img-profile" src="https://scontent-gmp1-1.cdninstagram.com/v/t51.2885-19/s320x320/111281038_926213341219564_1940619922197712205_n.jpg?_nc_ht=scontent-gmp1-1.cdninstagram.com&_nc_ohc=ITcRMERk0UYAX8KwJyW&oh=54d4847a6cb863301315313b83cf1551&oe=5F6BC0E9" alt="leehi_hi님의 프로필 사진">
+                        <img class="img-profile" src="/images/profile_frame.jpg" alt="leehi_hi님의 프로필 사진">
                         <div class="profile-text">
                             <span class="userID point-span">leehi_hi</span>
                             <span class="sub-span">jennierubyjane님 외 5명이 팔로우합...</span>
@@ -269,7 +272,7 @@
     </div>
 </div>
 </body>
-<script>
+<script th:inline="javascript">
 const modal = document.getElementById("modal_for_post")
 const modal_window = document.getElementById("modal_window")
 const btnModal = document.getElementById("post-btn-modal")
@@ -398,22 +401,23 @@ function onScroll() {
         console.log("getScrollTop() ---> " + getScrollTop());
         console.log("스크롤 끝 도달.");
 
+        let postList = [[${posts}]];
+        let page = /*[[${posts}]]*/;
+        console.log("postList :: " + postList);
+        console.log("postList 2 :: " + page);
+
         $.ajax({
             type: 'get',
             url: '/post/infiniteScroll',
+<!--            url: '/get/member',-->
             data: {post_no : 2}
-        }).done(function(result){
-            if(result){
-                alert("무한 스크롤 컨트롤러에서 보냄.");
-                console.log(post);
-
-                let str = "<article th:each = '" + post + ": ${post}'>";
-                str += "<td th:text='${result.post_no}'></td>";
-                str += "</article>";
-                $('#postArticles').append(str);
+        }).done(function(fragment){
+            if(fragment){
+                $('#moreList').append(fragment);
 
             } else{
-                alert("오류 발생. 다시 입력해주세요.");
+
+                alert("마지막 게시글입니다.");
             }
         }).fail(function(error){
             alert(JSON.stringify(error));
@@ -430,6 +434,7 @@ function onScroll() {
 
 $(window).scroll(function(){
     onScroll();
+
 });
 
 

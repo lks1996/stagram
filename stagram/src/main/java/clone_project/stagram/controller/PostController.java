@@ -189,14 +189,6 @@ public class PostController {
     }
 
 
-//    @GetMapping("/post/infiniteScroll")
-//    public ResponseEntity<List<PostDTO>> getArticlePages(@SessionAttribute(name =SessionConst.LOGIN_MEMBER) UserDTO loginMember, Long post_no) {
-//
-//
-//        List<PostDTO> postDTO = postService.selectPost();
-//
-//        return new ResponseEntity<>(postDTO, HttpStatus.OK);
-//    }
 
 /** 무한 스크롤로 보여줄 게시글보내주기. **/
     @GetMapping("/post/infiniteScroll")

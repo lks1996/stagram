@@ -30,14 +30,17 @@ public class UserEntity implements Serializable {
     @Column(name = "regDate")
     private String regDate;
 
-    @OneToMany(cascade = CascadeType.PERSIST, orphanRemoval = true)
+    @OneToMany(mappedBy = "userEntity")
     private List<PostEntity> postEntityList = new ArrayList<>();
 
-    @OneToMany(cascade = CascadeType.PERSIST, orphanRemoval = true)
-    private List<UserProfileImgEntity> userProfileImgEntityList = new ArrayList<>();
+    @OneToOne(mappedBy = "userEntity")
+    private UserProfileImgEntity userProfileImgEntity = new UserProfileImgEntity();
 
-    @OneToMany(cascade = CascadeType.PERSIST, orphanRemoval = true)
+    @OneToMany(mappedBy = "userEntity")
     private List<CommentsEntity> commentsEntityList = new ArrayList<>();
+
+    @OneToMany
+    private List<FollowEntity> followEntityList = new ArrayList<>();
 
     @Builder
     public UserEntity(Long user_no, String email, String user_id,

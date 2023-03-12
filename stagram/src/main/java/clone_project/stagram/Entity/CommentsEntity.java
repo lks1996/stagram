@@ -25,7 +25,7 @@ public class CommentsEntity {
     @Column(name = "user_id")
     private String user_id;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_no")
     private UserEntity userEntity;
 

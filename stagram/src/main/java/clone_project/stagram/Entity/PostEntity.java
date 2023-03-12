@@ -1,7 +1,6 @@
 package clone_project.stagram.Entity;
 
 import lombok.*;
-import org.apache.catalina.User;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -20,7 +19,7 @@ public class PostEntity implements Serializable {
     @Column(name = "contents")
     private String contents;
     @Column(name = "post_regDate")
-    private String post_regDate;
+    private String postRegDate;
 
     @Column(name = "user_id")
     private String user_id;
@@ -32,7 +31,7 @@ public class PostEntity implements Serializable {
     @Column(name = "postImgSize")
     private Long postImgSize;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_no")
     private UserEntity userEntity;
 
@@ -45,7 +44,7 @@ public class PostEntity implements Serializable {
                       Long postImgSize, UserEntity userEntity) {
         this.post_no = post_no;
         this.contents = contents;
-        this.post_regDate = post_regDate;
+        this.postRegDate = post_regDate;
         this.user_id = user_id;
         this.postImgOriginName = postImgOriginName;
         this.postImgName = postImgName;

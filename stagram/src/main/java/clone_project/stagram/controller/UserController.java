@@ -1,12 +1,10 @@
 package clone_project.stagram.controller;
 
-import clone_project.stagram.DTO.LoginDTO;
-import clone_project.stagram.DTO.PostDTO;
-import clone_project.stagram.DTO.UserDTO;
-import clone_project.stagram.DTO.UserProfileImgDTO;
+import clone_project.stagram.DTO.*;
 import clone_project.stagram.SavePath;
 import clone_project.stagram.SessionConst;
 import clone_project.stagram.service.CommentsService;
+import clone_project.stagram.service.FollowService;
 import clone_project.stagram.service.PostService;
 import clone_project.stagram.service.UserService;
 import org.apache.commons.io.IOUtils;
@@ -39,12 +37,14 @@ public class UserController {
     private final UserService userService;
     private final PostService postService;
     private final CommentsService commentsService;
+    private final FollowService followService;
 
 
-    public UserController(UserService userService, PostService postService, CommentsService commentsService) {
+    public UserController(UserService userService, PostService postService, CommentsService commentsService, FollowService followService) {
         this.userService = userService;
         this.postService = postService;
         this.commentsService = commentsService;
+        this.followService = followService;
     }
 
     @GetMapping("/list")
@@ -180,13 +180,14 @@ public class UserController {
 
             List<PostDTO> userPosts = postService.getOwnPost(loginMember.getUser_no());
 
-            model.addAttribute("profileChangeBtn_disabled", false);
-            model.addAttribute("hiddenProfileEditBtn", false);
-            model.addAttribute("hiddenFollowBtn", true);
-            model.addAttribute("user", loginMember);
-            model.addAttribute("postCount", userPosts.stream().count());
-            model.addAttribute("userPosts", userPosts);
-            model.addAttribute("loginUser", loginMember);
+            model.addAttribute("profileChangeBtn_disabled", false);//프로필사진 업로드 버튼
+            model.addAttribute("hiddenProfileEditBtn", false);//프로필 수정 버튼
+            model.addAttribute("hiddenFollowBtn", true);//팔로우버튼
+            model.addAttribute("hiddenFollowingBtn", true);//언팔로우 버튼
+            model.addAttribute("user", loginMember);//프로필 페이지의 주인 유저
+            model.addAttribute("postCount", userPosts.stream().count());//프로필 페이지 주인의 게시글 수
+            model.addAttribute("userPosts", userPosts);//프로필 페이지 주인이 작성한 게시글들
+            model.addAttribute("loginUser", loginMember);//현재 로그인한 유저(세선에 등록된 유저)
             return "profile";
         }
 
@@ -196,13 +197,29 @@ public class UserController {
 
             List<PostDTO> userPosts = postService.getOwnPost(nowUser.getUser_no());
 
-            model.addAttribute("profileChangeBtn_disabled", true);
-            model.addAttribute("hiddenProfileEditBtn", true);
-            model.addAttribute("hiddenFollowBtn", false);
-            model.addAttribute("user", nowUser);
-            model.addAttribute("postCount", userPosts.stream().count());
-            model.addAttribute("userPosts", userPosts);
-            model.addAttribute("loginUser", loginMember);
+            model.addAttribute("profileChangeBtn_disabled", true);//프로필사진 업로드 버튼
+            model.addAttribute("hiddenProfileEditBtn", true);//프로필 수정 버튼
+
+            model.addAttribute("user", nowUser);//프로필 페이지의 주인 유저
+            model.addAttribute("postCount", userPosts.stream().count());//프로필 페이지 주인의 게시글 수
+            model.addAttribute("userPosts", userPosts);//프로필 페이지 주인이 작성한 게시글들
+            model.addAttribute("loginUser", loginMember);//현재 로그인한 유저(세선에 등록된 유저)
+
+
+            //로그인한 사용자와 다른 유저 간의 팔로우 관계가 있는지 확인.
+
+            //팔로우 관계가 있다면, 언팔로우 버튼 보이게.
+            model.addAttribute("hiddenFollowBtn", true);//팔로우 버튼
+            model.addAttribute("hiddenFollowingBtn", false);//언팔로우 버튼
+
+            //팔로우 관계가 없다면, 팔로우 버튼 보이게.
+            FollowDTO isFollowDTO = followService.isFollow(loginMember.getUser_no(), nowUser.getUser_no());
+            if (isFollowDTO == null) {
+                model.addAttribute("hiddenFollowBtn", false);//팔로우 버튼
+                model.addAttribute("hiddenFollowingBtn", true);//언팔로우 버튼
+            }
+
+
             return "profile";
         }
 

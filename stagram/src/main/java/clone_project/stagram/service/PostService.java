@@ -7,6 +7,7 @@ import clone_project.stagram.Entity.UserEntity;
 import clone_project.stagram.Mapper;
 import clone_project.stagram.repository.post.JpaPostRepository;
 import clone_project.stagram.repository.post.JpaPostRepositoryCustom;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -47,7 +48,7 @@ public class PostService {
 
 /** 게시글 모두 보여주기(어떤 게시글을 보여줄지 로직 작성 할 것.) **/
     public List<PostDTO> selectPost() {
-        List<PostEntity> postEntities = jpaPostRepository.findAll();
+        List<PostEntity> postEntities = jpaPostRepository.findAll(Sort.by(Sort.Direction.DESC, "postRegDate"));
         List<PostDTO> postDTOS = Mapper.ListMapToPostDTO(postEntities);
 
         return postDTOS;

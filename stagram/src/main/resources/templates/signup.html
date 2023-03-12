@@ -146,7 +146,7 @@
             type:'post', //POST 방식으로 전달
             data:{id:id},
             success:function(result){ //컨트롤러에서 넘어온 result 값을 받는다
-                if(result){ //result 가 1이 아니면(=0일 경우) -> 사용 가능한 아이디
+                if(result){
                     $('.id_ok').css("display","inline-block");
                     $('.id_already').css("display", "none");
                     input_id = true;

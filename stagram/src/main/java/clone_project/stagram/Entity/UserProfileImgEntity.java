@@ -30,9 +30,7 @@ public class UserProfileImgEntity {
     @Column(name = "regDate")
     private String regDate;
 
-//    @Column(name = "user_no")
-//    private Long user_no;
-    @ManyToOne
+    @OneToOne
     @JoinColumn(name = "user_no")
     private UserEntity userEntity;
 
@@ -44,7 +42,6 @@ public class UserProfileImgEntity {
         this.profileImgName = profileImgName;
         this.profileImgSize = profileImgSize;
         this.regDate = regDate;
-//        this.user_no = UserNo;
         this.userEntity = userEntity;
     }
 }

@@ -2,6 +2,7 @@ package clone_project.stagram.controller;
 
 import clone_project.stagram.DTO.PostDTO;
 import clone_project.stagram.DTO.UserDTO;
+import clone_project.stagram.Entity.UserEntity;
 import clone_project.stagram.SessionConst;
 import clone_project.stagram.service.PostService;
 import clone_project.stagram.service.UserService;
@@ -44,6 +45,7 @@ public class HomeController {
         if (validUser == null) {
             return "signin";
         }
+
 
         List<PostDTO> posts = postService.selectPost();
 

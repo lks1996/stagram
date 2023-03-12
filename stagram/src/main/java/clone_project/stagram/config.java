@@ -2,6 +2,8 @@ package clone_project.stagram;
 
 import clone_project.stagram.repository.comments.JpaCommentsRepositoryCustom;
 import clone_project.stagram.repository.comments.JpaCommentsRepositoryCustomImpl;
+import clone_project.stagram.repository.follow.JpaFollowRepositoryCustom;
+import clone_project.stagram.repository.follow.JpaFollowRepositoryCustomImpl;
 import clone_project.stagram.repository.post.JpaPostRepositoryCustom;
 import clone_project.stagram.repository.post.JpaPostRepositoryCustomImpl;
 import clone_project.stagram.repository.userProfile.JpaUserProfileImgRepositoryCustom;
@@ -65,4 +67,8 @@ public class config {
         return new JpaCommentsRepositoryCustomImpl(em);
     }
 
+    @Bean
+    JpaFollowRepositoryCustom jpaFollowRepositoryCustom(){
+        return new JpaFollowRepositoryCustomImpl(em);
+    }
 }

@@ -3,6 +3,8 @@ package clone_project.stagram.DTO;
 import lombok.*;
 
 import javax.validation.constraints.Email;
+import java.util.ArrayList;
+import java.util.List;
 
 @Data
 public class UserDTO {
@@ -14,4 +16,10 @@ public class UserDTO {
     private String name;
     private String bio;
     private String regDate;
+
+    private UserProfileImgDTO userProfileImgDTO = new UserProfileImgDTO();
+    private List<PostDTO> postDTOS = new ArrayList<>();
+    private List<CommentsDTO> commentsDTOS = new ArrayList<>();
+    private List<FollowDTO> followDTOS = new ArrayList<>();
+
 }

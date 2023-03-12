@@ -203,6 +203,53 @@ header{
     margin: 0;
 }
 
+.follow-btn{
+    background-color: #0095f6;
+    border: none;
+    border-radius: 8px;
+    color: white;
+    position: relative;
+    text-align: center;
+    font-size: 14px;
+    font-weight: 600;
+    padding: 7px 16px!important;
+    text-overflow: ellipsis;
+    width: auto;
+    cursor: pointer;
+}
+
+.following-btn{
+    background-color: #c7c7c7f6;
+    border: none;
+    border-radius: 8px;
+    color: black;
+    position: relative;
+    text-align: center;
+    font-size: 14px;
+    font-weight: 600;
+    padding: 7px 16px!important;
+    text-overflow: ellipsis;
+    width: auto;
+    cursor: pointer;
+}
+div_for_follow_outer{
+    height: 100%;
+    padding-left: 4px;
+    padding-right: 4px;
+    justify-content: center;
+    flex-direction: row;
+    display: flex;
+    box-sizing: border-box;
+    position: relative;
+}
+
+.div_for_follow_inner{
+    display: block;
+    margin: 0;
+    line-height: 18px;
+    cursor: pointer;
+}
+
 .c_1{
     margin-left: 5px;
     flex-shrink: 0;

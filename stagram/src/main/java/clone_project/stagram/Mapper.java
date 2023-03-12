@@ -1,17 +1,10 @@
 package clone_project.stagram;
 
-import clone_project.stagram.DTO.CommentsDTO;
-import clone_project.stagram.DTO.PostDTO;
-import clone_project.stagram.DTO.UserDTO;
-import clone_project.stagram.DTO.UserProfileImgDTO;
-import clone_project.stagram.Entity.CommentsEntity;
-import clone_project.stagram.Entity.PostEntity;
-import clone_project.stagram.Entity.UserEntity;
-import clone_project.stagram.Entity.UserProfileImgEntity;
+import clone_project.stagram.DTO.*;
+import clone_project.stagram.Entity.*;
 import org.modelmapper.ModelMapper;
 import org.springframework.context.annotation.Configuration;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -112,7 +105,7 @@ public class Mapper {
         PostDTO postDTO = new PostDTO();
         postDTO.setPost_no(postEntity.get().getPost_no());
         postDTO.setContents(postEntity.get().getContents());
-        postDTO.setPost_regDate(postEntity.get().getPost_regDate());
+        postDTO.setPost_regDate(postEntity.get().getPostRegDate());
         postDTO.setUser_no(postEntity.get().getUserEntity().getUser_no());
         postDTO.setUser_id(postEntity.get().getUser_id());
         postDTO.setPostImgOriginName(postEntity.get().getPostImgOriginName());
@@ -169,6 +162,21 @@ public class Mapper {
                 .map(comments -> modelMapper.map(comments, CommentsDTO.class))
                 .collect(Collectors.toList());
         return commentsDTOS;
+    }
+
+/** Follow **/
+    public static FollowEntity mapToFollowEntity(FollowDTO followDTO, UserEntity followFrom, UserEntity followTo) {
+        FollowEntity followEntity = new FollowEntity(followDTO.getFollow_no(), followFrom, followTo);
+        return followEntity;
+    }
+
+    public static FollowDTO mapToFollowDTO(Optional<FollowEntity> followEntity) {
+        FollowDTO followDTO = new FollowDTO();
+        followDTO.setFollow_no(followEntity.get().getFollow_no());
+        followDTO.setFollow_from(followEntity.get().getFollow_from().getUser_no());
+        followDTO.setFollow_to(followEntity.get().getFollow_to().getUser_no());
+
+        return followDTO;
     }
 
 

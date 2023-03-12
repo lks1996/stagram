@@ -40,7 +40,21 @@
                         <div class="b_2">
                             <div class="b_3">
                                 <a href='/user/edit' th:hidden="${hiddenProfileEditBtn}"> 프로필 편집</a>
-                                <button class="follow-btn" th:hidden="${hiddenFollowBtn}">Follow</button>
+                                <button class="follow-btn" th:name="${user.user_no}" th:hidden="${hiddenFollowBtn}" onclick="follow(this.name)">
+                                    <div class="div_for_follow_outer">
+                                        <div class="div_for_follow_inner">
+                                            Follow
+                                        </div>
+                                    </div>
+                                </button>
+
+                                <button class="following-btn" th:name="${user.user_no}" th:hidden="${hiddenFollowingBtn}" onclick="unfollow(this.name)">
+                                    <div class="div_for_follow_outer">
+                                        <div class="div_for_follow_inner">
+                                            Following
+                                        </div>
+                                    </div>
+                                </button>
 
                             </div>
                         </div>
@@ -451,8 +465,45 @@ const targetPost = "comments_count"+post_no;
 }
 
 
+function follow(user_no){
+    $.ajax({
+        type: 'POST',
+        url: '/follow/request',
+        data: {user_no: user_no}
+    }).done(function(result){
+        if(result){
+            console.log(user_no + " 회원 팔로우 성공.")
 
+            $(".s_1").load(location.href + " .s_1");
+        } else{
+            alert("오류 발생. 나중에 다시 시도해주세요.");
 
+        }
+    }).fail(function(error){
+        alert(JSON.stringify(error));
+    });
+}
+
+function unfollow(user_no){
+    $.ajax({
+        type: 'POST',
+        url: '/follow/unfollow',
+        data: {user_no: user_no},
+        success:function(result){
+            if(result){
+                console.log(user_no + " 회원 언팔로우 성공.")
+
+                $(".s_1").load(location.href + " .s_1");
+            } else{
+                alert("오류 발생. 나중에 다시 시도해주세요.");
+
+            }
+        },
+        error:function(){
+            alert("ERROR");
+        }
+    });
+}
 
 
 </script>

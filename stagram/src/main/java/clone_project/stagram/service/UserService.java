@@ -2,6 +2,7 @@ package clone_project.stagram.service;
 
 import clone_project.stagram.DTO.UserDTO;
 import clone_project.stagram.DTO.UserProfileImgDTO;
+import clone_project.stagram.Entity.FollowEntity;
 import clone_project.stagram.Entity.UserEntity;
 import clone_project.stagram.Entity.UserProfileImgEntity;
 import clone_project.stagram.Mapper;
@@ -15,6 +16,7 @@ import org.springframework.stereotype.Service;
 import javax.transaction.Transactional;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public class UserService {
@@ -38,6 +40,15 @@ public class UserService {
     public List<UserDTO> findAllMembers() {
         List<UserEntity> userEntity = jpaUserRepository.findAll();
         List<UserDTO> userDto = Mapper.ListMapToUserDTO(userEntity);
+
+
+//        List<UserEntity> filteredFollowList = userEntity.stream().
+//                filter(follow -> userEntity.stream()
+//                        .anyMatch(user ->
+//                                user.getUser_no() == 1))
+//                        .collect(Collectors.toList());
+//
+//        System.out.println("######" + filteredFollowList.size());
 
         return userDto;
     }
@@ -151,6 +162,7 @@ public class UserService {
 /** 회원 번호에 해당하는 회원이 있는지 확인(회원 탈퇴 후 검증용) **/
     public UserDTO findUserByUserNo(Long user_no) {
         Optional<UserEntity> userEntity = jpaUserRepository.findById(user_no);
+
 
         if (userEntity.isPresent()) {
             UserDTO userDTO = Mapper.OptionalMapToUserDTO(userEntity);

@@ -16,10 +16,19 @@ public class JpaFollowRepositoryCustomImpl implements JpaFollowRepositoryCustom{
 
     @Override
     public Optional<FollowEntity> findByLoginUserNoAndOtherUserNo(Long loginUserNo, Long otherUserNo) {
-        List<FollowEntity> followEntity = em.createQuery("select m from FollowEntity m where m.follow_from.user_no =:loginUserNo and m.follow_to.user_no =:otherUserNo", FollowEntity.class)
+        List<FollowEntity> followEntity = em.createQuery("select m from FollowEntity m where m.follow_from_userEntity.user_no =:loginUserNo and m.follow_to_userEntity.user_no =:otherUserNo", FollowEntity.class)
                 .setParameter("loginUserNo", loginUserNo)
                 .setParameter("otherUserNo", otherUserNo)
                 .getResultList();
         return followEntity.stream().findAny();
+    }
+
+    @Override
+    public List<FollowEntity> findFollowingUsers(Long user_no) {
+        List<FollowEntity> followEntityList = em.createQuery("select m from FollowEntity m where m.follow_to_userEntity.user_no =: user_no", FollowEntity.class)
+                .setParameter("user_no", user_no)
+                .getResultList();
+
+        return followEntityList;
     }
 }

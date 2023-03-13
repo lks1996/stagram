@@ -173,10 +173,18 @@ public class Mapper {
     public static FollowDTO mapToFollowDTO(Optional<FollowEntity> followEntity) {
         FollowDTO followDTO = new FollowDTO();
         followDTO.setFollow_no(followEntity.get().getFollow_no());
-        followDTO.setFollow_from(followEntity.get().getFollow_from().getUser_no());
-        followDTO.setFollow_to(followEntity.get().getFollow_to().getUser_no());
+        followDTO.setFollow_from(followEntity.get().getFollow_from_userEntity().getUser_no());
+        followDTO.setFollow_to(followEntity.get().getFollow_to_userEntity().getUser_no());
 
         return followDTO;
+    }
+
+    public static List<FollowDTO> ListMapToFollowDTO(List<FollowEntity> followEntityList) {
+        List<FollowDTO> followDTOS = followEntityList
+                .stream()
+                .map(follow -> modelMapper.map(follow, FollowDTO.class))
+                .collect(Collectors.toList());
+        return followDTOS;
     }
 
 

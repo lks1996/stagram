@@ -28,6 +28,7 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.List;
+import java.util.Objects;
 import java.util.UUID;
 
 import static clone_project.stagram.WhatTime.whatTimeIsItNow;
@@ -174,56 +175,66 @@ public class UserController {
         System.out.println("세션id = " + loginMember.getId());
         System.out.println("loginMember.getId().equals(id)"+loginMember.getId().equals(id));
 
+        UserDTO nowUser = userService.isDuplicateId(id);
+
+        if (nowUser == null) {
+            return "/logout";
+        }
+
+        long followingCount = followService.followingCount(nowUser.getUser_no()).stream().count();
+
+        model.addAttribute("followingCount", followingCount);
+
         // 본인 프로필로 들어가려는것이라면.
-        if (loginMember.getId().equals(id)) {
+        if (Objects.equals(loginMember.getUser_no(), nowUser.getUser_no())) {
             System.out.println("@@@@@@@@@loginMember.getId()" + loginMember.getUser_no());
 
             List<PostDTO> userPosts = postService.getOwnPost(loginMember.getUser_no());
 
             model.addAttribute("profileChangeBtn_disabled", false);//프로필사진 업로드 버튼
             model.addAttribute("hiddenProfileEditBtn", false);//프로필 수정 버튼
-            model.addAttribute("hiddenFollowBtn", true);//팔로우버튼
-            model.addAttribute("hiddenFollowingBtn", true);//언팔로우 버튼
+
             model.addAttribute("user", loginMember);//프로필 페이지의 주인 유저
             model.addAttribute("postCount", userPosts.stream().count());//프로필 페이지 주인의 게시글 수
             model.addAttribute("userPosts", userPosts);//프로필 페이지 주인이 작성한 게시글들
             model.addAttribute("loginUser", loginMember);//현재 로그인한 유저(세선에 등록된 유저)
+
+            model.addAttribute("hiddenFollowBtn", true);//팔로우버튼
+            model.addAttribute("hiddenFollowingBtn", true);//언팔로우 버튼
+
+            model.addAttribute("followingCount", followingCount);
+
             return "profile";
         }
 
         // 다른 유저의 프로필로 들어가려는것이라면.
-        UserDTO nowUser = userService.isDuplicateId(id);
-        if (!(nowUser == null)) {
+        List<PostDTO> userPosts = postService.getOwnPost(nowUser.getUser_no());
 
-            List<PostDTO> userPosts = postService.getOwnPost(nowUser.getUser_no());
+        model.addAttribute("profileChangeBtn_disabled", true);//프로필사진 업로드 버튼
+        model.addAttribute("hiddenProfileEditBtn", true);//프로필 수정 버튼
 
-            model.addAttribute("profileChangeBtn_disabled", true);//프로필사진 업로드 버튼
-            model.addAttribute("hiddenProfileEditBtn", true);//프로필 수정 버튼
-
-            model.addAttribute("user", nowUser);//프로필 페이지의 주인 유저
-            model.addAttribute("postCount", userPosts.stream().count());//프로필 페이지 주인의 게시글 수
-            model.addAttribute("userPosts", userPosts);//프로필 페이지 주인이 작성한 게시글들
-            model.addAttribute("loginUser", loginMember);//현재 로그인한 유저(세선에 등록된 유저)
+        model.addAttribute("user", nowUser);//프로필 페이지의 주인 유저
+        model.addAttribute("postCount", userPosts.stream().count());//프로필 페이지 주인의 게시글 수
+        model.addAttribute("userPosts", userPosts);//프로필 페이지 주인이 작성한 게시글들
+        model.addAttribute("loginUser", loginMember);//현재 로그인한 유저(세선에 등록된 유저)
 
 
-            //로그인한 사용자와 다른 유저 간의 팔로우 관계가 있는지 확인.
+        //로그인한 사용자와 다른 유저 간의 팔로우 관계가 있는지 확인.
 
-            //팔로우 관계가 있다면, 언팔로우 버튼 보이게.
-            model.addAttribute("hiddenFollowBtn", true);//팔로우 버튼
-            model.addAttribute("hiddenFollowingBtn", false);//언팔로우 버튼
+        //팔로우 관계가 있다면, 언팔로우 버튼 보이게.
+        model.addAttribute("hiddenFollowBtn", true);//팔로우 버튼
+        model.addAttribute("hiddenFollowingBtn", false);//언팔로우 버튼
 
-            //팔로우 관계가 없다면, 팔로우 버튼 보이게.
-            FollowDTO isFollowDTO = followService.isFollow(loginMember.getUser_no(), nowUser.getUser_no());
-            if (isFollowDTO == null) {
-                model.addAttribute("hiddenFollowBtn", false);//팔로우 버튼
-                model.addAttribute("hiddenFollowingBtn", true);//언팔로우 버튼
-            }
-
-
-            return "profile";
+        //팔로우 관계가 없다면, 팔로우 버튼 보이게.
+        FollowDTO isFollowDTO = followService.isFollow(loginMember.getUser_no(), nowUser.getUser_no());
+        if (isFollowDTO == null) {
+            model.addAttribute("hiddenFollowBtn", false);//팔로우 버튼
+            model.addAttribute("hiddenFollowingBtn", true);//언팔로우 버튼
         }
 
-        return "/logout";
+        model.addAttribute("followingCount", followingCount);
+
+        return "profile";
     }
 
 

@@ -2,7 +2,6 @@ package clone_project.stagram.DTO;
 
 import lombok.Data;
 
-import javax.persistence.Column;
 
 @Data
 public class CommentsDTO {

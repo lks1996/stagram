@@ -33,14 +33,17 @@ public class UserEntity implements Serializable {
     @OneToMany(mappedBy = "userEntity")
     private List<PostEntity> postEntityList = new ArrayList<>();
 
-    @OneToOne(mappedBy = "userEntity")
-    private UserProfileImgEntity userProfileImgEntity = new UserProfileImgEntity();
+//    @OneToOne(mappedBy = "userEntity")
+//    private UserProfileImgEntity userProfileImgEntity = new UserProfileImgEntity();
 
     @OneToMany(mappedBy = "userEntity")
     private List<CommentsEntity> commentsEntityList = new ArrayList<>();
 
-    @OneToMany
-    private List<FollowEntity> followEntityList = new ArrayList<>();
+//    @OneToMany(mappedBy = "follow_from_userEntity")
+//    private List<FollowEntity> followerEntityList = new ArrayList<>();
+//
+//    @OneToMany(mappedBy = "follow_to_userEntity")
+//    private List<FollowEntity> followingEntityList = new ArrayList<>();
 
     @Builder
     public UserEntity(Long user_no, String email, String user_id,

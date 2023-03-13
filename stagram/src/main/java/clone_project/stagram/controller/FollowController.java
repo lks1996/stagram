@@ -2,7 +2,6 @@ package clone_project.stagram.controller;
 
 import clone_project.stagram.DTO.FollowDTO;
 import clone_project.stagram.DTO.UserDTO;
-import clone_project.stagram.Entity.FollowEntity;
 import clone_project.stagram.SessionConst;
 import clone_project.stagram.service.FollowService;
 import clone_project.stagram.service.UserService;
@@ -29,6 +28,8 @@ public class FollowController {
         UserDTO followTo = userService.findUserByUserNo(user_no);
 
         FollowDTO followDTO = new FollowDTO();
+        followDTO.setFollow_from(loginMember.getUser_no());
+        followDTO.setFollow_to(user_no);
 
         followService.follow(followDTO, followFrom, followTo);
 

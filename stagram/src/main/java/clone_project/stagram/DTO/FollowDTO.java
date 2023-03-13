@@ -6,6 +6,7 @@ import lombok.Data;
 public class FollowDTO {
 
     private Long follow_no;
+
     private Long follow_from;
     private Long follow_to;
 }

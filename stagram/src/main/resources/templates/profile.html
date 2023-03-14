@@ -77,13 +77,13 @@
                             </div>
                         </li>
                         <li>
-                            <a class="a_tag_1">
+                            <a class="a_tag_1" href='javascript:void(0);' onclick="followerListModalOn();">
                                 <div class="d_1">
                                     팔로워
 <!--                                    팔로워/팔로잉 수 동적으로 가져오기, 게시글 좋아요 구현-->
                                     <span>
                                         <span>
-                                            130
+                                            <span><td th:text="${followerCount}"></span>
                                         </span>
                                     </span>
                                 </div>
@@ -241,6 +241,101 @@
 </div>
 
 
+<!-- 팔로워 리스트 모달 -->
+<div id="modal_for_followers_list" class="modal-overlay">
+    <div class="modal-window">
+        <div class="content">
+            <div class="div_for_follower_list_head">
+                <div class="div_for_follower_list_head_outer">
+                    <div class="div_for_follower_list_head_inner">
+                        <h1>
+                            <div>
+                                팔로워
+                            </div>
+
+                        </h1>
+
+                    </div>
+                    <div class="div_for_follow_list_x_btn">
+                        <div class="div_for_follow_list_x_btn_outer">
+                            <button>
+                                x
+                            </button>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+
+            <div class="div_for_follower_list_contents">
+                <div class="div_for_follower_list_contents_outer">
+                    <div class="div_for_follower_list_contents_inner">
+                        <div class="as">
+                            <div class="asas">
+                                <div class="asasas">
+                                    <div class="asasasas">
+
+                                        <div class="div_for_follow_list_profile_pic">
+                                            <div class="sd">
+                                                <div class="sdsd">
+                                                    <div class="sdsdsd">
+                                                        <a>
+                                                            <img/>
+                                                        </a>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="div_for_follow_list_user_id">
+                                            <div>
+                                                <div>
+
+                                                    <div class="div_for_user_id">
+                                                        <span>
+                                                            <a>
+                                                                lks
+                                                            </a>
+                                                        </span>
+                                                    </div>
+
+                                                    <div class="div_for_user_name">
+                                                        <span>
+                                                            leeks
+                                                        </span>
+                                                    </div>
+
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="div_for_follow_list_delete_btn">
+                                            <div>
+                                                <div>
+
+                                                    <div class="div_for_follower_delete_btn">
+                                                        <div>
+                                                            <button>
+                                                                삭제
+                                                            </button>
+                                                        </div>
+                                                    </div>
+
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+
 
 <script>
 <!-- 프로필 사진 업로드 모달 -->
@@ -325,7 +420,6 @@ $('.profile-upload-btn').click(function (e) {
 });
 
 function changeValue(obj){
-
     document.getElementById('upload-profile-pic-form').submit();
 }
 
@@ -505,6 +599,38 @@ function unfollow(user_no){
         }
     });
 }
+
+
+
+
+
+
+
+
+<!--팔로워 리스트 -->
+const followerListModal = document.getElementById("modal_for_followers_list")
+
+function followerListModalOn() {
+    followerListModal.style.display = "flex"
+    document.body.style.overflow = 'hidden';
+}
+
+function isModalOn2() {
+    return followerListModal.style.display === "flex"
+}
+
+function followerListModalOff() {
+    followerListModal.style.display = "none"
+    document.body.style.overflow = 'unset';
+}
+
+
+modal2.addEventListener("click", e => {
+    const evTarget = e.target
+    if(evTarget.classList.contains("modal-overlay")) {
+        followerListModalOff()
+    }
+})
 
 
 </script>

@@ -20,6 +20,7 @@ public class UserDTO {
     private UserProfileImgDTO userProfileImgDTO = new UserProfileImgDTO();
     private List<PostDTO> postDTOS = new ArrayList<>();
     private List<CommentsDTO> commentsDTOS = new ArrayList<>();
-    private List<FollowDTO> followDTOS = new ArrayList<>();
+    private List<FollowDTO> followingDTOS = new ArrayList<>();
+    private List<FollowDTO> followerDTOS = new ArrayList<>();
 
 }

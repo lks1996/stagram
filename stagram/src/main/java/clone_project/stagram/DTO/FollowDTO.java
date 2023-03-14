@@ -7,6 +7,6 @@ public class FollowDTO {
 
     private Long follow_no;
 
-    private Long follow_from;
-    private Long follow_to;
+    private Long follow_from_user_no;
+    private Long follow_to_user_no;
 }

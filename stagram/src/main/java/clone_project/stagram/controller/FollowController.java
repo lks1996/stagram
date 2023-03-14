@@ -28,8 +28,8 @@ public class FollowController {
         UserDTO followTo = userService.findUserByUserNo(user_no);
 
         FollowDTO followDTO = new FollowDTO();
-        followDTO.setFollow_from(loginMember.getUser_no());
-        followDTO.setFollow_to(user_no);
+        followDTO.setFollow_from_user_no(loginMember.getUser_no());
+        followDTO.setFollow_from_user_no(user_no);
 
         followService.follow(followDTO, followFrom, followTo);
 

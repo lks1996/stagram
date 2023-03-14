@@ -181,9 +181,12 @@ public class UserController {
             return "/logout";
         }
 
-        long followingCount = followService.followingCount(nowUser.getUser_no()).stream().count();
+        long followingCount = followService.followingList(nowUser.getUser_no()).stream().count();
+        long followerCount = followService.followerList(nowUser.getUser_no()).stream().count();
 
         model.addAttribute("followingCount", followingCount);
+        model.addAttribute("followerCount", followerCount);
+
 
         // 본인 프로필로 들어가려는것이라면.
         if (Objects.equals(loginMember.getUser_no(), nowUser.getUser_no())) {
@@ -202,7 +205,7 @@ public class UserController {
             model.addAttribute("hiddenFollowBtn", true);//팔로우버튼
             model.addAttribute("hiddenFollowingBtn", true);//언팔로우 버튼
 
-            model.addAttribute("followingCount", followingCount);
+//            model.addAttribute("followingCount", followingCount);
 
             return "profile";
         }
@@ -232,7 +235,7 @@ public class UserController {
             model.addAttribute("hiddenFollowingBtn", true);//언팔로우 버튼
         }
 
-        model.addAttribute("followingCount", followingCount);
+//        model.addAttribute("followingCount", followingCount);
 
         return "profile";
     }

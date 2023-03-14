@@ -10,4 +10,6 @@ public interface JpaFollowRepositoryCustom {
 
     List<FollowEntity> findFollowingUsers(Long user_no);
 
+    List<FollowEntity> findFollowerUsers(Long user_no);
+
 }

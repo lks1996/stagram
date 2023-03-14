@@ -865,3 +865,259 @@ width: 100%;
     border: none;
     border-radius: 8px;
 }
+
+
+
+#modal_for_followers_list .modal-window{
+    align-items: stretch;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    background: #fafafa;
+    border-radius: 10px;
+    border: 0;
+    width: 400px;
+    position: relative;
+    justify-content: center;
+    margin: 0;
+    padding: 0;
+    vertical-align: baseline;
+}
+
+#modal_for_followers_list .content{
+    display: flex;
+    height: 100%;
+    max-width: 100%;
+    max-height: 400px;
+    min-height: 200px;
+    flex: 1 1 auto;
+    justify-content: flex-start;
+    flex-direction: column;
+    align-items: stretch;
+    box-sizing: border-box;
+    position: relative;
+    pointer-events: all;
+}
+
+.div_for_follower_list_head{
+    flex-direction: column;
+    display: flex;
+    align-items: stretch;
+}
+
+.div_for_follower_list_head_outer{
+    border-bottom: 1px solid #c7c7c7;
+    box-sizing: border-box;
+    display: inline-block;
+    height: 43px;
+    position: relative;
+    width: 100%;
+}
+
+.div_for_follower_list_head_inner{
+    height: 100%;
+    width: 100%;
+    position: absolute;
+    justify-content: center;
+    flex-direction: column;
+    display: flex;
+    box-sizing: border-box;
+}
+
+.div_for_follower_list_head_inner h1{
+    width: calc(100% - 100px);
+    align-items: center;
+    border: 0;
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+    font: inherit;
+    font-size: 16px;
+    font-weight: 600;
+    justify-content: center;
+    line-height: 24px;
+    margin: 0;
+    min-width: 0;
+    padding: 0;
+    text-align: center;
+    vertical-align: baseline;
+}
+
+.div_for_follow_list_x_btn{
+    float: right;
+    align-items: center;
+    display: flex;
+    flex-basis: 48px;
+    flex-direction: column;
+    height: 100%;
+    justify-content: center;
+    position: relative;
+}
+
+.div_for_follow_list_x_btn_outer{
+    padding-left: 8px;
+    padding-right: 8px;
+    flex: 0 0 auto;
+    justify-content: flex-start;
+    flex-direction: column;
+    align-items: stretch;
+    display: flex;
+    box-sizing: border-box;
+    position: relative;
+}
+
+.div_for_follow_list_x_btn_outer button{
+    align-items: center;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    padding: 8px;
+}
+
+.div_for_follower_list_contents{
+    border-radius: 12px;
+    display: block;
+    flex-basis: 1;
+    flex-grow: 1;
+    flex-shrink: 1;
+    min-height: 200px;
+    overflow-y: scroll;
+    position: relative;
+    border-bottom-right-radius: 8px;
+}
+
+.div_for_follower_list_contents_outer{
+    height: auto;
+    overflow: hidden auto;
+}
+
+.div_for_follower_list_contents_inner{
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    padding-bottom: 0px;
+    padding-top: 0px;
+}
+
+.as{
+    border-left-width: 0;
+    padding: 0;
+    background-color: transparent;
+    width: 100%;
+    min-height: 0;
+    list-style: none;
+    flex-basis: auto;
+    margin: 0;
+    border-right-width: 0;
+    box-sizing: border-box;
+    user-select: none;
+    flex-shrink: 0;
+    cursor: pointer;
+    position: relative;
+    display: block;
+    z-index: 0;
+    text-decoration: none;
+    outline: none;
+    text-align: inherit;
+}
+
+.asas{
+    padding-bottom: 8px;
+    overflow-y: visible;
+    border-bottom-left-radius: 0;
+    flex-direction: column;
+    display: flex;
+    border-bottom-right-radius: 0;
+    padding-top: 8px;
+    position: static;
+    padding-left: 16px;
+    align-items: stretch;
+    overflow-x: visible;
+    padding-right: 16px;
+    justify-content: flex-start;
+    user-select: none;
+}
+
+.asasas{
+    justify-content: center;
+    min-width: 0;
+    box-sizing: border-box;
+    display: flex;
+    align-items: stretch;
+    position: relative;
+    z-index: 0;
+    flex-grow: 1;
+}
+
+.asasasas{
+    flex-wrap: nowrap;
+    box-sizing: border-box;
+    display: flex;
+    align-items: center;
+    flex-shrink: 0;
+    justify-content: space-between;
+    flex-direction: row;
+    position: relative;
+    z-index: 0;
+}
+
+.div_for_follow_list_profile_pic{
+    min-width: 0;
+    flex-direction: column;
+    box-sizing: border-box;
+    display: flex;
+    flex-shrink: 0;
+    z-index: 0;
+    max-width: 100%;
+}
+
+.sd{
+    overflow-y: visible;
+    margin-right: 12px;
+    background-color: transparent;
+    flex-direction: column;
+    box-sizing: border-box;
+    display: flex;
+    flex-shrink: 0;
+    position: static;
+    overflow-x: visible;
+    justify-content: flex-start;
+    align-self: auto;
+    flex-grow: 0;
+}
+
+.sdsdsd{
+    position: relative;
+}
+
+.sdsdsd a{
+    width: 44px;
+    height: 44px;
+    text-decoration: none;
+    border-radius: 50%;
+    touch-action: manipulation;
+    padding: 0;
+    margin: 0;
+    flex-direction: column;
+    display: flex;
+    overflow-x: hidden;
+    cursor: pointer;
+    align-items: stretch;
+    position: relative;
+    z-index: 0;
+    text-align: inherit;
+    overflow-y: hidden;
+    user-select: none;
+}
+
+.sdsdsd img{
+    font-size: 100%;
+    width: 100%;
+    height: 100%;
+    padding: 0;
+    margin: 0;
+    vertical-align: baseline;
+    border: 0;
+}

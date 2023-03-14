@@ -409,7 +409,6 @@ function onScroll() {
         $.ajax({
             type: 'get',
             url: '/post/infiniteScroll',
-<!--            url: '/get/member',-->
             data: {post_no : 2}
         }).done(function(fragment){
             if(fragment){

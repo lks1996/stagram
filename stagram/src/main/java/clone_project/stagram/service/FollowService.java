@@ -8,7 +8,6 @@ import clone_project.stagram.Mapper;
 import clone_project.stagram.repository.follow.JpaFollowRepository;
 import clone_project.stagram.repository.follow.JpaFollowRepositoryCustom;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Optional;
@@ -57,8 +56,18 @@ public class FollowService {
     }
 
 
-    public List<FollowDTO> followingCount(Long user_no) {
+    public List<FollowDTO> followingList(Long user_no) {
         List<FollowEntity> followEntityList = jpaFollowRepositoryCustom.findFollowingUsers(user_no);
+
+        List<FollowDTO> followDTOS = Mapper.ListMapToFollowDTO(followEntityList);
+
+
+        return followDTOS;
+    }
+
+    public List<FollowDTO> followerList(Long user_no) {
+        List<FollowEntity> followEntityList = jpaFollowRepositoryCustom.findFollowerUsers(user_no);
+
         List<FollowDTO> followDTOS = Mapper.ListMapToFollowDTO(followEntityList);
 
         return followDTOS;

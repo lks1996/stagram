@@ -27,6 +27,7 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import java.util.UUID;
@@ -187,6 +188,10 @@ public class UserController {
         model.addAttribute("followingCount", followingCount);
         model.addAttribute("followerCount", followerCount);
 
+        List<UserDTO> followers = new ArrayList<>();
+
+        model.addAttribute("followerLists", followers);
+
 
         // 본인 프로필로 들어가려는것이라면.
         if (Objects.equals(loginMember.getUser_no(), nowUser.getUser_no())) {
@@ -204,8 +209,6 @@ public class UserController {
 
             model.addAttribute("hiddenFollowBtn", true);//팔로우버튼
             model.addAttribute("hiddenFollowingBtn", true);//언팔로우 버튼
-
-//            model.addAttribute("followingCount", followingCount);
 
             return "profile";
         }
@@ -235,7 +238,6 @@ public class UserController {
             model.addAttribute("hiddenFollowingBtn", true);//언팔로우 버튼
         }
 
-//        model.addAttribute("followingCount", followingCount);
 
         return "profile";
     }

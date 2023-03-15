@@ -6,7 +6,11 @@ import clone_project.stagram.SessionConst;
 import clone_project.stagram.service.FollowService;
 import clone_project.stagram.service.UserService;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Controller
 public class FollowController {
@@ -50,5 +54,31 @@ public class FollowController {
         followService.unfollow(followDTO, unfollowFrom, unfollowTo);
 
         return true;
+    }
+
+    @GetMapping("/follow/followerList")
+    public String followerList(@SessionAttribute(name =SessionConst.LOGIN_MEMBER) UserDTO loginMember,
+                               Model model, Long user_no) {
+
+        System.out.println("팔로우 리스트를 보여줄 유저 번호 == " + user_no);
+
+        List<FollowDTO> followDTO = followService.followerList(user_no);
+        System.out.println(followDTO.size());
+
+
+        List<UserDTO> followers = new ArrayList<>();
+
+
+        for (int i = 0; i < followDTO.size(); i++) {
+            System.out.println("followDTO.get(i).getFollow_from_user_no()" + followDTO.get(i).getFollow_from_user_no());
+
+            UserDTO follower = userService.findUserByUserNo(followDTO.get(i).getFollow_from_user_no());
+            followers.add(follower);
+        }
+
+
+        model.addAttribute("followerLists", followers);
+
+        return "profile :: #followListBody";
     }
 }

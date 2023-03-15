@@ -39,10 +39,10 @@ public class UserEntity implements Serializable {
     @OneToMany(mappedBy = "userEntity")
     private List<CommentsEntity> commentsEntityList = new ArrayList<>();
 
-    @OneToMany(mappedBy = "follow_from")
+    @OneToMany(mappedBy = "follow_from_user_no")
     private List<FollowEntity> followerEntityList = new ArrayList<>();
 
-    @OneToMany(mappedBy = "follow_to")
+    @OneToMany(mappedBy = "follow_to_user_no")
     private List<FollowEntity> followingEntityList = new ArrayList<>();
 
     @Builder

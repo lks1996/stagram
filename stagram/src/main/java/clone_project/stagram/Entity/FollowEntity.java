@@ -20,15 +20,15 @@ public class FollowEntity implements Serializable {
     // follow_from 가 나를 팔로우함.(팔로워)
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "follow_from_user_no")
-    private UserEntity follow_from;
+    private UserEntity follow_from_user_no;
     // 내가 follow_to 유저를 팔로우함.(팔로잉)
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "follow_to_user_no")
-    private UserEntity follow_to;
+    private UserEntity follow_to_user_no;
 
-    public FollowEntity(Long follow_no, UserEntity follow_from, UserEntity follow_to) {
+    public FollowEntity(Long follow_no, UserEntity follow_from_user_no, UserEntity follow_to_user_no) {
         this.follow_no = follow_no;
-        this.follow_from = follow_from;
-        this.follow_to = follow_to;
+        this.follow_from_user_no = follow_from_user_no;
+        this.follow_to_user_no = follow_to_user_no;
     }
 }

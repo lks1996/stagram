@@ -922,6 +922,7 @@ width: 100%;
     flex-direction: column;
     display: flex;
     box-sizing: border-box;
+    align-items: center;
 }
 
 .div_for_follower_list_head_inner h1{
@@ -1049,6 +1050,8 @@ width: 100%;
     position: relative;
     z-index: 0;
     flex-grow: 1;
+    flex-direction: column;
+    box-sizing: border-box;
 }
 
 .asasasas{
@@ -1120,4 +1123,122 @@ width: 100%;
     margin: 0;
     vertical-align: baseline;
     border: 0;
+}
+
+.div_for_follow_list_user_id{
+    flex-shrink: 1;
+    min-width: 0;
+    flex-basis: auto;
+    box-sizing: border-box;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-direction: row;
+    position: relative;
+    z-index: 0;
+    flex-grow: 1;
+    flex-wrap: wrap;
+}
+
+.qq{
+    flex-direction: column;
+    display: flex;
+    flex-shrink: 0;
+    position: relative;
+    z-index: 0;
+    flex-grow: 1;
+    max-width: 100%;
+}
+
+.qqww{
+    overflow-y: visible;
+    overflow-x: visible;
+    background-color: transparent;
+    min-width: 0;
+    flex-direction: column;
+    display: flex;
+    min-height: 0;
+    align-self: auto;
+    justify-content: flex-start;
+}
+
+.div_for_user_id{
+    line-height: 18px;
+    font-size: 14px;
+    margin: 0;
+    word-wrap: break-word;
+    font-weight: 600;
+    position: relative;
+    max-width: 100%;
+}
+
+.div_for_user_id span{
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    display: block;
+    max-width: 100%;
+}
+
+.div_for_user_id a{
+    text-decoration: none;
+    display: inline;
+    touch-action: manipulation;
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+}
+
+.div_for_user_name{
+    line-height: 18px;
+    font-size: 14px;
+    overflow: visible;
+    min-width: 0;
+    margin: 0;
+    word-wrap: break-word;
+    position: relative;
+}
+
+.div_for_user_name span{
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    max-width: 100%;
+}
+
+.div_for_follow_list_delete_btn{
+    min-width: 0;
+    flex-direction: column;
+    align-self: auto;
+    box-sizing: border-box;
+    position: relative;
+    z-index: 0;
+    max-width: 100%;
+}
+
+.div_for_follower_delete_btn{
+    overflow: visible;
+    background-color: transparent;
+    display: flex;
+    position: static;
+    align-items: stretch;
+    justify-content: flex-start;
+    margin-left: 12px;
+}
+
+.div_for_follower_delete_btn button{
+    border: none;
+    background-color: #c7c7c7;
+    border-radius: 8px;
+    position: relative;
+    text-align: center;
+    -webkit-appearance: none;
+    cursor: pointer;
+    display: block;
+    font-size: 14px;
+    font-weight: 600;
+    padding: 7px 16px;
+    text-overflow: ellipsis;
+    -webkit-user-select: none;
+    width: auto;
 }

@@ -115,7 +115,6 @@
                 <div class="comment">
                     <input th:id="'comments'+${post.post_no}" class="input-comment" type="text" placeholder="댓글 달기..." >
                     <button class="submit-comment" th:id="${post.post_no}" th:onclick="registerComments(this.id)">게시</button>
-                    <!--                타임라인 페이지에서도 댓글 달고 바로 업데이트되게 하기, 무한 스크롤 적용하기.-->
                 </div>
             </article>
         </div>

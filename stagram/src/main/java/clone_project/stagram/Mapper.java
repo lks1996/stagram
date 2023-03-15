@@ -22,6 +22,21 @@ public class Mapper {
                 .stream()
                 .map(user -> modelMapper.map(user, UserDTO.class))
                 .collect(Collectors.toList());
+
+        for (int i = 0; i < userEntities.size(); i++) {
+            List<FollowDTO> followerDTOS = userEntities.get(i).getFollowerEntityList()
+                    .stream()
+                    .map(follower->modelMapper.map(follower, FollowDTO.class))
+                    .collect(Collectors.toList());
+            userDto.set(i, userDto.get(i)).setFollowerDTOS(followerDTOS);
+
+            List<FollowDTO> followingDTOS = userEntities.get(i).getFollowerEntityList()
+                    .stream()
+                    .map(following->modelMapper.map(following, FollowDTO.class))
+                    .collect(Collectors.toList());
+            userDto.set(i, userDto.get(i)).setFollowingDTOS(followingDTOS);
+        }
+
         return userDto;
     }
 
@@ -173,8 +188,8 @@ public class Mapper {
     public static FollowDTO mapToFollowDTO(Optional<FollowEntity> followEntity) {
         FollowDTO followDTO = new FollowDTO();
         followDTO.setFollow_no(followEntity.get().getFollow_no());
-        followDTO.setFollow_from_user_no(followEntity.get().getFollow_from().getUser_no());
-        followDTO.setFollow_from_user_no(followEntity.get().getFollow_to().getUser_no());
+        followDTO.setFollow_from_user_no(followEntity.get().getFollow_from_user_no().getUser_no());
+        followDTO.setFollow_from_user_no(followEntity.get().getFollow_to_user_no().getUser_no());
 
         return followDTO;
     }

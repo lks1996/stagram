@@ -189,7 +189,7 @@ public class Mapper {
         FollowDTO followDTO = new FollowDTO();
         followDTO.setFollow_no(followEntity.get().getFollow_no());
         followDTO.setFollow_from_user_no(followEntity.get().getFollow_from_user_no().getUser_no());
-        followDTO.setFollow_from_user_no(followEntity.get().getFollow_to_user_no().getUser_no());
+        followDTO.setFollow_to_user_no(followEntity.get().getFollow_to_user_no().getUser_no());
 
         return followDTO;
     }

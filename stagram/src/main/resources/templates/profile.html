@@ -21,7 +21,7 @@
 
 <section>
     <main>
-        <div class="a">
+        <div class="a" th:with="user_no=${user.user_no}">
             <header>
                 <div class="a_1">
                     <div class="a_2">
@@ -256,7 +256,7 @@
                     </div>
                     <div class="div_for_follow_list_x_btn">
                         <div class="div_for_follow_list_x_btn_outer">
-                            <button>
+                            <button id="followerListModalCancelBtn">
                                 x
                             </button>
                         </div>
@@ -280,7 +280,7 @@
                                                         <div class="sdsd">
                                                             <div class="sdsdsd">
                                                                 <a>
-                                                                    <img class="pic" src="/images/profile_frame.jpg" alt="_jeongjaehyun님의 프로필 사진">
+                                                                    <img th:src="@{/user/display(id = ${followerList.id})}"/>
                                                                 </a>
                                                             </div>
                                                         </div>
@@ -311,7 +311,7 @@
 
                                                 <div class="div_for_follow_list_delete_btn">
                                                     <div class="div_for_follower_delete_btn">
-                                                        <button>
+                                                        <button th:hidden="${hiddenFollowerDeleteBtn}" th:id="${followerList.user_no}" th:name="${user_no}" onclick="followDelete(this.id, this.name)">
                                                             삭제
                                                         </button>
                                                     </div>
@@ -603,6 +603,7 @@ function unfollow(user_no){
 
 <!--팔로워 리스트 -->
 const followerListModal = document.getElementById("modal_for_followers_list");
+const followerListModalCancelBtn = document.getElementById("followerListModalCancelBtn");
 
 function followerListModalOn(userNo) {
 
@@ -624,6 +625,7 @@ function followerListModalOn(userNo) {
     document.body.style.overflow = 'hidden';
 }
 
+
 function isModalOn2() {
     return followerListModal.style.display === "flex"
 }
@@ -633,6 +635,9 @@ function followerListModalOff() {
     document.body.style.overflow = 'unset';
 }
 
+followerListModalCancelBtn.addEventListener("click", e => {
+    followerListModalOff();
+})
 
 followerListModal.addEventListener("click", e => {
     const evTarget = e.target
@@ -641,6 +646,28 @@ followerListModal.addEventListener("click", e => {
     }
 })
 
+
+function followDelete(user_no, ownerUser_no){
+    $.ajax({
+        type: 'POST',
+        url: '/follow/deleteFollower',
+        data: {user_no: user_no},
+        success:function(result){
+            if(result){
+                console.log(user_no + " 회원 언팔로우 성공.");
+
+                $(".s_1").load(location.href + " .s_1");
+                followerListModalOn(ownerUser_no);
+            } else{
+                alert("오류 발생. 나중에 다시 시도해주세요.");
+
+            }
+        },
+        error:function(){
+            alert("ERROR");
+        }
+    });
+}
 
 </script>
 </body>

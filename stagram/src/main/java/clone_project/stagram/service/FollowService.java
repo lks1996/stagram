@@ -47,7 +47,13 @@ public class FollowService {
     public FollowDTO isFollow(Long loginUserNo, Long otherUserNo) {
         Optional<FollowEntity> followEntity = jpaFollowRepositoryCustom.findByLoginUserNoAndOtherUserNo(loginUserNo, otherUserNo);
 
+
         if (followEntity.isPresent()) {
+            System.out.println("isFollow - followEntity getFollow_to_user_no = " + followEntity.get().getFollow_to_user_no());
+            System.out.println("isFollow - followEntity getFollow_from_user_no = " + followEntity.get().getFollow_from_user_no());
+
+
+
             FollowDTO followDTO = Mapper.mapToFollowDTO(followEntity);
             return followDTO;
         }

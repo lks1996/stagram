@@ -238,7 +238,6 @@ public class UserController {
             model.addAttribute("hiddenFollowingBtn", true);//언팔로우 버튼
         }
 
-
         return "profile";
     }
 

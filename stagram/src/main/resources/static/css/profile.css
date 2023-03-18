@@ -127,6 +127,7 @@ header{
     min-height: fit-content;
 }
 
+
 .b_1{
     flex-shrink: 1;
     min-width: 0;
@@ -303,6 +304,7 @@ div_for_follow_outer{
 }
 
 .a_tag_1{
+    color: black;
     text-decoration: none;
     display: inline;
     padding-left: 0;
@@ -868,7 +870,7 @@ width: 100%;
 
 
 
-#modal_for_followers_list .modal-window{
+#modal_for_followers_list .modal-window, #modal_for_followings_list .modal-window {
     align-items: stretch;
     box-sizing: border-box;
     display: flex;
@@ -884,7 +886,7 @@ width: 100%;
     vertical-align: baseline;
 }
 
-#modal_for_followers_list .content{
+#modal_for_followers_list .content, #modal_for_followings_list .content{
     display: flex;
     height: 100%;
     max-width: 100%;
@@ -899,13 +901,13 @@ width: 100%;
     pointer-events: all;
 }
 
-.div_for_follower_list_head{
+.div_for_follower_list_head, .div_for_following_list_head{
     flex-direction: column;
     display: flex;
     align-items: stretch;
 }
 
-.div_for_follower_list_head_outer{
+.div_for_follower_list_head_outer, .div_for_following_list_head_outer{
     border-bottom: 1px solid #c7c7c7;
     box-sizing: border-box;
     display: inline-block;
@@ -914,7 +916,7 @@ width: 100%;
     width: 100%;
 }
 
-.div_for_follower_list_head_inner{
+.div_for_follower_list_head_inner, .div_for_following_list_head_inner{
     height: 100%;
     width: 100%;
     position: absolute;
@@ -925,7 +927,7 @@ width: 100%;
     align-items: center;
 }
 
-.div_for_follower_list_head_inner h1{
+.div_for_follower_list_head_inner h1, .div_for_following_list_head_inner h1{
     width: calc(100% - 100px);
     align-items: center;
     border: 0;
@@ -977,7 +979,7 @@ width: 100%;
     padding: 8px;
 }
 
-.div_for_follower_list_contents{
+.div_for_follower_list_contents, .div_for_following_list_contents{
     border-radius: 12px;
     display: block;
     flex-basis: 1;
@@ -989,12 +991,13 @@ width: 100%;
     border-bottom-right-radius: 8px;
 }
 
-.div_for_follower_list_contents_outer{
+
+.div_for_follower_list_contents_outer, .div_for_following_list_contents_outer{
     height: auto;
     overflow: hidden auto;
 }
 
-.div_for_follower_list_contents_inner{
+.div_for_follower_list_contents_inner, .div_for_following_list_contents_inner{
     position: relative;
     display: flex;
     flex-direction: column;
@@ -1216,7 +1219,7 @@ width: 100%;
     max-width: 100%;
 }
 
-.div_for_follower_delete_btn{
+.div_for_follow_delete_btn{
     overflow: visible;
     background-color: transparent;
     display: flex;
@@ -1226,7 +1229,7 @@ width: 100%;
     margin-left: 12px;
 }
 
-.div_for_follower_delete_btn button{
+.div_for_follow_delete_btn button{
     border: none;
     background-color: #c7c7c7;
     border-radius: 8px;

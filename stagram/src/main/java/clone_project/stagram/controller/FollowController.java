@@ -105,6 +105,8 @@ public class FollowController {
 //팔로잉 리스트도 작성하기, 타임라인에서 사용자 팔로잉에 따라 동적으로 타임라인 구성하기.
         model.addAttribute("followerLists", followers);
 
+        System.out.println("ㅂㅂㅂㅂㅂㅂㅂㅂㅂㅂㅂㅂㅂㅂㅂㅂㅂㅂㅂㅂㅂㅂㅂㅂㅂㅂㅂㅂㅂㅂ:: "+user_no);
+
         UserDTO nowUser = userService.findUserByUserNo(user_no);
 
         // 본인 프로필로 들어가려는것이라면.
@@ -112,13 +114,52 @@ public class FollowController {
             System.out.println("본인 프로필들어와서 팔로워 리스트 열었음.");
             model.addAttribute("hiddenFollowerDeleteBtn", false);//팔로워 리스트 팔로워 삭제 버튼
 
-            return "profile :: #followListBody";
+            return "profile :: #followerListBody";
         }
 
         model.addAttribute("hiddenFollowerDeleteBtn", true);//팔로워 리스트 팔로워 삭제 버튼
 
-        return "profile :: #followListBody";
+        return "profile :: #followerListBody";
     }
 
+
+/** 팔로잉 리스트 반환 **/
+    @GetMapping("/follow/followingList")
+    public String followingList(@SessionAttribute(name =SessionConst.LOGIN_MEMBER) UserDTO loginMember,
+                               Model model, Long user_no) {
+
+        System.out.println("누구의 팔로잉 리스트? == " + user_no);
+
+        List<FollowDTO> followingDTO = followService.followingList(user_no);
+        System.out.println(followingDTO.size());
+
+
+        List<UserDTO> followings = new ArrayList<>();
+
+
+        for (int i = 0; i < followingDTO.size(); i++) {
+            System.out.println("followDTO.get(i).getFollow_from_user_no()" + followingDTO.get(i).getFollow_to_user_no());
+
+            UserDTO follower = userService.findUserByUserNo(followingDTO.get(i).getFollow_to_user_no());
+            followings.add(follower);
+        }
+
+        model.addAttribute("followingLists", followings);
+
+        System.out.println("ㅐㅐㅐㅐㅐㅐㅐㅐㅐㅐㅐㅐㅐㅐㅐㅐㅐㅐㅐㅐㅐㅐㅐㅐㅐㅐㅐㅐㅐ:: "+user_no);
+        UserDTO nowUser = userService.findUserByUserNo(user_no);
+
+        // 본인 프로필로 들어가려는것이라면.
+        if (Objects.equals(loginMember.getUser_no(), nowUser.getUser_no())) {
+            System.out.println("본인 프로필들어와서 팔로워 리스트 열었음.");
+            model.addAttribute("hiddenFollowingDeleteBtn", false);//팔로워 리스트 팔로워 삭제 버튼
+
+            return "profile :: #followingListBody";
+        }
+
+        model.addAttribute("hiddenFollowingDeleteBtn", true);//팔로워 리스트 팔로워 삭제 버튼
+
+        return "profile :: #followingListBody";
+    }
 
 }

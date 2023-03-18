@@ -1,5 +1,6 @@
 package clone_project.stagram.service;
 
+import clone_project.stagram.DTO.FollowDTO;
 import clone_project.stagram.DTO.PostDTO;
 import clone_project.stagram.DTO.UserDTO;
 import clone_project.stagram.Entity.PostEntity;
@@ -11,6 +12,7 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -47,11 +49,48 @@ public class PostService {
 
 
 /** 게시글 모두 보여주기(어떤 게시글을 보여줄지 로직 작성 할 것.) **/
-    public List<PostDTO> selectPost() {
-        List<PostEntity> postEntities = jpaPostRepository.findAll(Sort.by(Sort.Direction.DESC, "postRegDate"));
-        List<PostDTO> postDTOS = Mapper.ListMapToPostDTO(postEntities);
+//본인 게시글과 본인이 팔로우 하는 회원의 게시글을 최신순으로 출력.
+    public List<PostDTO> selectPost(List<FollowDTO> followingList, UserDTO loginMember, int pageCount) {
 
-        return postDTOS;
+        //페이징에 필요한 변수들
+        int paginationSize = 4;
+        int firstIndex = 0 + (paginationSize * pageCount);
+        int lastIndex = 4 + (paginationSize * pageCount);
+
+        //회원이 팔로우하는 회원의 게시글과 본인의 게시글을 담을 게시글 엔티티 선언.
+        List<PostEntity> followerPostList = new ArrayList<>();
+
+        //모든 게시글을 등록일 기준 최신순으로 가져옴.
+        List<PostEntity> postEntities = jpaPostRepository.findAll(Sort.by(Sort.Direction.DESC, "postRegDate"));
+
+        //db에서 가져온 게시글의 수 만큼 i 반복, 팔로잉 수 만큼 j 반복 -> 2중 for 문으로 일일히 비교하면서 출력할 게시글 판별 (상당히 비효율적.)
+        for (int i = 0; i < postEntities.size(); i++) {
+            for (int j = 0; j < followingList.size(); j++) {
+                if (postEntities.get(i).getUserEntity().getUser_no().equals(followingList.get(j).getFollow_to_user_no()) ||
+                        postEntities.get(i).getUserEntity().getUser_no().equals(loginMember.getUser_no())) {
+                    followerPostList.add(postEntities.get(i));
+                }
+            }
+        }
+
+        //정리한 게시글 리스트를 DTO로 변환
+        List<PostDTO> postDTOS = Mapper.ListMapToPostDTO(followerPostList);
+
+        System.out.println("정리 된 postDTO 사이즈 " + postDTOS.size());
+        System.out.println("lastIndex ====" + lastIndex);
+        System.out.println("postDTOS.size() - 1 ======" + (postDTOS.size() - 1));
+
+        if (firstIndex > (postDTOS.size() - 1)) {        //firstIndex 값이 게시글 리스트의 개수보다 크다면, 더 이상 보여줄 게시글이 없는 것.
+            return null;
+
+        } else if (lastIndex > postDTOS.size()) {        //lastIndex 값이 게시글 리스트의 개수보다 크다면, lastIndex 는 게시글 개수의 마지막 인덱스로 함.
+            lastIndex = postDTOS.size();
+
+        }
+
+        List<PostDTO> paginatedPostList = postDTOS.subList(firstIndex, lastIndex);
+
+        return paginatedPostList;
     }
 
 

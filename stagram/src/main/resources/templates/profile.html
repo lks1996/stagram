@@ -15,258 +15,259 @@
 
 </head>
 <body>
-<!-- side menu -->
-<div class="side_menu" th:replace="~{/fragment/sideMenu :: sideMenuFragment}">
-</div>
+    <!-- side menu -->
+    <div class="side_menu" th:replace="~{/fragment/sideMenu :: sideMenuFragment}">
+    </div>
 
-<section>
-    <main>
-        <div class="a" th:with="user_no=${user.user_no}">
-            <header>
-                <div class="a_1">
-                    <div class="a_2">
-                        <div class="a_3">
-                            <button id="btn-modal" th:disabled="${profileChangeBtn_disabled}">
+    <input type="hidden" id="ownerUserNo" th:value="${user.user_no}"/>
+    <section>
+        <main>
+            <div class="a">
+                <header>
+                    <div class="a_1">
+                        <div class="a_2">
+                            <div class="a_3">
+                                <button id="btn-modal" th:disabled="${profileChangeBtn_disabled}">
 
-                                <img th:src="@{/user/display(id = ${user.id})}" alt="" style="width: 150px; height: 150px;">
-                            </button>
-                        </div>
-                    </div>
-                </div>
-
-                <section class="s_1">
-                    <div class="b_1">
-                        <h2><td th:text="${user.id}"></h2>
-                        <div class="b_2">
-                            <div class="b_3">
-                                <a href='/user/edit' th:hidden="${hiddenProfileEditBtn}"> 프로필 편집</a>
-                                <button class="follow-btn" th:name="${user.user_no}" th:hidden="${hiddenFollowBtn}" onclick="follow(this.name)">
-                                    <div class="div_for_follow_outer">
-                                        <div class="div_for_follow_inner">
-                                            Follow
-                                        </div>
-                                    </div>
+                                    <img th:src="@{/user/display(id = ${user.id})}" alt="" style="width: 150px; height: 150px;">
                                 </button>
-
-                                <button class="following-btn" th:name="${user.user_no}" th:hidden="${hiddenFollowingBtn}" onclick="unfollow(this.name)">
-                                    <div class="div_for_follow_outer">
-                                        <div class="div_for_follow_inner">
-                                            Following
-                                        </div>
-                                    </div>
-                                </button>
-
                             </div>
                         </div>
-                        <div class="c_1">
-                            <button class="profile-settings-btn" id="btn-modal2" th:hidden="${hiddenProfileEditBtn}" aria-label="profile settings"><i class="fas fa-cog" aria-hidden="true"></i></button>
+                    </div>
+
+                    <section class="s_1">
+                        <div class="b_1">
+                            <h2><td th:text="${user.id}"></h2>
+                            <div class="b_2">
+                                <div class="b_3">
+                                    <a href='/user/edit' th:hidden="${hiddenProfileEditBtn}"> 프로필 편집</a>
+                                    <button class="follow-btn" th:name="${user.user_no}" th:hidden="${hiddenFollowBtn}" onclick="follow(this.name)">
+                                        <div class="div_for_follow_outer">
+                                            <div class="div_for_follow_inner">
+                                                Follow
+                                            </div>
+                                        </div>
+                                    </button>
+
+                                    <button class="following-btn" th:name="${user.user_no}" th:hidden="${hiddenFollowingBtn}" onclick="unfollow(this.name)">
+                                        <div class="div_for_follow_outer">
+                                            <div class="div_for_follow_inner">
+                                                Following
+                                            </div>
+                                        </div>
+                                    </button>
+
+                                </div>
+                            </div>
+                            <div class="c_1">
+                                <button class="profile-settings-btn" id="btn-modal2" th:hidden="${hiddenProfileEditBtn}" aria-label="profile settings"><i class="fas fa-cog" aria-hidden="true"></i></button>
+                            </div>
                         </div>
-                    </div>
 
-                    <div class="space">
-                        <div></div>
-                    </div>
+                        <div class="space">
+                            <div></div>
+                        </div>
 
-                    <ul>
-                        <li>
-                            <div class="d_1">
-                                게시글
-                                <span>
+                        <ul>
+                            <li>
+                                <div class="d_1">
+                                    게시글
+                                    <span>
                                     <span><td th:text="${postCount}"></span>
                                 </span>
-                            </div>
-                        </li>
-                        <li>
-                            <a href="javascript:void(0);" onclick="followerListModalOn(this.name);" th:name="${user.user_no}" class="a_tag_1">
-                                <div class="d_1">
-                                    팔로워
-                                    <span>
+                                </div>
+                            </li>
+                            <li>
+                                <a href="javascript:void(0);" onclick="followerListModalOn(this.name);" th:name="${user.user_no}" class="a_tag_1">
+                                    <div class="d_1">
+                                        팔로워
+                                        <span>
                                         <span>
                                             <span><td th:text="${followerCount}"></span>
                                         </span>
                                     </span>
-                                </div>
-                            </a>
-                        </li>
-                        <li>
-                            <a class="a_tag_1">
-                                <div class="d_1">
-                                    팔로우
-                                    <span>
+                                    </div>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="javascript:void(0);" onclick="followingListModalOn(this.name);" th:name="${user.user_no}" class="a_tag_1">
+                                    <div class="d_1">
+                                        팔로우
+                                        <span>
                                         <span>
                                             <span><td th:text="${followingCount}"></span>
                                         </span>
                                     </span>
-                                </div>
-                            </a>
-                        </li>
-
-                    </ul>
-
-                    <div class="e_1">
-                        <span><td th:text="${user.name}"></td></span>
-                        <h1><td th:text="${user.bio}"></h1>
-
-                    </div>
-
-                </section>
-            </header>
-
-            <div class="space2">
-                <div></div>
-            </div>
-
-            <div class="gallery">
-                <article class="article_gallery">
-                    <div>
-                        <div class="f_1">
-
-                            <div class="gallery-item" tabindex="0" th:each="userPost: ${userPosts}">
-                                <a href="javascript:void(0);" th:onload="getCommentsCount(this.id);" onclick="postDetailModal(this.id, this.name);" th:id="${userPost.post_no}" th:name="${userPost.postImgName}">
-
-                                    <img th:src="@{/post/display(postName = ${userPost.postImgName})}"
-                                         class="gallery-image" alt="">
-
-                                    <div class="gallery-item-info">
-
-                                        <ul>
-                                            <li class="gallery-item-likes">
-                                                <i class="fas fa-heart" aria-hidden="true"></i>
-                                                56
-                                            </li>
-                                            <li class="gallery-item-comments">
-                                                <i class="fas fa-comment" aria-hidden="true"></i>
-                                                <label th:text="${#lists.size(userPost.commentsDTOS)}"></label>
-                                            </li>
-                                        </ul>
                                     </div>
                                 </a>
+                            </li>
+
+                        </ul>
+
+                        <div class="e_1">
+                            <span><td th:text="${user.name}"></td></span>
+                            <h1><td th:text="${user.bio}"></h1>
+
+                        </div>
+
+                    </section>
+                </header>
+
+                <div class="space2">
+                    <div></div>
+                </div>
+
+                <div class="gallery">
+                    <article class="article_gallery">
+                        <div>
+                            <div class="f_1">
+
+                                <div class="gallery-item" tabindex="0" th:each="userPost: ${userPosts}">
+                                    <a href="javascript:void(0);" th:onload="getCommentsCount(this.id);" onclick="postDetailModal(this.id, this.name);" th:id="${userPost.post_no}" th:name="${userPost.postImgName}">
+
+                                        <img th:src="@{/post/display(postName = ${userPost.postImgName})}"
+                                             class="gallery-image" alt="">
+
+                                        <div class="gallery-item-info">
+
+                                            <ul>
+                                                <li class="gallery-item-likes">
+                                                    <i class="fas fa-heart" aria-hidden="true"></i>
+                                                    56
+                                                </li>
+                                                <li class="gallery-item-comments">
+                                                    <i class="fas fa-comment" aria-hidden="true"></i>
+                                                    <label th:text="${#lists.size(userPost.commentsDTOS)}"></label>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </a>
+                                </div>
                             </div>
                         </div>
-                    </div>
-                </article>
+                    </article>
+                </div>
             </div>
-        </div>
-    </main>
-</section>
+        </main>
+    </section>
 
 
 
-<!-- Modal Windows-->
-<!-- 프로필 사진 바꾸는 모달 -->
-<div id="modal_for_profile_img" class="modal-overlay">
-    <div class="modal-window">
-        <div class="title">
-            <h3>프로필 사진 바꾸기</h3>
-        </div>
-        <div class="content">
-            <button class="profile-upload-btn">
-                사진 업로드
-            </button>
-            <button class="profile-delete-btn" onclick = "location.href = '/delete/profileImg'" >
-                현재 사진 삭제
-            </button>
-            <button class="cancel-btn">
-                취소
-            </button>
-        </div>
-        <form id="upload-profile-pic-form" action="/upload/profile" method="post" enctype="multipart/form-data">
-            <input type="file" id="profileImg" name="profileImg" style="display:none;" onchange="changeValue(this)">
-        </form>
-    </div>
-</div>
-
-<!-- 톱니바퀴 버튼 모달 -->
-<div id="modal_for_profile_setting" class="modal-overlay">
-    <div class="modal-window">
-        <div class="content">
-            <button class="logout-btn" onclick = "location.href = '/logout'" >
-                로그아웃
-            </button>
-            <button class="cancel-btn2">
-                취소
-            </button>
-        </div>
-    </div>
-</div>
-
-<!-- 게시글 업로드 모달 -->
-<div id="modal_for_post" class="modal-overlay">
-    <div id="modal_window" class="modal-window">
-        <div class="title">
-            <div class="div_h3">
-                <h3>새 게시물 만들기</h3>
+    <!-- Modal Windows-->
+    <!-- 프로필 사진 바꾸는 모달 -->
+    <div id="modal_for_profile_img" class="modal-overlay">
+        <div class="modal-window">
+            <div class="title">
+                <h3>프로필 사진 바꾸기</h3>
             </div>
-            <div class="nextBtn_div">
-                <button id="nextBtn" onclick="visibleContents()">다음</button>
-                <button id="shareBtn" style="display: none;" onclick="form_submit()">공유</button>
-            </div>
-        </div>
-        <div class="data_space">
             <div class="content">
-                <div class="space">
-                    <img id="preview" style="display:none;"/>
-                    <button class="select-img-btn" id="select-img-btn">
-                        컴퓨터에서 선택
-                    </button>
-                </div>
+                <button class="profile-upload-btn">
+                    사진 업로드
+                </button>
+                <button class="profile-delete-btn" onclick = "location.href = '/delete/profileImg'" >
+                    현재 사진 삭제
+                </button>
+                <button class="cancel-btn">
+                    취소
+                </button>
             </div>
-            <div class="content_text">
-                <div class="text_space">
-                    <input type="text" id="postContents" name="postContents" style="display:none;" placeholder="문구 입력...">
-                </div>
-            </div>
-        </div>
-        <form id="upload-post-pic-form" action="/upload/post" method="post" enctype="multipart/form-data">
-            <input type="file" id="postImg" name="postImg" accept=".gif, .jpg, .png, .jpeg" style="display:none;" onchange="readURL(this)">
-            <input type="text" id="postContentsInForm" name="postContentsInForm" style="display:none;">
-        </form>
-    </div>
-</div>
-
-
-
-<!-- 게시글 자세히 보기 모달 -->
-<div id="modal_for_post_detail" class="modal-overlay">
-    <iframe src="" id="post_detail_iframe" scrolling="no">대체 내용</iframe>
-
-    <div class="div_for_x_btn_outer">
-        <div class="div_for_x_btn_inner">
-            <button id="x_btn">
-                <i class="fa-duotone fa-x"></i>
-            </button>
+            <form id="upload-profile-pic-form" action="/upload/profile" method="post" enctype="multipart/form-data">
+                <input type="file" id="profileImg" name="profileImg" style="display:none;" onchange="changeValue(this)">
+            </form>
         </div>
     </div>
-</div>
 
+    <!-- 톱니바퀴 버튼 모달 -->
+    <div id="modal_for_profile_setting" class="modal-overlay">
+        <div class="modal-window">
+            <div class="content">
+                <button class="logout-btn" onclick = "location.href = '/logout'" >
+                    로그아웃
+                </button>
+                <button class="cancel-btn2">
+                    취소
+                </button>
+            </div>
+        </div>
+    </div>
 
-<!-- 팔로워 리스트 모달 -->
-<div id="modal_for_followers_list" class="modal-overlay">
-    <div class="modal-window">
-        <div class="content">
-            <div class="div_for_follower_list_head">
-                <div class="div_for_follower_list_head_outer">
-                    <div class="div_for_follower_list_head_inner">
-                        <h1>
-                            <div>
-                                팔로워
-                            </div>
-                        </h1>
-
+    <!-- 게시글 업로드 모달 -->
+    <div id="modal_for_post" class="modal-overlay">
+        <div id="modal_window" class="modal-window">
+            <div class="title">
+                <div class="div_h3">
+                    <h3>새 게시물 만들기</h3>
+                </div>
+                <div class="nextBtn_div">
+                    <button id="nextBtn" onclick="visibleContents()">다음</button>
+                    <button id="shareBtn" style="display: none;" onclick="form_submit()">공유</button>
+                </div>
+            </div>
+            <div class="data_space">
+                <div class="content">
+                    <div class="space">
+                        <img id="preview" style="display:none;"/>
+                        <button class="select-img-btn" id="select-img-btn">
+                            컴퓨터에서 선택
+                        </button>
                     </div>
-                    <div class="div_for_follow_list_x_btn">
-                        <div class="div_for_follow_list_x_btn_outer">
-                            <button id="followerListModalCancelBtn">
-                                x
-                            </button>
+                </div>
+                <div class="content_text">
+                    <div class="text_space">
+                        <input type="text" id="postContents" name="postContents" style="display:none;" placeholder="문구 입력...">
+                    </div>
+                </div>
+            </div>
+            <form id="upload-post-pic-form" action="/upload/post" method="post" enctype="multipart/form-data">
+                <input type="file" id="postImg" name="postImg" accept=".gif, .jpg, .png, .jpeg" style="display:none;" onchange="readURL(this)">
+                <input type="text" id="postContentsInForm" name="postContentsInForm" style="display:none;">
+            </form>
+        </div>
+    </div>
+
+
+
+    <!-- 게시글 자세히 보기 모달 -->
+    <div id="modal_for_post_detail" class="modal-overlay">
+        <iframe src="" id="post_detail_iframe" scrolling="no">대체 내용</iframe>
+
+        <div class="div_for_x_btn_outer">
+            <div class="div_for_x_btn_inner">
+                <button id="x_btn">
+                    <i class="fa-duotone fa-x"></i>
+                </button>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- 팔로워 리스트 모달 -->
+    <div id="modal_for_followers_list" class="modal-overlay">
+        <div class="modal-window">
+            <div class="content">
+                <div class="div_for_follower_list_head">
+                    <div class="div_for_follower_list_head_outer">
+                        <div class="div_for_follower_list_head_inner">
+                            <h1>
+                                <div>
+                                    팔로워
+                                </div>
+                            </h1>
+
                         </div>
+                        <div class="div_for_follow_list_x_btn">
+                            <div class="div_for_follow_list_x_btn_outer">
+                                <button id="followerListModalCancelBtn">
+                                    x
+                                </button>
+                            </div>
+                        </div>
+                        <div style="float:left;"></div>
                     </div>
-                    <div style="float:left;"></div>
                 </div>
-            </div>
 
-            <div class="div_for_follower_list_contents" id="followListBody">
-                <div th:each = "followerList: ${followerLists}">
+                <div class="div_for_follower_list_contents" id="followerListBody">
+                    <div th:each = "followerList: ${followerLists}">
 
                         <div class="div_for_follower_list_contents_outer">
                             <div class="div_for_follower_list_contents_inner">
@@ -310,8 +311,8 @@
                                                 </div>
 
                                                 <div class="div_for_follow_list_delete_btn">
-                                                    <div class="div_for_follower_delete_btn">
-                                                        <button th:hidden="${hiddenFollowerDeleteBtn}" th:id="${followerList.user_no}" th:name="${user_no}" onclick="followDelete(this.id, this.name)">
+                                                    <div class="div_for_follow_delete_btn">
+                                                        <button th:hidden="${hiddenFollowerDeleteBtn}" th:id="${followerList.user_no}" onclick="followDelete(this.id)">
                                                             삭제
                                                         </button>
                                                     </div>
@@ -324,11 +325,100 @@
                         </div>
 
 
+                    </div>
                 </div>
             </div>
         </div>
     </div>
-</div>
+
+
+    <!-- 팔로잉 리스트 모달 -->
+    <div id="modal_for_followings_list" class="modal-overlay">
+        <div class="modal-window">
+            <div class="content">
+                <div class="div_for_following_list_head">
+                    <div class="div_for_following_list_head_outer">
+                        <div class="div_for_following_list_head_inner">
+                            <h1>
+                                <div>
+                                    팔로잉
+                                </div>
+                            </h1>
+
+                        </div>
+                        <div class="div_for_follow_list_x_btn">
+                            <div class="div_for_follow_list_x_btn_outer">
+                                <button id="followingListModalCancelBtn">
+                                    x
+                                </button>
+                            </div>
+                        </div>
+                        <div style="float:left;"></div>
+                    </div>
+                </div>
+
+                <div class="div_for_following_list_contents" id="followingListBody">
+                    <div th:each = "followingList: ${followingLists}">
+
+                        <div class="div_for_following_list_contents_outer">
+                            <div class="div_for_following_list_contents_inner">
+                                <div class="as">
+                                    <div class="asas">
+                                        <div class="asasas">
+                                            <div class="asasasas">
+
+                                                <div class="div_for_follow_list_profile_pic">
+                                                    <div class="sd">
+                                                        <div class="sdsd">
+                                                            <div class="sdsdsd">
+                                                                <a>
+                                                                    <img th:src="@{/user/display(id = ${followingList.id})}"/>
+                                                                </a>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                                <div class="div_for_follow_list_user_id">
+                                                    <div class="qq">
+                                                        <div class="qqww">
+
+                                                            <div class="div_for_user_id">
+                                                        <span class="qqwwqq">
+                                                            <a>
+                                                                <th th:text="${followingList.id}"></th>
+                                                            </a>
+                                                        </span>
+                                                            </div>
+
+                                                            <div class="div_for_user_name">
+                                                        <span>
+                                                            <th th:text="${followingList.name}"></th>
+                                                        </span>
+                                                            </div>
+
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                                <div class="div_for_follow_list_delete_btn">
+                                                    <div class="div_for_follow_delete_btn">
+                                                        <button th:hidden="${hiddenFollowingDeleteBtn}" onclick="followingDelete(this.id)" th:id="${followingList.user_no}">
+                                                                삭제
+                                                        </button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 
 
 <script>
@@ -561,7 +651,7 @@ function follow(user_no){
         data: {user_no: user_no}
     }).done(function(result){
         if(result){
-            console.log(user_no + " 회원 팔로우 성공.")
+            console.log(user_no + " 회원 팔로우 성공.");
 
             $(".s_1").load(location.href + " .s_1");
         } else{
@@ -580,7 +670,7 @@ function unfollow(user_no){
         data: {user_no: user_no},
         success:function(result){
             if(result){
-                console.log(user_no + " 회원 언팔로우 성공.")
+                console.log(user_no + " 회원 언팔로우 성공.");
 
                 $(".s_1").load(location.href + " .s_1");
             } else{
@@ -599,21 +689,20 @@ function unfollow(user_no){
 
 
 
-
+const ownerUserNo = document.getElementById("ownerUserNo").value;
 
 <!--팔로워 리스트 -->
 const followerListModal = document.getElementById("modal_for_followers_list");
 const followerListModalCancelBtn = document.getElementById("followerListModalCancelBtn");
 
 function followerListModalOn(userNo) {
-
         $.ajax({
             type: 'get',
             url: '/follow/followerList',
             data: {user_no : userNo}
         }).done(function(fragment){
             if(fragment){
-                $('#followListBody').replaceWith(fragment);
+                $('#followerListBody').replaceWith(fragment);
             } else{
                 alert("마지막 게시글입니다.");
             }
@@ -621,17 +710,13 @@ function followerListModalOn(userNo) {
             alert(JSON.stringify(error));
         });
 
-    followerListModal.style.display = "flex"
+    followerListModal.style.display = "flex";
     document.body.style.overflow = 'hidden';
 }
 
 
-function isModalOn2() {
-    return followerListModal.style.display === "flex"
-}
-
 function followerListModalOff() {
-    followerListModal.style.display = "none"
+    followerListModal.style.display = "none";
     document.body.style.overflow = 'unset';
 }
 
@@ -640,14 +725,14 @@ followerListModalCancelBtn.addEventListener("click", e => {
 })
 
 followerListModal.addEventListener("click", e => {
-    const evTarget = e.target
+    const evTarget = e.target;
     if(evTarget.classList.contains("modal-overlay")) {
-        followerListModalOff()
+        followerListModalOff();
     }
 })
 
 
-function followDelete(user_no, ownerUser_no){
+function followDelete(user_no){
     $.ajax({
         type: 'POST',
         url: '/follow/deleteFollower',
@@ -657,7 +742,73 @@ function followDelete(user_no, ownerUser_no){
                 console.log(user_no + " 회원 언팔로우 성공.");
 
                 $(".s_1").load(location.href + " .s_1");
-                followerListModalOn(ownerUser_no);
+                followerListModalOn(ownerUserNo);
+            } else{
+                alert("오류 발생. 나중에 다시 시도해주세요.");
+
+            }
+        },
+        error:function(){
+            alert("ERROR");
+        }
+    });
+}
+
+
+
+
+<!--팔로잉 리스트 -->
+const followingListModal = document.getElementById("modal_for_followings_list");
+const followingListModalCancelBtn = document.getElementById("followingListModalCancelBtn");
+
+function followingListModalOn(userNo) {
+        $.ajax({
+            type: 'get',
+            url: '/follow/followingList',
+            data: {user_no : userNo}
+        }).done(function(fragment){
+            if(fragment){
+                $('#followingListBody').replaceWith(fragment);
+            } else{
+                alert("마지막 게시글입니다.");
+            }
+        }).fail(function(error){
+            alert(JSON.stringify(error));
+        });
+
+    followingListModal.style.display = "flex";
+    document.body.style.overflow = 'hidden';
+}
+
+
+function followingListModalOff() {
+    followingListModal.style.display = "none";
+    document.body.style.overflow = 'unset';
+}
+
+followingListModalCancelBtn.addEventListener("click", e => {
+    followingListModalOff();
+})
+
+followingListModal.addEventListener("click", e => {
+    const evTarget = e.target;
+    if(evTarget.classList.contains("modal-overlay")) {
+        followingListModalOff();
+    }
+})
+
+
+function followingDelete(user_no){
+    $.ajax({
+        type: 'POST',
+        url: '/follow/unfollow',
+        data: {user_no: user_no},
+        success:function(result){
+            if(result){
+                console.log(user_no + " 회원 언팔로우 성공.");
+
+                $(".s_1").load(location.href + " .s_1");
+                followingListModalOn(ownerUserNo);
             } else{
                 alert("오류 발생. 나중에 다시 시도해주세요.");
 

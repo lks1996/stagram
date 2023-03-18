@@ -1,9 +1,10 @@
 package clone_project.stagram.controller;
 
+import clone_project.stagram.DTO.FollowDTO;
 import clone_project.stagram.DTO.PostDTO;
 import clone_project.stagram.DTO.UserDTO;
-import clone_project.stagram.Entity.UserEntity;
 import clone_project.stagram.SessionConst;
+import clone_project.stagram.service.FollowService;
 import clone_project.stagram.service.PostService;
 import clone_project.stagram.service.UserService;
 import lombok.extern.slf4j.Slf4j;
@@ -22,16 +23,19 @@ public class HomeController {
 
     private final UserService userService;
     private final PostService postService;
+    private final FollowService followService;
 
-    public HomeController(UserService userService, PostService postService) {
+    public HomeController(UserService userService, PostService postService, FollowService followService) {
         this.userService = userService;
         this.postService = postService;
+        this.followService = followService;
     }
 
     @GetMapping("/")
     public String home(@SessionAttribute(name =SessionConst.LOGIN_MEMBER, required = false) UserDTO loginMember,
                        Model model) throws IOException {
 
+        int pageCount = 0;
 
         if (loginMember == null) {
             return "signin";
@@ -46,8 +50,10 @@ public class HomeController {
             return "signin";
         }
 
-
-        List<PostDTO> posts = postService.selectPost();
+        //로그인한 회원이 팔로우하는(팔로잉) 회원들의 회원번호 가져오기.
+        List<FollowDTO> followingList = followService.followingList(loginMember.getUser_no());
+        //팔로잉하는 회원들의 게시글과 본인의 게시글을 뿌려주자.
+        List<PostDTO> posts = postService.selectPost(followingList, loginMember, pageCount);
 
         model.addAttribute("posts", posts);
         model.addAttribute("loginUser", loginMember);

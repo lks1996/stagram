@@ -1,12 +1,13 @@
 package clone_project.stagram.controller;
 
 import clone_project.stagram.DTO.CommentsDTO;
+import clone_project.stagram.DTO.FollowDTO;
 import clone_project.stagram.DTO.PostDTO;
 import clone_project.stagram.DTO.UserDTO;
-import clone_project.stagram.Entity.PostEntity;
 import clone_project.stagram.SavePath;
 import clone_project.stagram.SessionConst;
 import clone_project.stagram.service.CommentsService;
+import clone_project.stagram.service.FollowService;
 import clone_project.stagram.service.PostService;
 import clone_project.stagram.service.UserService;
 import org.apache.commons.io.IOUtils;
@@ -22,9 +23,7 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.UUID;
 
 import static clone_project.stagram.WhatTime.whatTimeIsItNow;
@@ -35,11 +34,13 @@ public class PostController {
     private final PostService postService;
     private final UserService userService;
     private final CommentsService commentsService;
+    private final FollowService followService;
 
-    public PostController(PostService postService, UserService userService, CommentsService commentsService) {
+    public PostController(PostService postService, UserService userService, CommentsService commentsService, FollowService followService) {
         this.postService = postService;
         this.userService = userService;
         this.commentsService = commentsService;
+        this.followService = followService;
     }
 
 
@@ -192,12 +193,13 @@ public class PostController {
 
 /** 무한 스크롤로 보여줄 게시글보내주기. **/
     @GetMapping("/post/infiniteScroll")
-    public String getMembers(@SessionAttribute(name =SessionConst.LOGIN_MEMBER) UserDTO loginMember, Model model, Long post_no) throws Exception {
+    public String getMembers(@SessionAttribute(name =SessionConst.LOGIN_MEMBER) UserDTO loginMember, Model model, Long post_no, int pageCount) {
 
-        System.out.println("무한 스크롤 컨트롤러 도착. 전달 받은 게시글 번호 == " + post_no);
+        System.out.println("현재 페이지는 바로!!!!!!!! --> " +pageCount);
 
-//        List<PostDTO> postDTO = postService.selectPost();
-        List<PostDTO> postDTO = postService.getOwnPost(post_no);
+        //로그인한 회원이 팔로우하는(팔로잉) 회원들의 회원번호 가져오기.
+        List<FollowDTO> followingList = followService.followingList(loginMember.getUser_no());
+        List<PostDTO> postDTO = postService.selectPost(followingList, loginMember, pageCount);
 
         model.addAttribute("posts", postDTO);
 

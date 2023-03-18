@@ -188,9 +188,10 @@ public class UserController {
         model.addAttribute("followingCount", followingCount);
         model.addAttribute("followerCount", followerCount);
 
-        List<UserDTO> followers = new ArrayList<>();
+        List<UserDTO> follows = new ArrayList<>();
 
-        model.addAttribute("followerLists", followers);
+        model.addAttribute("followerLists", follows);
+        model.addAttribute("followingLists", follows);
 
 
         // 본인 프로필로 들어가려는것이라면.

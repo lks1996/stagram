@@ -61,7 +61,7 @@ public class FollowService {
         return null;
     }
 
-
+/** 특정 유저의 팔로잉 리스트 반환 **/
     public List<FollowDTO> followingList(Long user_no) {
         List<FollowEntity> followEntityList = jpaFollowRepositoryCustom.findFollowingUsers(user_no);
 
@@ -71,6 +71,7 @@ public class FollowService {
         return followDTOS;
     }
 
+/** 특정 유저의 팔로워 리스트 반환 **/
     public List<FollowDTO> followerList(Long user_no) {
         List<FollowEntity> followEntityList = jpaFollowRepositoryCustom.findFollowerUsers(user_no);
 

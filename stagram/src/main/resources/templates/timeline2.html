@@ -378,7 +378,8 @@ const contents_text_id = "comments"+post_no;
 }
 
 <!-- 무한 스크롤 관련 함수 -->
-const defaultArticlePaginationSize = 5;
+const defaultArticlePaginationSize = 3;
+let pageCount = 1;
 
 function getDocumentHeight() {
 	const body = document.body;
@@ -408,14 +409,16 @@ function onScroll() {
         $.ajax({
             type: 'get',
             url: '/post/infiniteScroll',
-            data: {post_no : 2}
+            data: {post_no : 2,
+            pageCount : pageCount}
         }).done(function(fragment){
-            if(fragment){
-                $('#moreList').append(fragment);
-
-            } else{
-
+            if(fragment == null){
                 alert("마지막 게시글입니다.");
+
+            }else{
+                $('#moreList').append(fragment);
+                pageCount++;
+
             }
         }).fail(function(error){
             alert(JSON.stringify(error));

@@ -53,13 +53,15 @@ public class HomeController {
         //로그인한 회원이 팔로우하는(팔로잉) 회원들의 회원번호 가져오기.
         List<FollowDTO> followingList = followService.followingList(loginMember.getUser_no());
         //팔로잉하는 회원들의 게시글과 본인의 게시글을 뿌려주자.
-        List<PostDTO> posts = postService.selectPost(followingList, loginMember, pageCount);
+        List<PostDTO> postDTO = postService.selectPost(followingList, loginMember);
+        List<PostDTO> paginatedPostList = postService.pagination(postDTO, pageCount);
 
-        model.addAttribute("posts", posts);
+        model.addAttribute("posts", paginatedPostList);
         model.addAttribute("loginUser", loginMember);
         return "timeline2";
     }
 }
+
 
 
 

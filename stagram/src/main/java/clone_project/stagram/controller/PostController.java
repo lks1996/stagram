@@ -1,9 +1,6 @@
 package clone_project.stagram.controller;
 
-import clone_project.stagram.DTO.CommentsDTO;
-import clone_project.stagram.DTO.FollowDTO;
-import clone_project.stagram.DTO.PostDTO;
-import clone_project.stagram.DTO.UserDTO;
+import clone_project.stagram.DTO.*;
 import clone_project.stagram.SavePath;
 import clone_project.stagram.SessionConst;
 import clone_project.stagram.service.CommentsService;
@@ -23,6 +20,7 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.Collections;
 import java.util.List;
 import java.util.UUID;
 
@@ -193,15 +191,35 @@ public class PostController {
 
 /** 무한 스크롤로 보여줄 게시글보내주기. **/
     @GetMapping("/post/infiniteScroll")
-    public String getMembers(@SessionAttribute(name =SessionConst.LOGIN_MEMBER) UserDTO loginMember, Model model, Long post_no, int pageCount) {
+    public String getMembers(@SessionAttribute(name =SessionConst.LOGIN_MEMBER) UserDTO loginMember,
+                             Model model, int pageCount) {
 
         System.out.println("현재 페이지는 바로!!!!!!!! --> " +pageCount);
 
         //로그인한 회원이 팔로우하는(팔로잉) 회원들의 회원번호 가져오기.
         List<FollowDTO> followingList = followService.followingList(loginMember.getUser_no());
-        List<PostDTO> postDTO = postService.selectPost(followingList, loginMember, pageCount);
+        //팔로잉하는 회원들의 게시글과 본인의 게시글을 리스트로 가져옴.
+        List<PostDTO> postDTO = postService.selectPost(followingList, loginMember);
+        //페이징 처리
+        List<PostDTO> paginatedPostList = postService.pagination(postDTO, pageCount);
 
-        model.addAttribute("posts", postDTO);
+        //팔로우하는 회원이나 본인의 게시글에서 더 이상 보여줄게 없다면, 아무 사용자의 게시글을 랜덤으로 보여준다.
+        if (paginatedPostList == null) {
+
+            List<PostDTO> allPostDTO = postService.findAllPost();
+
+            //리스크 인덱스를 랜덤으로 셔플.
+            Collections.shuffle(allPostDTO);
+
+            //랜덤으로 섞은 리스트를 페이징.(이때 게시글의 순서가 랜덤이므로, 첫 인덱스와 마지막 인덱스는 고정 값으로 함.)
+            List<PostDTO> paginatedAllPostList = postService.pagination(allPostDTO, 0);
+
+            model.addAttribute("posts", paginatedAllPostList);
+
+            return "timeline2 :: #moreList";
+        }
+
+        model.addAttribute("posts", paginatedPostList);
 
         return "timeline2 :: #moreList"; // template html 파일 이름 + '::' + fragment의 id
 

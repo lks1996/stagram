@@ -91,10 +91,10 @@
                                                     </a>
                                                 </div>
                                                 <span class="span_for_space">
-                                        </span>
+                                    </span>
                                                 <span class="span_for_comments_contents">
-                                            <td th:text="${comments.comments_contents}"></td>
-                                        </span>
+                                        <td th:text="${comments.comments_contents}"></td>
+                                    </span>
                                             </div>
                                             <img class="comment-heart"
                                                  src="https://s3.ap-northeast-2.amazonaws.com/cdn.wecode.co.kr/bearu/heart.png"
@@ -118,7 +118,16 @@
                 </div>
             </article>
         </div>
-
+        <div class="dot-spinner">
+            <div class="dot-spinner__dot"></div>
+            <div class="dot-spinner__dot"></div>
+            <div class="dot-spinner__dot"></div>
+            <div class="dot-spinner__dot"></div>
+            <div class="dot-spinner__dot"></div>
+            <div class="dot-spinner__dot"></div>
+            <div class="dot-spinner__dot"></div>
+            <div class="dot-spinner__dot"></div>
+        </div>
 
     </div>
     <!-- main-right -->
@@ -401,6 +410,8 @@ function onScroll() {
         console.log("getScrollTop() ---> " + getScrollTop());
         console.log("스크롤 끝 도달.");
 
+        $(".dot-spinner").show();
+
         let postList = [[${posts}]];
         let page = /*[[${posts}]]*/;
         console.log("postList :: " + postList);
@@ -409,18 +420,15 @@ function onScroll() {
         $.ajax({
             type: 'get',
             url: '/post/infiniteScroll',
-            data: {post_no : 2,
-            pageCount : pageCount}
+            data: {pageCount : pageCount}
         }).done(function(fragment){
-            if(fragment == null){
-                alert("마지막 게시글입니다.");
-
-            }else{
+            console.log(fragment)
                 $('#moreList').append(fragment);
                 pageCount++;
+                $(".dot-spinner").hide();
 
-            }
         }).fail(function(error){
+
             alert(JSON.stringify(error));
         });
 

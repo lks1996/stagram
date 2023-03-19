@@ -50,12 +50,7 @@ public class PostService {
 
 /** 게시글 모두 보여주기(어떤 게시글을 보여줄지 로직 작성 할 것.) **/
 //본인 게시글과 본인이 팔로우 하는 회원의 게시글을 최신순으로 출력.
-    public List<PostDTO> selectPost(List<FollowDTO> followingList, UserDTO loginMember, int pageCount) {
-
-        //페이징에 필요한 변수들
-        int paginationSize = 4;
-        int firstIndex = 0 + (paginationSize * pageCount);
-        int lastIndex = 4 + (paginationSize * pageCount);
+    public List<PostDTO> selectPost(List<FollowDTO> followingList, UserDTO loginMember) {
 
         //회원이 팔로우하는 회원의 게시글과 본인의 게시글을 담을 게시글 엔티티 선언.
         List<PostEntity> followerPostList = new ArrayList<>();
@@ -76,21 +71,7 @@ public class PostService {
         //정리한 게시글 리스트를 DTO로 변환
         List<PostDTO> postDTOS = Mapper.ListMapToPostDTO(followerPostList);
 
-        System.out.println("정리 된 postDTO 사이즈 " + postDTOS.size());
-        System.out.println("lastIndex ====" + lastIndex);
-        System.out.println("postDTOS.size() - 1 ======" + (postDTOS.size() - 1));
-
-        if (firstIndex > (postDTOS.size() - 1)) {        //firstIndex 값이 게시글 리스트의 개수보다 크다면, 더 이상 보여줄 게시글이 없는 것.
-            return null;
-
-        } else if (lastIndex > postDTOS.size()) {        //lastIndex 값이 게시글 리스트의 개수보다 크다면, lastIndex 는 게시글 개수의 마지막 인덱스로 함.
-            lastIndex = postDTOS.size();
-
-        }
-
-        List<PostDTO> paginatedPostList = postDTOS.subList(firstIndex, lastIndex);
-
-        return paginatedPostList;
+        return postDTOS;
     }
 
 
@@ -138,6 +119,40 @@ public class PostService {
     public void deleteOnePost(Long post_no) {
         jpaPostRepository.deleteById(post_no);
 
+    }
+
+/** 전체 게시글 조회 **/
+    public List<PostDTO> findAllPost() {
+        List<PostEntity> postEntities = jpaPostRepository.findAll();
+        List<PostDTO> postDTOS = Mapper.ListMapToPostDTO(postEntities);
+
+        return postDTOS;
+    }
+
+
+/** 게시글 페이징 **/
+    public List<PostDTO> pagination(List<PostDTO> postDTOS, int pageCount) {
+        //페이징에 필요한 변수들
+        int paginationSize = 4;
+        int firstIndex = 0 + (paginationSize * pageCount);
+        int lastIndex = 4 + (paginationSize * pageCount);
+
+        System.out.println("정리 된 postDTO 사이즈 " + postDTOS.size());
+        System.out.println("lastIndex ====" + lastIndex);
+        System.out.println("postDTOS.size() - 1 ======" + (postDTOS.size() - 1));
+        System.out.println("pageCount =====  " + pageCount);
+
+        if (firstIndex > (postDTOS.size() - 1)) {        //firstIndex 값이 게시글 리스트의 개수보다 크다면, 더 이상 보여줄 게시글이 없는 것.
+            return null;
+
+        } else if (lastIndex > postDTOS.size()) {        //lastIndex 값이 게시글 리스트의 개수보다 크다면, lastIndex 는 게시글 개수의 마지막 인덱스로 함.
+            lastIndex = postDTOS.size();
+
+        }
+
+        List<PostDTO> paginatedPostList = postDTOS.subList(firstIndex, lastIndex);
+
+        return paginatedPostList;
     }
 
 

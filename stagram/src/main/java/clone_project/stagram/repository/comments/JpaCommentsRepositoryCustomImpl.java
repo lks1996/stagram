@@ -1,11 +1,9 @@
 package clone_project.stagram.repository.comments;
 
 import clone_project.stagram.Entity.CommentsEntity;
-import clone_project.stagram.Entity.PostEntity;
 
 import javax.persistence.EntityManager;
 import java.util.List;
-import java.util.Optional;
 
 public class JpaCommentsRepositoryCustomImpl implements JpaCommentsRepositoryCustom{
     private final EntityManager em;

@@ -61,10 +61,12 @@ public class PostService {
         //db에서 가져온 게시글의 수 만큼 i 반복, 팔로잉 수 만큼 j 반복 -> 2중 for 문으로 일일히 비교하면서 출력할 게시글 판별 (상당히 비효율적.)
         for (int i = 0; i < postEntities.size(); i++) {
             for (int j = 0; j < followingList.size(); j++) {
-                if (postEntities.get(i).getUserEntity().getUser_no().equals(followingList.get(j).getFollow_to_user_no()) ||
-                        postEntities.get(i).getUserEntity().getUser_no().equals(loginMember.getUser_no())) {
+                if (postEntities.get(i).getUserEntity().getUser_no().equals(followingList.get(j).getFollow_to_user_no())) {
                     followerPostList.add(postEntities.get(i));
                 }
+            }
+            if (postEntities.get(i).getUserEntity().getUser_no().equals(loginMember.getUser_no())) {
+                followerPostList.add(postEntities.get(i));
             }
         }
 

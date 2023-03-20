@@ -52,8 +52,6 @@ public class Mapper {
     }
 
 
-
-
     public UserDTO mapToUserDTO(UserEntity userEntity) {
         UserDTO userDTO = modelMapper.map(userEntity, UserDTO.class);
         return userDTO;
@@ -147,6 +145,14 @@ public class Mapper {
             postDTO.set(i, postDTO.get(i)).setCommentsDTOS(commentsDTOS);
         }
 
+        for (int i = 0; i < postEntities.size(); i++) {
+            List<LikeDTO> likeDTOS = postEntities.get(i).getLikeEntityList()
+                    .stream()
+                    .map(like -> modelMapper.map(like, LikeDTO.class))
+                    .collect(Collectors.toList());
+            postDTO.set(i, postDTO.get(i)).setLikeDTOS(likeDTOS);
+        }
+
 
         return postDTO;
     }
@@ -202,6 +208,24 @@ public class Mapper {
         return followDTOS;
     }
 
+/** Like **/
+    public static LikeEntity mapToLikeEntity(LikeDTO likeDTO, UserEntity userEntity, PostEntity postEntity) {
+
+        LikeEntity likeEntity = new LikeEntity(likeDTO.getLike_no(), likeDTO.getLike_regDate(),
+                userEntity, postEntity);
+
+        return likeEntity;
+    }
+
+    public static LikeDTO mapToLikeDTO(Optional<LikeEntity> likeEntity) {
+        LikeDTO likeDTO = new LikeDTO();
+        likeDTO.setLike_no(likeEntity.get().getLike_no());
+        likeDTO.setLike_regDate(likeEntity.get().getLike_regDate());
+        likeDTO.setUser_no(likeEntity.get().getUserEntity().getUser_no());
+        likeDTO.setPost_no(likeEntity.get().getPostEntity().getPost_no());
+
+        return likeDTO;
+    }
 
 
 }

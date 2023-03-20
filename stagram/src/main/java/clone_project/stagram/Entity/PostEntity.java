@@ -38,6 +38,9 @@ public class PostEntity implements Serializable {
     @OneToMany(mappedBy = "postEntity")
     private List<CommentsEntity> commentsEntityList = new ArrayList<>();
 
+    @OneToMany(mappedBy = "postEntity")
+    private List<LikeEntity> likeEntityList = new ArrayList<>();
+
 
     public PostEntity(Long post_no, String contents, String post_regDate,
                       String user_id, String postImgOriginName, String postImgName,

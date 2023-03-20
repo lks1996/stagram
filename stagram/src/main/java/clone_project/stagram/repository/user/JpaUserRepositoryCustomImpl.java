@@ -27,7 +27,8 @@ public class JpaUserRepositoryCustomImpl implements JpaUserRepositoryCustom {
         List<UserEntity> userEntity = em.createQuery("select m from UserEntity m where m.user_id = :user_id", UserEntity.class)
                 .setParameter("user_id", id)
                 .getResultList();
-        return userEntity.stream().findAny();    }
+        return userEntity.stream().findAny();
+    }
 
 
 }

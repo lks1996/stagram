@@ -4,6 +4,8 @@ import clone_project.stagram.repository.comments.JpaCommentsRepositoryCustom;
 import clone_project.stagram.repository.comments.JpaCommentsRepositoryCustomImpl;
 import clone_project.stagram.repository.follow.JpaFollowRepositoryCustom;
 import clone_project.stagram.repository.follow.JpaFollowRepositoryCustomImpl;
+import clone_project.stagram.repository.like.JpaLikeRepositoryCustom;
+import clone_project.stagram.repository.like.JpaLikeRepositoryCustomImpl;
 import clone_project.stagram.repository.post.JpaPostRepositoryCustom;
 import clone_project.stagram.repository.post.JpaPostRepositoryCustomImpl;
 import clone_project.stagram.repository.userProfile.JpaUserProfileImgRepositoryCustom;
@@ -11,7 +13,6 @@ import clone_project.stagram.repository.userProfile.JpaUserProfileImgRepositoryC
 import clone_project.stagram.repository.user.JpaUserRepositoryCustom;
 import clone_project.stagram.repository.user.JpaUserRepositoryCustomImpl;
 import org.modelmapper.ModelMapper;
-import org.modelmapper.convention.MatchingStrategies;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -73,5 +74,10 @@ public class config {
     @Bean
     JpaFollowRepositoryCustom jpaFollowRepositoryCustom(){
         return new JpaFollowRepositoryCustomImpl(em);
+    }
+
+    @Bean
+    JpaLikeRepositoryCustom jpaLikeRepositoryCustom() {
+        return new JpaLikeRepositoryCustomImpl(em);
     }
 }

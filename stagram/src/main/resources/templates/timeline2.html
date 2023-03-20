@@ -62,12 +62,27 @@
                     <img th:src="@{/post/display(postName = ${post.postImgName})}" alt="" class="mainPic">
                 </div>
                 <div class="icons-react">
-                    <div class="icons-left">
-                        <img class="icon-react" src="https://s3.ap-northeast-2.amazonaws.com/cdn.wecode.co.kr/bearu/heart.png" alt="하트">
-                        <img class="icon-react" src="https://s3.ap-northeast-2.amazonaws.com/cdn.wecode.co.kr/bearu/comment.png" alt="말풍선">
-                        <img class="icon-react" src="images/dm.png" alt="DM">
-                    </div>
-                    <img class="icon-react" src="https://s3.ap-northeast-2.amazonaws.com/cdn.wecode.co.kr/bearu/bookmark.png" alt="북마크">
+
+                        <div class="icons-left">
+                            <div th:class="'icons-list'+${post.post_no}">
+                                <div th:if="${#lists.isEmpty(post.likeDTOS)}">
+                                    <a href="javascript:void(0);" onclick="likeFunction(this.name);" th:name="${post.post_no}">
+                                        <img class="icon-react" src="https://s3.ap-northeast-2.amazonaws.com/cdn.wecode.co.kr/bearu/heart.png" alt="하트">
+                                    </a>
+                                </div>
+                                <div th:unless="${#lists.isEmpty(post.likeDTOS)}">
+                                    <a href="javascript:void(0);" onclick="unlikeFunction(this.name);" th:name="${post.post_no}">
+                                        <i class="fa-sharp fa-solid fa-heart icon-react"></i>
+                                    </a>
+                                </div>
+                            </div>
+
+                            <img class="icon-react" src="https://s3.ap-northeast-2.amazonaws.com/cdn.wecode.co.kr/bearu/comment.png" alt="말풍선">
+                            <img class="icon-react" src="images/dm.png" alt="DM">
+                        </div>
+                        <img class="icon-react" src="https://s3.ap-northeast-2.amazonaws.com/cdn.wecode.co.kr/bearu/bookmark.png" alt="북마크">
+
+
                 </div>
                 <!-- article text data -->
                 <div class="reaction">
@@ -448,9 +463,48 @@ $(window).scroll(function(){
 
 
 
+<!-- 좋아요 함수 -->
+function likeFunction(postNo){
+        $.ajax({
+            type: 'POST',
+            url: '/like/register',
+            data: {post_no : postNo}
+        }).done(function(result){
+            console.log(result)
+
+            alert("좋아요 등록이 완료되었습니다.");
+            $(".icons-list"+postNo).load(location.href + " .icons-list"+postNo);
+
+        }).fail(function(error){
+
+            alert(JSON.stringify(error));
+        });
+
+
+}
+
+
+<!-- 좋아요 취소 함수 -->
+function unlikeFunction(postNo){
+        $.ajax({
+            type: 'POST',
+            url: '/like/cancel',
+            data: {post_no : postNo}
+        }).done(function(result){
+            console.log(result)
+
+            alert("좋아요 취소가 완료되었습니다.");
+            $(".icons-list"+postNo).load(location.href + " .icons-list"+postNo);
 
 
 
+        }).fail(function(error){
+
+            alert(JSON.stringify(error));
+        });
+
+
+}
 
 
 

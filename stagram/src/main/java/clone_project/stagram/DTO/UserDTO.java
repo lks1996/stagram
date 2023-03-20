@@ -22,5 +22,6 @@ public class UserDTO {
     private List<CommentsDTO> commentsDTOS = new ArrayList<>();
     private List<FollowDTO> followingDTOS = new ArrayList<>();
     private List<FollowDTO> followerDTOS = new ArrayList<>();
+    private List<LikeDTO> likeDTOS = new ArrayList<>();
 
 }

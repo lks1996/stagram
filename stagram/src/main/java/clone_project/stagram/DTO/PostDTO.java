@@ -20,4 +20,5 @@ public class PostDTO {
     private Long postImgSize;
 
     private List<CommentsDTO> commentsDTOS = new ArrayList<>();
+    private List<LikeDTO> likeDTOS = new ArrayList<>();
 }

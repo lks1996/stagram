@@ -222,6 +222,7 @@ public class Mapper {
         likeDTO.setLike_no(likeEntity.get().getLike_no());
         likeDTO.setLike_regDate(likeEntity.get().getLike_regDate());
         likeDTO.setUser_no(likeEntity.get().getUserEntity().getUser_no());
+        likeDTO.setUser_id(likeEntity.get().getUserEntity().getUser_id());
         likeDTO.setPost_no(likeEntity.get().getPostEntity().getPost_no());
 
         return likeDTO;

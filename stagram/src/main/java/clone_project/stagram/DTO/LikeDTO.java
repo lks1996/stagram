@@ -9,5 +9,6 @@ public class LikeDTO {
     private String like_regDate;
 
     private Long user_no;
+    private String user_id;
     private Long post_no;
 }

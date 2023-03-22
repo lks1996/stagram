@@ -61,8 +61,6 @@ public class HomeController {
         System.out.println("홈컨트롤러에서 뿌려줄 게시물들은 ? " + postDTO);
 
 
-        System.out.println("postDTO.get(0).getLikeDTOS().get(0) ==== " + postDTO.get(0).getLikeDTOS().isEmpty());
-
 
         //팔로우하는 회원이나 본인의 게시글에서 더 이상 보여줄게 없다면, 아무 사용자의 게시글을 랜덤으로 보여준다.
         if (postDTO.isEmpty()) {

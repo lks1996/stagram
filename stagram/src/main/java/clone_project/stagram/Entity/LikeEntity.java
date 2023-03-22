@@ -20,7 +20,12 @@ public class LikeEntity {
     private String like_regDate;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "user_no")
+//    @JoinColumn(name = "user_no")
+    @JoinColumns(value = {
+            @JoinColumn(name = "user_no", referencedColumnName="user_no"),
+            @JoinColumn(name = "user_id", referencedColumnName="user_id")
+    })
+
     private UserEntity userEntity;
 
     @ManyToOne(fetch = FetchType.LAZY)

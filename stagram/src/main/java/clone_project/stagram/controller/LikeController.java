@@ -49,10 +49,10 @@ public class LikeController {
         //like 가 정상적으로 취소되었는지 확인.
         LikeDTO likeDTO = likeService.findLikeByUserNoAndPostNo(loginMember.getUser_no(), post_no);
         if (likeDTO == null) {
-            return false;
+            return true;
         }
 
-        return true;
+        return false;
     }
 }
 

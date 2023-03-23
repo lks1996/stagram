@@ -69,9 +69,19 @@
                     </div>
                     <div class="user_contents_space">
 
-                        <section class="section_for_btn">
+                        <div class="section_for_btn">
                             <span>
-                                <img class="icon-react" src="https://s3.ap-northeast-2.amazonaws.com/cdn.wecode.co.kr/bearu/heart.png" alt="하트">
+                                <a href="javascript:void(0);" onclick="unlikeFunction(this.name);"
+                                   th:name="${post.post_no}" th:hidden="${likeBtn}">
+                                    <i class="fa-sharp fa-solid fa-heart icon-react"></i>
+                                </a>
+                            </span>
+                            <span>
+                                <a href="javascript:void(0);" onclick="likeFunction(this.name);"
+                                   th:name="${post.post_no}" th:hidden="${unlikeBtn}">
+                                    <img class="icon-react"
+                                         src="https://s3.ap-northeast-2.amazonaws.com/cdn.wecode.co.kr/bearu/heart.png" alt="하트">
+                                </a>
                             </span>
                             <span>
                                 <img class="icon-react" src="https://s3.ap-northeast-2.amazonaws.com/cdn.wecode.co.kr/bearu/comment.png" alt="말풍선">
@@ -80,7 +90,7 @@
                                 <img class="icon-react" src="/images/dm.png" alt="DM">
                             </span>
 
-                        </section>
+                        </div>
                         <section class="section_for_liked_people">
                             <div>
                             </div>
@@ -121,7 +131,7 @@
                                     </div>
 
                                 </div>
-<!--                                댓글 리스트 볼만하게 수정, 댓글 작성한 회원 아이디를 어떻게 보여줄 것이지? 지금은 회원 번호로 보임-->
+
                                 <div class="div_for_all_comments" th:each="comment: ${comments}">
                                     <li class="li_for_all_comments">
                                         <div class="div_for_comments_outer">
@@ -349,6 +359,49 @@ function deleteComments(comments_no){
     }).fail(function(error){
         alert(JSON.stringify(error));
     });
+}
+
+<!-- 좋아요 함수 -->
+function likeFunction(postNo){
+        $.ajax({
+            type: 'POST',
+            url: '/like/register',
+            data: {post_no : postNo}
+        }).done(function(result){
+            console.log(result)
+
+            alert("좋아요 등록이 완료되었습니다.");
+            $(".section_for_btn").load(location.href + " .section_for_btn");
+<!--            $(".likes-list"+postNo).load(location.href + " .likes-list"+postNo);-->
+
+        }).fail(function(error){
+
+            alert(JSON.stringify(error));
+        });
+
+
+}
+
+
+<!-- 좋아요 취소 함수 -->
+function unlikeFunction(postNo){
+        $.ajax({
+            type: 'POST',
+            url: '/like/cancel',
+            data: {post_no : postNo}
+        }).done(function(result){
+            console.log(result)
+
+            alert("좋아요 취소가 완료되었습니다.");
+            $(".section_for_btn").load(location.href + " .section_for_btn");
+<!--            $(".likes-list"+postNo).load(location.href + " .likes-list"+postNo);-->
+
+
+        }).fail(function(error){
+
+            alert(JSON.stringify(error));
+        });
+
 }
 </script>
 

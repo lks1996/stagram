@@ -82,6 +82,17 @@ public class HomeController {
 
         List<PostDTO> paginatedPostList = postService.pagination(postDTO, pageCount);
 
+        for (int i = 0; i < paginatedPostList.size(); i++) {
+            for (int j = 0; j < paginatedPostList.get(i).getLikeDTOS().size(); j++) {
+                if (paginatedPostList.get(i).getLikeDTOS().get(j).getUser_no() == loginMember.getUser_no()) {
+                    paginatedPostList.get(i).setPostImgSize(0L);
+
+                    System.out.println(i + "번째 paginatedPostList의 이미지 사이즈를 " + paginatedPostList.get(i).getPostImgSize()+"로 초기화 함");
+                }
+            }
+        }
+
+
         model.addAttribute("posts", paginatedPostList);
         return "timeline2";
     }

@@ -162,7 +162,6 @@ public class PostController {
 /** 게시글 자세히 보기 페이지 및 iframe **/
     @GetMapping("/post/page")
     public String postDetail(@SessionAttribute(name =SessionConst.LOGIN_MEMBER) UserDTO loginMember, String postName, Model model) {
-        System.out.println("EKEKEKEKEKEKEK!! = " + postName);
 
         PostDTO postDTO = postService.isValidPost(postName);
 
@@ -180,10 +179,22 @@ public class PostController {
             model.addAttribute("hiddenThreeDotBtn", true);
         }
 
+
+        model.addAttribute("likeBtn", false);
+        model.addAttribute("unlikeBtn", true);
+
+        for (int i = 0; i < postDTO.getLikeDTOS().size(); i++) {
+            if (postDTO.getLikeDTOS().get(i).getUser_no().equals(loginMember.getUser_no())) {
+                model.addAttribute("likeBtn", true);
+                model.addAttribute("unlikeBtn", false);
+            }
+        }
+
         List<CommentsDTO> comments = commentsService.findCommentsByPostNo(postDTO.getPost_no());
 
         model.addAttribute("comments", comments);
         model.addAttribute("post", postDTO);
+
         return "postDetail";
     }
 
@@ -214,9 +225,29 @@ public class PostController {
             //랜덤으로 섞은 리스트를 페이징.(이때 게시글의 순서가 랜덤이므로, 첫 인덱스와 마지막 인덱스는 고정 값으로 함.)
             List<PostDTO> paginatedAllPostList = postService.pagination(allPostDTO, 0);
 
+            for (int i = 0; i < paginatedAllPostList.size(); i++) {
+                for (int j = 0; j < paginatedAllPostList.get(i).getLikeDTOS().size(); j++) {
+                    if (paginatedAllPostList.get(i).getLikeDTOS().get(j).getUser_no() == loginMember.getUser_no()) {
+                        paginatedAllPostList.get(i).setPostImgSize(0L);
+
+                        System.out.println(i + "번째 paginatedPostList의 이미지 사이즈를 " + paginatedAllPostList.get(i).getPostImgSize()+"로 초기화 함");
+                    }
+                }
+            }
+
             model.addAttribute("posts", paginatedAllPostList);
 
             return "timeline2 :: #moreList";
+        }
+
+        for (int i = 0; i < paginatedPostList.size(); i++) {
+            for (int j = 0; j < paginatedPostList.get(i).getLikeDTOS().size(); j++) {
+                if (paginatedPostList.get(i).getLikeDTOS().get(j).getUser_no() == loginMember.getUser_no()) {
+                    paginatedPostList.get(i).setPostImgSize(0L);
+
+                    System.out.println(i + "번째 paginatedPostList의 이미지 사이즈를 " + paginatedPostList.get(i).getPostImgSize()+"로 초기화 함");
+                }
+            }
         }
 
         model.addAttribute("posts", paginatedPostList);

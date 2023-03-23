@@ -281,6 +281,19 @@ display: flex;
     width: 24px;
 }
 
+.section_for_btn i{
+    font-size: 24px;
+    color: red;
+    display: inline-block;
+    margin-right: 8px;
+    align-items: center;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    justify-content: center;
+    padding: 8px;
+}
+
 .section_for_liked_people{
     padding-left: 16px;
     padding-right: 16px;
@@ -389,6 +402,11 @@ display: flex;
     position: relative;
     z-index: 0;
     -webkit-tap-highlight-color: transparent;
+}
+
+.contents_profile_pic_div img{
+    width: 32px;
+    height: 32px;
 }
 
 .div_for_writer_name{

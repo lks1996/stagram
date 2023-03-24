@@ -169,9 +169,6 @@ public class PostController {
             return null;
         }
 
-        System.out.println("postDTO.getUser_no() == " + postDTO.getUser_no());
-        System.out.println("loginMember.getUser_no() == " + loginMember.getUser_no());
-        System.out.println("postDTO.getUser_no().equals(loginMember.getUser_no() == " + postDTO.getUser_no().equals(loginMember.getUser_no()));
 
         if (postDTO.getUser_no().equals(loginMember.getUser_no())) {
             model.addAttribute("hiddenThreeDotBtn", false);
@@ -179,14 +176,15 @@ public class PostController {
             model.addAttribute("hiddenThreeDotBtn", true);
         }
 
-
-        model.addAttribute("likeBtn", false);
-        model.addAttribute("unlikeBtn", true);
+        model.addAttribute("likeBtn", true);
+        model.addAttribute("unlikeBtn", false);
 
         for (int i = 0; i < postDTO.getLikeDTOS().size(); i++) {
+
             if (postDTO.getLikeDTOS().get(i).getUser_no().equals(loginMember.getUser_no())) {
-                model.addAttribute("likeBtn", true);
-                model.addAttribute("unlikeBtn", false);
+                model.addAttribute("likeBtn", false);
+                model.addAttribute("unlikeBtn", true);
+
             }
         }
 

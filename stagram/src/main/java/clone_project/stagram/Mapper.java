@@ -126,6 +126,7 @@ public class Mapper {
         postDTO.setPostImgSize(postEntity.get().getPostImgSize());
 
         postDTO.setCommentsDTOS(Mapper.ListMapToCommentsDTO(postEntity.get().getCommentsEntityList()));
+        postDTO.setLikeDTOS(Mapper.ListMapToLikeDTO(postEntity.get().getLikeEntityList()));
 
         return postDTO;
     }
@@ -226,6 +227,14 @@ public class Mapper {
         likeDTO.setPost_no(likeEntity.get().getPostEntity().getPost_no());
 
         return likeDTO;
+    }
+
+    public static List<LikeDTO> ListMapToLikeDTO(List<LikeEntity> likeEntities) {
+        List<LikeDTO> likeDTOS = likeEntities
+                .stream()
+                .map(like -> modelMapper.map(like, LikeDTO.class))
+                .collect(Collectors.toList());
+        return likeDTOS;
     }
 
 

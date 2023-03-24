@@ -368,11 +368,16 @@ function likeFunction(postNo){
             url: '/like/register',
             data: {post_no : postNo}
         }).done(function(result){
-            console.log(result)
+            if(result){
+                console.log(result)
 
-            alert("좋아요 등록이 완료되었습니다.");
-            $(".section_for_btn").load(location.href + " .section_for_btn");
-<!--            $(".likes-list"+postNo).load(location.href + " .likes-list"+postNo);-->
+                alert("좋아요 등록이 완료되었습니다.");
+                $(".section_for_btn").load(location.href + " .section_for_btn");
+            } else{
+                alert("오류 발생. 다시 입력해주세요.");
+
+            }
+
 
         }).fail(function(error){
 
@@ -390,12 +395,15 @@ function unlikeFunction(postNo){
             url: '/like/cancel',
             data: {post_no : postNo}
         }).done(function(result){
-            console.log(result)
+            if(result){
+                console.log(result)
 
-            alert("좋아요 취소가 완료되었습니다.");
-            $(".section_for_btn").load(location.href + " .section_for_btn");
-<!--            $(".likes-list"+postNo).load(location.href + " .likes-list"+postNo);-->
+                 alert("좋아요 취소가 완료되었습니다.");
+                $(".section_for_btn").load(location.href + " .section_for_btn");
+            } else{
+                alert("오류 발생. 다시 입력해주세요.");
 
+            }
 
         }).fail(function(error){
 

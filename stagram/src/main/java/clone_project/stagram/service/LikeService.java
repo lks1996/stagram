@@ -52,4 +52,9 @@ public class LikeService {
 
         return null;
     }
+
+    @Transactional
+    public void deleteAllLikes(Long postNo) {
+        jpaLikeRepositoryCustom.deleteAllLikes(postNo);
+    }
 }

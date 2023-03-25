@@ -31,4 +31,12 @@ public class JpaLikeRepositoryCustomImpl implements JpaLikeRepositoryCustom{
                 .getResultList();
         return likeEntity.stream().findAny();
     }
+
+    @Override
+    public void deleteAllLikes(Long post_no) {
+        em.createQuery("delete from LikeEntity m where m.postEntity.post_no = :post_no")
+                .setParameter("post_no", post_no)
+                .executeUpdate();
+        em.clear();
+    }
 }

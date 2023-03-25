@@ -10,4 +10,6 @@ public interface JpaLikeRepositoryCustom {
 
     Optional<LikeEntity> findByUserNoAndPostNo(Long user_no, Long post_no);
 
+    void deleteAllLikes(Long postNo);
+
 }

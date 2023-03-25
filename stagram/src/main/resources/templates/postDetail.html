@@ -68,29 +68,31 @@
 
                     </div>
                     <div class="user_contents_space">
-
-                        <div class="section_for_btn">
+                        <div class="section_for_btn_outer">
+                            <div class="section_for_btn">
                             <span>
                                 <a href="javascript:void(0);" onclick="unlikeFunction(this.name);"
                                    th:name="${post.post_no}" th:hidden="${likeBtn}">
                                     <i class="fa-sharp fa-solid fa-heart icon-react"></i>
                                 </a>
                             </span>
-                            <span>
+                                <span>
                                 <a href="javascript:void(0);" onclick="likeFunction(this.name);"
                                    th:name="${post.post_no}" th:hidden="${unlikeBtn}">
                                     <img class="icon-react"
                                          src="https://s3.ap-northeast-2.amazonaws.com/cdn.wecode.co.kr/bearu/heart.png" alt="하트">
                                 </a>
                             </span>
-                            <span>
+                                <span>
                                 <img class="icon-react" src="https://s3.ap-northeast-2.amazonaws.com/cdn.wecode.co.kr/bearu/comment.png" alt="말풍선">
                             </span>
-                            <span>
+                                <span>
                                 <img class="icon-react" src="/images/dm.png" alt="DM">
                             </span>
-
+                            </div>
                         </div>
+
+
                         <section class="section_for_liked_people">
                             <div>
                             </div>

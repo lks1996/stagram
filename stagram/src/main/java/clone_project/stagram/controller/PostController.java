@@ -3,10 +3,7 @@ package clone_project.stagram.controller;
 import clone_project.stagram.DTO.*;
 import clone_project.stagram.SavePath;
 import clone_project.stagram.SessionConst;
-import clone_project.stagram.service.CommentsService;
-import clone_project.stagram.service.FollowService;
-import clone_project.stagram.service.PostService;
-import clone_project.stagram.service.UserService;
+import clone_project.stagram.service.*;
 import org.apache.commons.io.IOUtils;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -33,12 +30,14 @@ public class PostController {
     private final UserService userService;
     private final CommentsService commentsService;
     private final FollowService followService;
+    private final LikeService likeService;
 
-    public PostController(PostService postService, UserService userService, CommentsService commentsService, FollowService followService) {
+    public PostController(PostService postService, UserService userService, CommentsService commentsService, FollowService followService, LikeService likeService) {
         this.postService = postService;
         this.userService = userService;
         this.commentsService = commentsService;
         this.followService = followService;
+        this.likeService = likeService;
     }
 
 
@@ -107,6 +106,7 @@ public class PostController {
         System.out.println("삭제할 게시글 postNo : " + postNo);
 
         commentsService.deleteAllComments(postNo);
+        likeService.deleteAllLikes(postNo);
         postService.deleteOnePost(postNo);
 
         //postNo 게시글이 삭제되었는지 확인

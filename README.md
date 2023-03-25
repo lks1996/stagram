@@ -50,8 +50,8 @@
   + 회원 탈퇴 페이지
  ![회원탈퇴페이지](https://user-images.githubusercontent.com/91775452/227708108-aa02602e-6bd6-4cf9-8044-ef10697dfa11.png)
  
- + 게시글 업로드
- ![게시글 업로드 화면](https://user-images.githubusercontent.com/91775452/227708358-2f30c69c-6c0d-4876-a7ae-ff6835c47a55.png)
+  + 게시글 업로드
+  ![게시글 업로드 화면](https://user-images.githubusercontent.com/91775452/227708358-2f30c69c-6c0d-4876-a7ae-ff6835c47a55.png)
 
 
 + ### 문제

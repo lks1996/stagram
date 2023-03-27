@@ -18,6 +18,10 @@ import org.springframework.web.bind.annotation.SessionAttribute;
 import java.io.IOException;
 import java.util.Collections;
 import java.util.List;
+<<<<<<< HEAD
+=======
+import java.util.Objects;
+>>>>>>> bc74343 (주석 정리, 타임라인 로딩 효과 개선)
 
 @Slf4j
 @Controller
@@ -61,7 +65,10 @@ public class HomeController {
         System.out.println("홈컨트롤러에서 뿌려줄 게시물들은 ? " + postDTO);
 
 
+<<<<<<< HEAD
 
+=======
+>>>>>>> bc74343 (주석 정리, 타임라인 로딩 효과 개선)
         //팔로우하는 회원이나 본인의 게시글에서 더 이상 보여줄게 없다면, 아무 사용자의 게시글을 랜덤으로 보여준다.
         if (postDTO.isEmpty()) {
 
@@ -75,6 +82,19 @@ public class HomeController {
             //랜덤으로 섞은 리스트를 페이징.(이때 게시글의 순서가 랜덤이므로, 첫 인덱스와 마지막 인덱스는 고정 값으로 함.)
             List<PostDTO> paginatedAllPostList = postService.pagination(allPostDTO, 0);
 
+<<<<<<< HEAD
+=======
+            for (int i = 0; i < paginatedAllPostList.size(); i++) {
+                for (int j = 0; j < paginatedAllPostList.get(i).getLikeDTOS().size(); j++) {
+                    if (Objects.equals(paginatedAllPostList.get(i).getLikeDTOS().get(j).getUser_no(), loginMember.getUser_no())) {
+                        paginatedAllPostList.get(i).setPostImgSize(0L);
+
+                        System.out.println(i + "번째 paginatedPostList의 이미지 사이즈를 " + paginatedAllPostList.get(i).getPostImgSize()+"로 초기화 함");
+                    }
+                }
+            }
+
+>>>>>>> bc74343 (주석 정리, 타임라인 로딩 효과 개선)
             model.addAttribute("posts", paginatedAllPostList);
 
             return "timeline2";
@@ -84,7 +104,11 @@ public class HomeController {
 
         for (int i = 0; i < paginatedPostList.size(); i++) {
             for (int j = 0; j < paginatedPostList.get(i).getLikeDTOS().size(); j++) {
+<<<<<<< HEAD
                 if (paginatedPostList.get(i).getLikeDTOS().get(j).getUser_no() == loginMember.getUser_no()) {
+=======
+                if (Objects.equals(paginatedPostList.get(i).getLikeDTOS().get(j).getUser_no(), loginMember.getUser_no())) {
+>>>>>>> bc74343 (주석 정리, 타임라인 로딩 효과 개선)
                     paginatedPostList.get(i).setPostImgSize(0L);
 
                     System.out.println(i + "번째 paginatedPostList의 이미지 사이즈를 " + paginatedPostList.get(i).getPostImgSize()+"로 초기화 함");
@@ -92,7 +116,10 @@ public class HomeController {
             }
         }
 
+<<<<<<< HEAD
 
+=======
+>>>>>>> bc74343 (주석 정리, 타임라인 로딩 효과 개선)
         model.addAttribute("posts", paginatedPostList);
         return "timeline2";
     }

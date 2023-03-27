@@ -71,10 +71,15 @@ public class PostController {
             System.out.println(postDTO.getUser_no());
             System.out.println(postDTO.getUser_id());
 
+<<<<<<< HEAD
 
             postService.savePost(postDTO, loginMember);
 
 
+=======
+            postService.savePost(postDTO, loginMember);
+
+>>>>>>> bc74343 (주석 정리, 타임라인 로딩 효과 개선)
             return "redirect:/";
         }
 
@@ -89,7 +94,10 @@ public class PostController {
     @PostMapping("/post/update")
     @ResponseBody
     public String updatePost(@RequestParam Long postNo, @RequestParam String postContents) {
+<<<<<<< HEAD
         System.out.println(postNo + "|||||||||" + postContents);
+=======
+>>>>>>> bc74343 (주석 정리, 타임라인 로딩 효과 개선)
 
         postService.updatePostContents(postNo, postContents);
 
@@ -103,7 +111,10 @@ public class PostController {
     @PostMapping("/post/delete")
     @ResponseBody
     public String deletePost(@RequestParam Long postNo) {
+<<<<<<< HEAD
         System.out.println("삭제할 게시글 postNo : " + postNo);
+=======
+>>>>>>> bc74343 (주석 정리, 타임라인 로딩 효과 개선)
 
         commentsService.deleteAllComments(postNo);
         likeService.deleteAllLikes(postNo);
@@ -116,7 +127,10 @@ public class PostController {
 
         }
 
+<<<<<<< HEAD
 
+=======
+>>>>>>> bc74343 (주석 정리, 타임라인 로딩 효과 개선)
         return null;
     }
 
@@ -129,8 +143,11 @@ public class PostController {
 
         PostDTO postDTO = postService.isValidPost(postName);
 
+<<<<<<< HEAD
         System.out.println("프로필 페이지에서 넘어온 포스트 네임 : " + postName);
 
+=======
+>>>>>>> bc74343 (주석 정리, 타임라인 로딩 효과 개선)
         //등록된 프로필 사진이 없다면, default 이미지 경로 설정.
         if (postDTO == null) {
             profileImg = SavePath.USER_PROFILE_IMG_DEFAULT;
@@ -150,10 +167,15 @@ public class PostController {
     @GetMapping("/post/info")
     @ResponseBody
     public PostDTO postInfo(Long postNo) {
+<<<<<<< HEAD
         System.out.println("넘어온 post_no : " + postNo);
 
         PostDTO postDTO = postService.findPostByPostNo(postNo);
         System.out.println(postDTO.getCommentsDTOS().get(2).getComments_contents());
+=======
+
+        PostDTO postDTO = postService.findPostByPostNo(postNo);
+>>>>>>> bc74343 (주석 정리, 타임라인 로딩 효과 개선)
 
         return postDTO;
     }
@@ -169,7 +191,10 @@ public class PostController {
             return null;
         }
 
+<<<<<<< HEAD
 
+=======
+>>>>>>> bc74343 (주석 정리, 타임라인 로딩 효과 개선)
         if (postDTO.getUser_no().equals(loginMember.getUser_no())) {
             model.addAttribute("hiddenThreeDotBtn", false);
         } else {
@@ -203,8 +228,11 @@ public class PostController {
     public String getMembers(@SessionAttribute(name =SessionConst.LOGIN_MEMBER) UserDTO loginMember,
                              Model model, int pageCount) {
 
+<<<<<<< HEAD
         System.out.println("현재 페이지는 바로!!!!!!!! --> " +pageCount);
 
+=======
+>>>>>>> bc74343 (주석 정리, 타임라인 로딩 효과 개선)
         //로그인한 회원이 팔로우하는(팔로잉) 회원들의 회원번호 가져오기.
         List<FollowDTO> followingList = followService.followingList(loginMember.getUser_no());
         //팔로잉하는 회원들의 게시글과 본인의 게시글을 리스트로 가져옴.
@@ -227,8 +255,11 @@ public class PostController {
                 for (int j = 0; j < paginatedAllPostList.get(i).getLikeDTOS().size(); j++) {
                     if (paginatedAllPostList.get(i).getLikeDTOS().get(j).getUser_no() == loginMember.getUser_no()) {
                         paginatedAllPostList.get(i).setPostImgSize(0L);
+<<<<<<< HEAD
 
                         System.out.println(i + "번째 paginatedPostList의 이미지 사이즈를 " + paginatedAllPostList.get(i).getPostImgSize()+"로 초기화 함");
+=======
+>>>>>>> bc74343 (주석 정리, 타임라인 로딩 효과 개선)
                     }
                 }
             }

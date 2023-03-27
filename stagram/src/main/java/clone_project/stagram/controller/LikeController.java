@@ -21,10 +21,17 @@ public class LikeController {
         this.postService = postService;
     }
 
+<<<<<<< HEAD
     @PostMapping("/like/register")
     @ResponseBody
     public boolean likeRegister(@SessionAttribute(name = SessionConst.LOGIN_MEMBER) UserDTO loginMember, @RequestParam Long post_no) {
         System.out.println("like post_no"+ post_no);
+=======
+/** 좋아요 등록 **/
+    @PostMapping("/like/register")
+    @ResponseBody
+    public boolean likeRegister(@SessionAttribute(name = SessionConst.LOGIN_MEMBER) UserDTO loginMember, @RequestParam Long post_no) {
+>>>>>>> bc74343 (주석 정리, 타임라인 로딩 효과 개선)
 
         PostDTO postDTO = postService.findPostByPostNo(post_no);
         if (postDTO == null) {
@@ -39,10 +46,17 @@ public class LikeController {
         return true;
     }
 
+<<<<<<< HEAD
     @PostMapping("/like/cancel")
     @ResponseBody
     public boolean likeCancel(@SessionAttribute(name = SessionConst.LOGIN_MEMBER) UserDTO loginMember, @RequestParam Long post_no) {
         System.out.println("unlike post_no"+ post_no);
+=======
+/** 좋아요 취소 **/
+    @PostMapping("/like/cancel")
+    @ResponseBody
+    public boolean likeCancel(@SessionAttribute(name = SessionConst.LOGIN_MEMBER) UserDTO loginMember, @RequestParam Long post_no) {
+>>>>>>> bc74343 (주석 정리, 타임라인 로딩 효과 개선)
 
         likeService.cancelLike(post_no, loginMember.getUser_no());
 

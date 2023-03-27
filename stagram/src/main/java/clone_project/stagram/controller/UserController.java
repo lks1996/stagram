@@ -66,8 +66,12 @@ public class UserController {
 
     @PostMapping("/user/signup")
     public String register(UserDTO userDTO) throws Exception{
+<<<<<<< HEAD
         System.out.println(userDTO.getEmail());
         System.out.println(userDTO.getPassword());
+=======
+
+>>>>>>> bc74343 (주석 정리, 타임라인 로딩 효과 개선)
         userDTO.setRegDate(whatTimeIsItNow());
         userService.register(userDTO);
         return "redirect:/";
@@ -97,7 +101,10 @@ public class UserController {
             System.out.println(id);
             return true;
         }
+<<<<<<< HEAD
         System.out.println(id);
+=======
+>>>>>>> bc74343 (주석 정리, 타임라인 로딩 효과 개선)
         return false;
     }
 
@@ -129,14 +136,20 @@ public class UserController {
 
         UserDTO loginUser = userService.login(loginDTO.getIdOrEmail());
 
+<<<<<<< HEAD
         System.out.println(encoder.matches(loginDTO.getPw(), loginUser.getPassword()));
 
+=======
+>>>>>>> bc74343 (주석 정리, 타임라인 로딩 효과 개선)
         //입력한 email 이나 id 가 존재하지 않는다면,
         if (loginUser != null) {
             if (encoder.matches(loginDTO.getPw(), loginUser.getPassword())) {
                 session.setAttribute(SessionConst.LOGIN_MEMBER, loginUser);
                 session.setMaxInactiveInterval(3000);
+<<<<<<< HEAD
                 System.out.println("request.getSession()" + session.getAttribute(SessionConst.LOGIN_MEMBER));
+=======
+>>>>>>> bc74343 (주석 정리, 타임라인 로딩 효과 개선)
 
                 result = "loginSuccess";
             } else {
@@ -149,7 +162,10 @@ public class UserController {
             result = "idOrEmailFail";
 
         }
+<<<<<<< HEAD
 
+=======
+>>>>>>> bc74343 (주석 정리, 타임라인 로딩 효과 개선)
         return result;
     }
 
@@ -157,11 +173,19 @@ public class UserController {
 
 /** 로그아웃 **/
     @GetMapping("/logout")
+<<<<<<< HEAD
         public String logout(HttpServletRequest request){
 
         HttpSession session = request.getSession();
 
         session.invalidate();
+=======
+    public String logout(HttpServletRequest request){
+
+        HttpSession session = request.getSession();
+        session.invalidate();
+
+>>>>>>> bc74343 (주석 정리, 타임라인 로딩 효과 개선)
         return "redirect:/";
     }
 
@@ -172,10 +196,13 @@ public class UserController {
     public String profile(@SessionAttribute(name =SessionConst.LOGIN_MEMBER) UserDTO loginMember,
                           String id, Model model) throws Exception{
 
+<<<<<<< HEAD
         System.out.println("넘어온 id = " + id);
         System.out.println("세션id = " + loginMember.getId());
         System.out.println("loginMember.getId().equals(id)"+loginMember.getId().equals(id));
 
+=======
+>>>>>>> bc74343 (주석 정리, 타임라인 로딩 효과 개선)
         UserDTO nowUser = userService.isDuplicateId(id);
 
         if (nowUser == null) {
@@ -193,7 +220,10 @@ public class UserController {
         model.addAttribute("followerLists", follows);
         model.addAttribute("followingLists", follows);
 
+<<<<<<< HEAD
 
+=======
+>>>>>>> bc74343 (주석 정리, 타임라인 로딩 효과 개선)
         // 본인 프로필로 들어가려는것이라면.
         if (Objects.equals(loginMember.getUser_no(), nowUser.getUser_no())) {
             System.out.println("@@@@@@@@@loginMember.getId()" + loginMember.getUser_no());
@@ -225,9 +255,13 @@ public class UserController {
         model.addAttribute("userPosts", userPosts);//프로필 페이지 주인이 작성한 게시글들
         model.addAttribute("loginUser", loginMember);//현재 로그인한 유저(세선에 등록된 유저)
 
+<<<<<<< HEAD
 
         //로그인한 사용자와 다른 유저 간의 팔로우 관계가 있는지 확인.
 
+=======
+        //로그인한 사용자와 다른 유저 간의 팔로우 관계가 있는지 확인.
+>>>>>>> bc74343 (주석 정리, 타임라인 로딩 효과 개선)
         //팔로우 관계가 있다면, 언팔로우 버튼 보이게.
         model.addAttribute("hiddenFollowBtn", true);//팔로우 버튼
         model.addAttribute("hiddenFollowingBtn", false);//언팔로우 버튼
@@ -260,9 +294,12 @@ public class UserController {
 
         HttpSession session = request.getSession();
 
+<<<<<<< HEAD
         System.out.println(updatedUserDTO.getEmail());
         System.out.println(updatedUserDTO.getBio());
 
+=======
+>>>>>>> bc74343 (주석 정리, 타임라인 로딩 효과 개선)
         updatedUserDTO.setUser_no(loginMember.getUser_no());
         updatedUserDTO.setPassword(loginMember.getPassword());
         updatedUserDTO.setRegDate(loginMember.getRegDate());
@@ -373,8 +410,11 @@ public class UserController {
     @PostMapping("/upload/profile")
     public String upload_profile_pic(@SessionAttribute(name =SessionConst.LOGIN_MEMBER) UserDTO loginMember, @RequestParam MultipartFile profileImg) throws Exception{
 
+<<<<<<< HEAD
 
 
+=======
+>>>>>>> bc74343 (주석 정리, 타임라인 로딩 효과 개선)
         if( !profileImg.isEmpty() ) {   //파일이 비어있지 않다면.
             String uuidForProfilePicName = UUID.randomUUID().toString()+".jpg";
             File converFile = new File(SavePath.USER_PROFILE_IMG_SAVE_PATH, uuidForProfilePicName);
@@ -445,7 +485,10 @@ public class UserController {
             userProfileImgDTO = userService.hasProfileImg(nowUser);
         }
 
+<<<<<<< HEAD
 
+=======
+>>>>>>> bc74343 (주석 정리, 타임라인 로딩 효과 개선)
         //등록된 프로필 사진이 없다면, default 이미지 경로 설정.
         if (userProfileImgDTO == null) {
             profileImg = SavePath.USER_PROFILE_IMG_DEFAULT;

@@ -12,6 +12,10 @@ public class JpaCommentsRepositoryCustomImpl implements JpaCommentsRepositoryCus
         this.em = em;
     }
 
+<<<<<<< HEAD
+=======
+    /** 게시글 번호에 해당하는 댓글 모두 삭제 **/
+>>>>>>> bc74343 (주석 정리, 타임라인 로딩 효과 개선)
     @Override
     public void deleteAllByPostNo(Long post_no) {
         em.createQuery("delete from CommentsEntity m where m.postEntity.post_no = :post_no")
@@ -20,6 +24,10 @@ public class JpaCommentsRepositoryCustomImpl implements JpaCommentsRepositoryCus
         em.clear();
     }
 
+<<<<<<< HEAD
+=======
+    /** 게시글 번호에 해당하는 댓글 모두 찾기 **/
+>>>>>>> bc74343 (주석 정리, 타임라인 로딩 효과 개선)
     @Override
     public List<CommentsEntity> findCommentsByPostNo(Long post_no) {
         List<CommentsEntity> commentsEntities = em.createQuery("select m from CommentsEntity m where m.postEntity.post_no =:post_no", CommentsEntity.class)
@@ -28,6 +36,10 @@ public class JpaCommentsRepositoryCustomImpl implements JpaCommentsRepositoryCus
         return commentsEntities;
     }
 
+<<<<<<< HEAD
+=======
+    /** 댓글에 있는 사용자 정보 업데이트 **/
+>>>>>>> bc74343 (주석 정리, 타임라인 로딩 효과 개선)
     @Override
     public void updateCommentsUser(Long user_no, String id) {
         System.out.println("[Comments] user_no가 " + user_no + "인 사용자의 사용자 이름을 " + id + "수정시작.");
@@ -38,6 +50,9 @@ public class JpaCommentsRepositoryCustomImpl implements JpaCommentsRepositoryCus
                 .executeUpdate();
         em.clear();
 
+<<<<<<< HEAD
         System.out.println("[Comments] 수정 완료");
+=======
+>>>>>>> bc74343 (주석 정리, 타임라인 로딩 효과 개선)
     }
 }

@@ -1,7 +1,10 @@
 package clone_project.stagram.Entity;
 
 import lombok.AccessLevel;
+<<<<<<< HEAD
 import lombok.Builder;
+=======
+>>>>>>> bc74343 (주석 정리, 타임라인 로딩 효과 개선)
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 

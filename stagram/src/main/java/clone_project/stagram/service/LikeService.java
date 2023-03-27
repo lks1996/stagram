@@ -25,7 +25,11 @@ public class LikeService {
         this.jpaLikeRepositoryCustom = jpaLikeRepositoryCustom;
     }
 
+<<<<<<< HEAD
 
+=======
+    /** 좋아요 등록 **/
+>>>>>>> bc74343 (주석 정리, 타임라인 로딩 효과 개선)
     public void likeRegister(LikeDTO likeDTO, UserDTO loginMember, PostDTO postDTO) {
         UserEntity userEntity = Mapper.mapToUserEntity(loginMember);
         PostEntity postEntity = Mapper.mapToPostEntity(postDTO, userEntity);
@@ -35,6 +39,10 @@ public class LikeService {
         jpaLikeRepository.save(likeEntity);
     }
 
+<<<<<<< HEAD
+=======
+    /** 좋아요 취소 **/
+>>>>>>> bc74343 (주석 정리, 타임라인 로딩 효과 개선)
     @Transactional
     public void cancelLike(Long post_no, Long user_no) {
 
@@ -42,6 +50,10 @@ public class LikeService {
 
     }
 
+<<<<<<< HEAD
+=======
+    /** 게시글에 회원이 좋아요 했는지 확인 **/
+>>>>>>> bc74343 (주석 정리, 타임라인 로딩 효과 개선)
     public LikeDTO findLikeByUserNoAndPostNo(Long user_no, Long post_no) {
         Optional<LikeEntity> likeEntity = jpaLikeRepositoryCustom.findByUserNoAndPostNo(user_no, post_no);
 
@@ -53,6 +65,10 @@ public class LikeService {
         return null;
     }
 
+<<<<<<< HEAD
+=======
+    /** 특정 게시글의 모든 좋아요 삭제 **/
+>>>>>>> bc74343 (주석 정리, 타임라인 로딩 효과 개선)
     @Transactional
     public void deleteAllLikes(Long postNo) {
         jpaLikeRepositoryCustom.deleteAllLikes(postNo);

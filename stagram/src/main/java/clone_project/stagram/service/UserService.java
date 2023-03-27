@@ -2,10 +2,7 @@ package clone_project.stagram.service;
 
 import clone_project.stagram.DTO.UserDTO;
 import clone_project.stagram.DTO.UserProfileImgDTO;
-<<<<<<< HEAD
 import clone_project.stagram.Entity.FollowEntity;
-=======
->>>>>>> bc74343 (주석 정리, 타임라인 로딩 효과 개선)
 import clone_project.stagram.Entity.UserEntity;
 import clone_project.stagram.Entity.UserProfileImgEntity;
 import clone_project.stagram.Mapper;
@@ -19,10 +16,7 @@ import org.springframework.stereotype.Service;
 import javax.transaction.Transactional;
 import java.util.List;
 import java.util.Optional;
-<<<<<<< HEAD
 import java.util.stream.Collectors;
-=======
->>>>>>> bc74343 (주석 정리, 타임라인 로딩 효과 개선)
 
 @Service
 public class UserService {

@@ -24,11 +24,11 @@ public class FollowController {
         this.userService = userService;
     }
 
-/** 팔로우 **/
+    /** 팔로우 **/
     @PostMapping("/follow/request")
     @ResponseBody
     public boolean followRequest(@SessionAttribute(name = SessionConst.LOGIN_MEMBER) UserDTO loginMember,
-                                @RequestParam Long user_no) {
+                                 @RequestParam Long user_no) {
         System.out.println("팔로우 하려는 회원의 회원 번호 : " + user_no);
 
         UserDTO followFrom = userService.findUserByUserNo(loginMember.getUser_no());
@@ -43,11 +43,11 @@ public class FollowController {
         return true;
     }
 
-/** 팔로우 취소(본인이 본인의 팔로잉 취소, 프로필 화면에서) **/
+    /** 팔로우 취소(본인이 본인의 팔로잉 취소, 프로필 화면에서) **/
     @PostMapping("/follow/unfollow")
     @ResponseBody
     public boolean unfollowRequest(@SessionAttribute(name = SessionConst.LOGIN_MEMBER) UserDTO loginMember,
-                                  @RequestParam Long user_no) {
+                                   @RequestParam Long user_no) {
 
         UserDTO unfollowFrom = userService.findUserByUserNo(loginMember.getUser_no());
         UserDTO unfollowTo = userService.findUserByUserNo(user_no);
@@ -59,35 +59,29 @@ public class FollowController {
         return true;
     }
 
-/** 팔로우 취소(본인이 팔로워가 본인을 팔로우하는 것을 취소, 팔로워 리스트에서) **/
+    /** 팔로우 취소(본인이 팔로워가 본인을 팔로우하는 것을 취소, 팔로워 리스트에서) **/
     @PostMapping("/follow/deleteFollower")
     @ResponseBody
     public boolean deleteFollower(@SessionAttribute(name = SessionConst.LOGIN_MEMBER) UserDTO loginMember,
-                                   @RequestParam Long user_no) {
-<<<<<<< HEAD
+                                  @RequestParam Long user_no) {
         System.out.println("언팔로우 하려는 회원의 회원 번호 : " + user_no);
         System.out.println("언팔로우 하려는 회원의 회원 : " + loginMember.getUser_no());
-=======
->>>>>>> bc74343 (주석 정리, 타임라인 로딩 효과 개선)
 
         UserDTO unfollowFrom = userService.findUserByUserNo(user_no);
         UserDTO unfollowTo = userService.findUserByUserNo(loginMember.getUser_no());
 
         FollowDTO followDTO = followService.isFollow(unfollowFrom.getUser_no(), unfollowTo.getUser_no());
 
-<<<<<<< HEAD
         System.out.println("unfollowFrom -- "+ unfollowFrom);
         System.out.println("unfollowTo -- "+ unfollowTo);
         System.out.println("followDTO -- "+ followDTO);
 
-=======
->>>>>>> bc74343 (주석 정리, 타임라인 로딩 효과 개선)
         followService.unfollow(followDTO, unfollowFrom, unfollowTo);
 
         return true;
     }
 
-/** 팔로워 리스트 반환 **/
+    /** 팔로워 리스트 반환 **/
     @GetMapping("/follow/followerList")
     public String followerList(@SessionAttribute(name =SessionConst.LOGIN_MEMBER) UserDTO loginMember,
                                Model model, Long user_no) {
@@ -108,25 +102,16 @@ public class FollowController {
             followers.add(follower);
         }
 
-<<<<<<< HEAD
 //팔로잉 리스트도 작성하기, 타임라인에서 사용자 팔로잉에 따라 동적으로 타임라인 구성하기.
         model.addAttribute("followerLists", followers);
 
         System.out.println("ㅂㅂㅂㅂㅂㅂㅂㅂㅂㅂㅂㅂㅂㅂㅂㅂㅂㅂㅂㅂㅂㅂㅂㅂㅂㅂㅂㅂㅂㅂ:: "+user_no);
 
-=======
-        model.addAttribute("followerLists", followers);
-
->>>>>>> bc74343 (주석 정리, 타임라인 로딩 효과 개선)
         UserDTO nowUser = userService.findUserByUserNo(user_no);
 
         // 본인 프로필로 들어가려는것이라면.
         if (Objects.equals(loginMember.getUser_no(), nowUser.getUser_no())) {
-<<<<<<< HEAD
             System.out.println("본인 프로필들어와서 팔로워 리스트 열었음.");
-=======
-
->>>>>>> bc74343 (주석 정리, 타임라인 로딩 효과 개선)
             model.addAttribute("hiddenFollowerDeleteBtn", false);//팔로워 리스트 팔로워 삭제 버튼
 
             return "profile :: #followerListBody";
@@ -138,10 +123,10 @@ public class FollowController {
     }
 
 
-/** 팔로잉 리스트 반환 **/
+    /** 팔로잉 리스트 반환 **/
     @GetMapping("/follow/followingList")
     public String followingList(@SessionAttribute(name =SessionConst.LOGIN_MEMBER) UserDTO loginMember,
-                               Model model, Long user_no) {
+                                Model model, Long user_no) {
 
         System.out.println("누구의 팔로잉 리스트? == " + user_no);
 
@@ -161,19 +146,12 @@ public class FollowController {
 
         model.addAttribute("followingLists", followings);
 
-<<<<<<< HEAD
         System.out.println("ㅐㅐㅐㅐㅐㅐㅐㅐㅐㅐㅐㅐㅐㅐㅐㅐㅐㅐㅐㅐㅐㅐㅐㅐㅐㅐㅐㅐㅐ:: "+user_no);
-=======
->>>>>>> bc74343 (주석 정리, 타임라인 로딩 효과 개선)
         UserDTO nowUser = userService.findUserByUserNo(user_no);
 
         // 본인 프로필로 들어가려는것이라면.
         if (Objects.equals(loginMember.getUser_no(), nowUser.getUser_no())) {
-<<<<<<< HEAD
             System.out.println("본인 프로필들어와서 팔로워 리스트 열었음.");
-=======
-
->>>>>>> bc74343 (주석 정리, 타임라인 로딩 효과 개선)
             model.addAttribute("hiddenFollowingDeleteBtn", false);//팔로워 리스트 팔로워 삭제 버튼
 
             return "profile :: #followingListBody";

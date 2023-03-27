@@ -21,11 +21,11 @@ public class CommentController {
         this.postService = postService;
     }
 
-/** 댓글 등록 **/
+    /** 댓글 등록 **/
     @PostMapping("/comments/register")
     @ResponseBody
     public boolean commentsRegister(@SessionAttribute(name = SessionConst.LOGIN_MEMBER) UserDTO loginMember,
-                                   @RequestBody CommentsDTO commentsDTO) {
+                                    @RequestBody CommentsDTO commentsDTO) {
         PostDTO postDTO = postService.findPostByPostNo(commentsDTO.getPost_no());
         if (postDTO == null) {
             return false;
@@ -40,11 +40,11 @@ public class CommentController {
         return true;
     }
 
-/** 댓글 삭제 **/
+    /** 댓글 삭제 **/
     @PostMapping("/comments/delete")
     @ResponseBody
     public boolean commentsDelete(@SessionAttribute(name = SessionConst.LOGIN_MEMBER) UserDTO loginMember,
-                                    @RequestParam Long comments_no) {
+                                  @RequestParam Long comments_no) {
 
         System.out.println("comments_no :::::::: " + comments_no);
 

@@ -14,10 +14,6 @@ public class JpaUserRepositoryCustomImpl implements JpaUserRepositoryCustom {
         this.em = em;
     }
 
-<<<<<<< HEAD
-=======
-    /** 이메일로 회원 찾기 **/
->>>>>>> bc74343 (주석 정리, 타임라인 로딩 효과 개선)
     @Override
     public Optional<UserEntity> findByEmail(String email) {
         List<UserEntity> userEntity = em.createQuery("select m from UserEntity m where m.email = :email", UserEntity.class)
@@ -26,10 +22,6 @@ public class JpaUserRepositoryCustomImpl implements JpaUserRepositoryCustom {
         return userEntity.stream().findAny();
     }
 
-<<<<<<< HEAD
-=======
-    /** 아이디로 회원 찾기 **/
->>>>>>> bc74343 (주석 정리, 타임라인 로딩 효과 개선)
     @Override
     public Optional<UserEntity> findById(String id) {
         List<UserEntity> userEntity = em.createQuery("select m from UserEntity m where m.user_id = :user_id", UserEntity.class)

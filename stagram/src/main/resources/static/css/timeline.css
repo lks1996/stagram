@@ -674,11 +674,7 @@ width: 100%;
     margin-left: auto;
     margin-right: auto;
   position: relative;
-<<<<<<< HEAD
-  display: inline;
-=======
   display: flex;
->>>>>>> bc74343 (주석 정리, 타임라인 로딩 효과 개선)
   align-items: center;
   justify-content: flex-start;
   height: var(--uib-size);
